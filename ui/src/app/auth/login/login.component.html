@@ -1,0 +1,16 @@
+<div class="d-flex align-items-center" style="height: 100vh">
+  <div class="container-fluid">
+    <div class="row p-3">
+      <form id="formId" [formGroup]="loginForm" #formDir="ngForm" class="form-horizontal" novalidate="" (ngSubmit)="onSubmit()">
+        <div class="col-12 offset-0 col-md-4 offset-md-4">
+          <div tabindex="0" class="e-card p-5 pt-4" id="basic">
+            <h4 class="mt-0 align-self-center">Login</h4>
+            <app-input fn="email" label="Email" type="text" [fg]="loginForm"></app-input>
+            <app-input fn="password" label="Password" type="password" [fg]="loginForm"></app-input>
+            <button ejs-button type="submit" class="mt-4" cssClass="e-outline" [isPrimary]="true">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
