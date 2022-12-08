@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoreModule } from './core/core.module';
 import { ProjectModule } from './resources/project/project.module';
+import { KpModule } from './resources/kp/kp.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProjectModule } from './resources/project/project.module';
     }),
     CoreModule,
     ProjectModule,
+    KpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

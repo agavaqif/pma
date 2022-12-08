@@ -24,13 +24,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/project",
+							"raw": "http://localhost:3000/api/project",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"project"
 							]
 						}
@@ -43,13 +44,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/project",
+							"raw": "http://localhost:3000/api/project",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"project"
 							]
 						}
@@ -62,13 +64,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/project/1",
+							"raw": "http://localhost:3000/api/project/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"project",
 								"1"
 							]
@@ -83,7 +86,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test Project updated\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Test Project 1 updated\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,13 +94,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/project/1",
+							"raw": "http://localhost:3000/api/project/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"project",
 								"1"
 							]
@@ -111,14 +115,150 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/project/1",
+							"raw": "http://localhost:3000/api/project/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"project",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kps",
+			"item": [
+				{
+					"name": "Create  KPs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"end\": 30,\r\n    \"kpUnit\": \"m\",\r\n    \"accuracy\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/project/2/kp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"2",
+								"kp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All KPs of the Project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/project/2/kp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"2",
+								"kp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the KP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/project/2/kp/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"2",
+								"kp",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update the KP",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/project/2/kp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"2",
+								"kp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the KP",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/project/2/kp/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"2",
+								"kp",
 								"1"
 							]
 						}
