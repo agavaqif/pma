@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { ProjectService } from 'src/app/core/services/project.service';
 
@@ -8,17 +9,16 @@ import { ProjectService } from 'src/app/core/services/project.service';
   styleUrls: ['./project-wizard.component.scss'],
 })
 export class ProjectWizardComponent implements OnInit {
-  public projects: any[] = [];
-
+  public project: any;
   public fields: object = { text: 'name', id: 'projectId' };
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, private route: ActivatedRoute) {}
+
+  get projectId() {
+    return this.route.snapshot.paramMap.get('projectId');
+  }
 
   ngOnInit(): void {
-    this.projectService.onProjects().subscribe((projects) => {
-      this.projects = projects;
-      console.log(this.projects);
-    });
-    this.projectService.getProjects();
+    this.projectService.getProject(this.projectId).subscribe((project) => (this.project = project));
   }
 }

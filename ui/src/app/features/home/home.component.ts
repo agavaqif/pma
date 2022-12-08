@@ -12,6 +12,8 @@ import { word } from 'src/app/core/utils/words';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  public projects: any[] = [];
+  public fields: object = { text: 'name', id: 'projectId' };
   word = word;
 
   // Modal
@@ -45,6 +47,8 @@ export class HomeComponent implements OnInit {
     this.initTarget();
     this.initForm();
     this.initBtns();
+    this.projectService.onProjects().subscribe((projects) => (this.projects = projects));
+    this.projectService.getProjects();
   }
 
   onCreateProject(): void {
@@ -52,10 +56,13 @@ export class HomeComponent implements OnInit {
       this.projectService.createProject(this.projectForm.value).subscribe((project) => {
         this.projectService.getProjects();
         this.closeModal();
-        this.router.navigate(['project-wizard']);
       });
     } else {
       this.projectForm.markAllAsTouched();
     }
+  }
+
+  onProjectClick(projectId: number): void {
+    this.router.navigate(['project-wizard', projectId]);
   }
 }

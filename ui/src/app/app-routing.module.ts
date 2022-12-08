@@ -10,7 +10,7 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'project-wizard',
+    path: 'project-wizard/:projectId',
     component: ProjectWizardComponent,
   },
 ];
