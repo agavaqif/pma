@@ -1,0 +1,23 @@
+<div class="kps-header">
+  <button ejs-button [isPrimary]="true" (click)="openModal()">{{word('CREATE_KPS')}}</button>
+</div>
+<ejs-grid [dataSource]='projectKps'>
+  <e-columns>
+    <e-column field='start' [headerText]='word("START")'></e-column>
+    <e-column field='end' [headerText]='word("END")'></e-column>
+  </e-columns>
+</ejs-grid>
+
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_NEW_PROJECT')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="kp-form" [formGroup]="kpForm">
+      <app-input [label]="word('START')" [fn]="'start'" [fg]="kpForm" [type]="'number'"></app-input>
+      <app-input [label]="word('END')" [fn]="'end'" [fg]="kpForm" [type]="'number'"></app-input>
+      <app-dropdown [label]="word('KP_UNIT')" [fn]="'kpUnit'" [fg]="kpForm" [data]="kpUnits"></app-dropdown>
+      <app-input [label]="word('ACCURACY')" [fn]="'accuracy'" [fg]="kpForm" [type]="'number'"></app-input>
+    </form>
+  </ng-template>
+</ejs-dialog>

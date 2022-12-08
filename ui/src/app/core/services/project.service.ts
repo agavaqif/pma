@@ -1,3 +1,4 @@
+import { IProject } from './../../shared/interfaces/project.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -6,8 +7,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ProjectService {
-  baseUrl = 'http://localhost:3000/project';
-  projects: Subject<any[]> = new Subject<any[]>();
+  baseUrl = 'http://localhost:3000/api/project';
+  projects: Subject<IProject[]> = new Subject<IProject[]>();
 
   constructor(private http: HttpClient) {}
 

@@ -1,6 +1,17 @@
 export const wordsMap: any = {
   // Home
   CREATE_NEW_PROJECT: 'Create New Project',
+
+  // Project Wizard
+  CREATE_KPS: 'Create Kps',
+  START: 'Start',
+  END: 'End',
+  KP_UNIT: 'Kp Unit',
+  ACCURACY: 'Accuracy',
+  
+  // Kp Unit
+  METER: 'Meter',
+  KILOMETER: 'Kilometer',
 };
 
 export const validateWords: any = {

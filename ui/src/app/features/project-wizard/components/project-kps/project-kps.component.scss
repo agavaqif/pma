@@ -1,0 +1,24 @@
+.kps-header {
+  text-align: end;
+}
+
+ejs-grid {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1rem;
+}
+
+.e-dlg-header-content {
+  padding-bottom: 10px;
+}
+
+.e-dialog .e-footer-content {
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
+
+.kp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}

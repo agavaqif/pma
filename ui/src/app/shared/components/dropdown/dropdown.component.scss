@@ -1,0 +1,15 @@
+.form-group {
+  position: relative;
+  app-validation-error {
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    color: red;
+  }
+}
+ejs-dropdownlist {
+  color: inherit !important;
+  * {
+    color: inherit !important;
+  }
+}
