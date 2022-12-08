@@ -1,0 +1,14 @@
+<form [formGroup]="fg" class="form-group">
+  <div class="e-float-input e-input-group" [ngClass]="{
+    'e-error': fcn.invalid && (fcn.dirty || fcn.touched),
+    'e-valid': fcn.valid && (fcn.dirty || fcn.touched),
+    'mt-0': !label,
+    'mt-4': label,
+    'mb-3': mb
+  }">
+    <input [id]="fn" [type]="type" [formControlName]="fn" [readOnly]="readonly" />
+    <span class="e-float-line"></span>
+    <label [for]="fn" class="e-label-top e-float-text">{{ label }}</label>
+  </div>
+  <app-validation-error [fcn]="fcn"></app-validation-error>
+</form>
