@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoreModule } from './core/core.module';
-import { GreetingModule } from './resources/greeting/greeting.module';
+import { ProjectModule } from './resources/project/project.module';
 
 @Module({
   imports: [
@@ -26,7 +26,7 @@ import { GreetingModule } from './resources/greeting/greeting.module';
       }),
     }),
     CoreModule,
-    GreetingModule,
+    ProjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
