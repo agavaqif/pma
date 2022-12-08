@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SyncfusionModule } from './syncfusion/syncfusion.module';
-import { PipesModule } from './pipes/pipes.module';
 import { DirectivesModule } from './directives/directives.module';
 import { RouterModule } from '@angular/router';
+import { InputComponent } from './components/input/input.component';
+import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 
-const components: any[] = [];
+const components = [InputComponent];
 
-const modules: any[] = [CommonModule, PipesModule, SyncfusionModule, ReactiveFormsModule, RouterModule, DirectivesModule];
+const modules: any[] = [CommonModule, SyncfusionModule, ReactiveFormsModule, RouterModule, DirectivesModule];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, ValidationErrorComponent],
   imports: [...modules],
   exports: [...components, ...modules],
 })

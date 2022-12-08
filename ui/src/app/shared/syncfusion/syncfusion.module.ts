@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SidebarModule, ToolbarAllModule, ToolbarModule, TreeViewModule } from '@syncfusion/ej2-angular-navigations';
-import { ButtonAllModule, ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { ButtonAllModule } from '@syncfusion/ej2-angular-buttons';
 import { ListViewModule } from '@syncfusion/ej2-angular-lists';
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
@@ -22,6 +21,7 @@ import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { TooltipModule } from '@syncfusion/ej2-angular-popups';
 import { BreadcrumbModule } from '@syncfusion/ej2-angular-navigations';
 import { AutoCompleteModule } from '@syncfusion/ej2-angular-dropdowns';
+import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
   declarations: [],
@@ -51,7 +51,8 @@ import { AutoCompleteModule } from '@syncfusion/ej2-angular-dropdowns';
     MultiSelectModule,
     TooltipModule,
     BreadcrumbModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ListBoxModule,
   ],
 })
 export class SyncfusionModule {}

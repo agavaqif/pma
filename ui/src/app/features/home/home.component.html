@@ -1,0 +1,15 @@
+<div class="home">
+  <button ejs-button [isPrimary]="true" (click)="openModal()">Create Project</button>
+</div>
+
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_NEW_PROJECT')"
+  [width]="350" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <!-- <form [formGroup]="projectForm" class="e-float-input e-input-group mt-0"><input formControlName="name" /></form> -->
+    <form [formGroup]="projectForm">
+      <app-input [label]="word('PROJECT_NAME')" [fn]="'name'" [fg]="projectForm"></app-input>
+    </form>
+  </ng-template>
+</ejs-dialog>

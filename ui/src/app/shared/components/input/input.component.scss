@@ -1,0 +1,9 @@
+.form-group {
+  position: relative;
+  app-validation-error {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    color: red;
+  }
+}

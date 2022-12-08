@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+
+import { HomeComponent } from './features/home/home.component';
+import { ProjectWizardComponent } from './features/project-wizard/project-wizard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
+    component: HomeComponent,
+  },
+  {
+    path: 'project-wizard',
+    component: ProjectWizardComponent,
   },
 ];
 
