@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { IKp, IKpCreate } from 'src/app/shared/interfaces/kp.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KpService {
   baseUrl(...path: any[]) {
-    return `http://localhost:3000/api/project${path.length ? '/' + path.join('/') : ''}`;
+    return `${environment.coreBaseUrl}/api/project${path.length ? '/' + path.join('/') : ''}`;
   }
   projectKps: Subject<IKp[]> = new Subject<IKp[]>();
 
