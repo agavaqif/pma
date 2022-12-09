@@ -5,8 +5,6 @@ export interface IKp {
   kpId: number;
   start: number;
   end: number;
-  kpUnit: KpUnit;
-  accuracy: number;
   project: IProject;
 }
 

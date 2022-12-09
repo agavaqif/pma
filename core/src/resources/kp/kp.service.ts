@@ -11,23 +11,25 @@ export class KpService {
   constructor(
     @InjectRepository(Kp)
     private repo: Repository<Kp>,
+    @InjectRepository(Project)
+    private projectRepo: Repository<Project>,
   ) {}
 
   async createKps(projectId: number, { start, end, kpUnit, accuracy }: CreateKpsDto) {
     const kps = [];
     const length = (end - start) / accuracy;
+    const projectSettings = { kpUnit, accuracy };
+    const updatedProject = await this.projectRepo.update({ projectId }, { projectSettings });
     for (let i = 0; i < length; i++) {
       const kp = this.repo.create({
         start: start + accuracy * i,
         end: start + accuracy * (i + 1),
-        kpUnit,
-        accuracy,
         project: { projectId } as Project,
       });
       kps.push(kp);
     }
     const savedKps = await this.repo.save(kps);
-    return savedKps;
+    return { updatedProject, savedKps };
   }
 
   async findAllByProjectId(projectId: number) {
