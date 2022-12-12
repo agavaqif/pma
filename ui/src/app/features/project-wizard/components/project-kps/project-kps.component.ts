@@ -1,3 +1,4 @@
+import { IExecType } from 'src/app/shared/interfaces/exec-type.interface';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +8,7 @@ import { IKp, IKpCreate } from 'src/app/shared/interfaces/kp.interface';
 import { KpService } from 'src/app/core/services/kp.service';
 import { word } from 'src/app/core/utils/words';
 import { KpUnit } from 'src/app/shared/enums/kp-unit.enum';
+import { ExecTypesService } from 'src/app/core/services/exec-types.service';
 
 @Component({
   selector: 'app-project-kps',
@@ -15,10 +17,12 @@ import { KpUnit } from 'src/app/shared/enums/kp-unit.enum';
 })
 export class ProjectKpsComponent implements OnInit {
   public projectKps: IKp[];
-  word = word;
-  kpUnits = Object.keys(KpUnit).map((key: any) => ({ value: KpUnit[key as keyof typeof KpUnit], text: word(key) }));
 
-  constructor(private kpService: KpService, private route: ActivatedRoute) {}
+  kpUnits = Object.keys(KpUnit).map((key: any) => ({ value: KpUnit[key as keyof typeof KpUnit], text: word(key) }));
+  execTypes: any[];
+  word = word;
+
+  constructor(private kpService: KpService, private route: ActivatedRoute, private execTypesService: ExecTypesService) {}
 
   get projectId() {
     return +this.route.snapshot.paramMap.get('projectId');
@@ -27,6 +31,11 @@ export class ProjectKpsComponent implements OnInit {
   ngOnInit(): void {
     this.kpService.onKps().subscribe((kps) => (this.projectKps = kps));
     this.kpService.getKpsByProjectId(this.projectId);
+    this.execTypesService.onExecTypes().subscribe((execTypes) => {
+      this.execTypes = execTypes.map((execType) => ({ value: execType.execTypeId, text: execType.name }));
+      console.log(this.execTypes);
+    });
+    this.execTypesService.getExecTypesByProjectId(this.projectId);
     this.initTarget();
     this.initForm();
     this.initBtns();
@@ -62,6 +71,7 @@ export class ProjectKpsComponent implements OnInit {
       end: new FormControl('', [Validators.required]),
       kpUnit: new FormControl('', [Validators.required]),
       accuracy: new FormControl('', [Validators.required]),
+      execType: new FormControl('', [Validators.required]),
     });
   }
 
@@ -72,6 +82,7 @@ export class ProjectKpsComponent implements OnInit {
         end: +this.kpForm.value.end,
         kpUnit: this.kpForm.value.kpUnit,
         accuracy: +this.kpForm.value.accuracy,
+        execTypeId: +this.kpForm.value.execType,
       };
       this.kpService.createKp(this.projectId, kp).subscribe((kp) => this.kpService.getKpsByProjectId(this.projectId));
       this.closeModal();

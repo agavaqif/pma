@@ -5,6 +5,7 @@
   <e-columns>
     <e-column field='start' [headerText]='word("START")'></e-column>
     <e-column field='end' [headerText]='word("END")'></e-column>
+    <e-column field='execType.name' [headerText]='word("EXEC_TYPE")'></e-column>
   </e-columns>
 </ejs-grid>
 
@@ -18,6 +19,7 @@
       <app-input [label]="word('END')" [fn]="'end'" [fg]="kpForm" [type]="'number'"></app-input>
       <app-dropdown [label]="word('KP_UNIT')" [fn]="'kpUnit'" [fg]="kpForm" [data]="kpUnits"></app-dropdown>
       <app-input [label]="word('ACCURACY')" [fn]="'accuracy'" [fg]="kpForm" [type]="'number'"></app-input>
+      <app-dropdown [label]="word('EXEC_TYPE')" [fn]="'execType'" [fg]="kpForm" [data]="execTypes"></app-dropdown>
     </form>
   </ng-template>
 </ejs-dialog>

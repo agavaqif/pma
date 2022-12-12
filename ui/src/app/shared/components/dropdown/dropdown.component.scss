@@ -1,8 +1,9 @@
 .form-group {
   position: relative;
+  margin-bottom: 12px;
   app-validation-error {
     position: absolute;
-    bottom: -22px;
+    bottom: -16px;
     left: 0;
     color: red;
   }

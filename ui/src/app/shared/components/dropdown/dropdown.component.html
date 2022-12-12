@@ -1,5 +1,5 @@
 <form [formGroup]="fg">
-  <div class="form-group mb-3" [ngClass]="{
+  <div class="form-group" [ngClass]="{
     'e-error': fcn.invalid && (fcn.dirty || fcn.touched),
     'e-valid': fcn.valid && (fcn.dirty || fcn.touched)
   }">
