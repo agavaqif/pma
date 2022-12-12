@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoreModule } from './core/core.module';
 import { ProjectModule } from './resources/project/project.module';
 import { KpModule } from './resources/kp/kp.module';
+import { ExecTypeModule } from './resources/exec-type/exec-type.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { KpModule } from './resources/kp/kp.module';
     CoreModule,
     ProjectModule,
     KpModule,
+    ExecTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
