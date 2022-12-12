@@ -5,6 +5,6 @@ export class ProjectSettings {
   @Column({ name: 'kp_unit', type: 'enum', enum: KpUnit })
   kpUnit: KpUnit;
 
-  @Column()
+  @Column({ nullable: true })
   accuracy: number;
 }
