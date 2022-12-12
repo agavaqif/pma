@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 import { KpUnit } from 'src/shared/enums/kp-unit.enum';
 
 export class CreateKpsDto {
@@ -13,4 +13,7 @@ export class CreateKpsDto {
 
   @IsNumber()
   accuracy: number;
+
+  @IsNotEmpty()
+  execTypeId: number;
 }

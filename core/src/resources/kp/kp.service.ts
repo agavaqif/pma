@@ -1,3 +1,4 @@
+import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,7 +16,7 @@ export class KpService {
     private projectRepo: Repository<Project>,
   ) {}
 
-  async createKps(projectId: number, { start, end, kpUnit, accuracy }: CreateKpsDto) {
+  async createKps(projectId: number, { start, end, kpUnit, accuracy, execTypeId }: CreateKpsDto) {
     const kps = [];
     const length = (end - start) / accuracy;
     const projectSettings = { kpUnit, accuracy };
@@ -25,6 +26,7 @@ export class KpService {
         start: start + accuracy * i,
         end: start + accuracy * (i + 1),
         project: { projectId } as Project,
+        execType: { execTypeId } as ExecType,
       });
       kps.push(kp);
     }
@@ -33,7 +35,7 @@ export class KpService {
   }
 
   async findAllByProjectId(projectId: number) {
-    const kps = await this.repo.find({ where: { project: { projectId } } });
+    const kps = await this.repo.find({ where: { project: { projectId } }, relations: ['execType'] });
     return kps;
   }
 
