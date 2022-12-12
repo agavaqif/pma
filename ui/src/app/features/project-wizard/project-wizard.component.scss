@@ -1,0 +1,25 @@
+.tabs-container {
+  justify-content: flex-start;
+  overflow-y: auto;
+  height: 80vh;
+  position: relative;
+  @media (max-width: 480px) {
+    height: 100vh;
+  }
+  margin-top: 1rem;
+  .e-content {
+    padding: 1rem;
+  }
+}
+
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.e-tab-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+}

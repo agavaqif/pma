@@ -2,17 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { IProject } from 'src/app/shared/interfaces/project.interface';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
-  baseUrl = 'http://localhost:3000/project';
-  projects: Subject<any[]> = new Subject<any[]>();
+  baseUrl(...path: any[]) {
+    return `${environment.coreBaseUrl}/api/project${path.length ? '/' + path.join('/') : ''}`;
+  }
+  projects: Subject<IProject[]> = new Subject<IProject[]>();
 
   constructor(private http: HttpClient) {}
 
   getProjects() {
-    this.http.get(this.baseUrl).subscribe((projects: any) => this.projects.next(projects));
+    this.http.get(this.baseUrl()).subscribe((projects: any) => this.projects.next(projects));
   }
 
   onProjects() {
@@ -20,18 +25,18 @@ export class ProjectService {
   }
 
   getProject(projectId: string) {
-    return this.http.get(`${this.baseUrl}/${projectId}`);
+    return this.http.get(this.baseUrl(projectId));
   }
 
   createProject(project: any) {
-    return this.http.post(this.baseUrl, project);
+    return this.http.post(this.baseUrl(), project);
   }
 
   updateProject(projectId: string, project: any) {
-    return this.http.patch(`${this.baseUrl}/${projectId}`, project);
+    return this.http.patch(this.baseUrl(projectId), project);
   }
 
   deleteProject(projectId: string) {
-    return this.http.delete(`${this.baseUrl}/${projectId}`);
+    return this.http.delete(this.baseUrl(projectId));
   }
 }

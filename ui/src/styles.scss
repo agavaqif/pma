@@ -47,3 +47,18 @@ body,
 .e-label-top.e-float-text {
   transform: translate3d(-10px, -38px, 0) scale(1) !important;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+.card {
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 3px #ccc;
+  background-color: white;
+}

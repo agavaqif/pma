@@ -2,8 +2,14 @@
   position: relative;
   app-validation-error {
     position: absolute;
-    bottom: -5px;
+    bottom: -3px;
     left: 0;
     color: red;
   }
+}
+.mb {
+  margin-bottom: 12px;
+}
+.mt {
+  margin-top: 19px;
 }

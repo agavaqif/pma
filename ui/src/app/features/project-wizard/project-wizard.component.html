@@ -1,4 +1,27 @@
-<h2>Project Details</h2>
-<div class="project-details">
-  <span>Project Name: </span> <span>{{project.name}}</span>
+<div class="px-3">
+  <h2>Project Details</h2>
+  <div class="project-details">
+    <span>Project Name: </span> <span>{{project?.name}}</span>
+  </div>
+  <div class="card tabs-container">
+    <ejs-tab>
+      <e-tabitems>
+        <e-tabitem [header]="headerText[0]">
+          <ng-template #content>
+            <app-project-exec-types></app-project-exec-types>
+          </ng-template>
+        </e-tabitem>
+        <e-tabitem [header]="headerText[1]">
+          <ng-template #content>
+            <app-project-kps></app-project-kps>
+          </ng-template>
+        </e-tabitem>
+        <e-tabitem [header]="headerText[2]">
+          <ng-template #content>
+            <h1>Tab 3 Content</h1>
+          </ng-template>
+        </e-tabitem>
+      </e-tabitems>
+    </ejs-tab>
+  </div>
 </div>
