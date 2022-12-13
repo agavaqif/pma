@@ -1,0 +1,49 @@
+.mqs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+}
+
+.e-dlg-header-content {
+  padding-bottom: 10px;
+}
+
+.e-dialog .e-footer-content {
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
+
+.mq-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cfcfcf;
+  border-radius: 5px;
+  background-color: #e2e8f0;
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem;
+  .list-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    div {
+      flex: 1;
+    }
+  }
+  .list-item:not(:last-child) {
+    border-bottom: 1px solid #cfcfcf;
+  }
+}
+
+ejs-checkbox {
+  margin-block: 10px;
+}

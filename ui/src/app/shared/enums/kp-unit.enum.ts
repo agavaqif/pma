@@ -1,10 +1,10 @@
 import { word } from 'src/app/core/utils/words';
 export enum KpUnit {
-  METER = 'm',
-  KILOMETER = 'km',
+  METER,
+  KILOMETER,
 }
 
-// export const kpUnit = {
-//   [KpUnit.METER]: word('METER'),
-//   [KpUnit.KILOMETER]: word('KILOMETER'),
-// };
+export const kpUnits = {
+  [KpUnit.METER]: word('METER'),
+  [KpUnit.KILOMETER]: word('KILOMETER'),
+}
