@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Project } from 'src/resources/project/entities/project.entity';
 import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 
-@Entity()
+@Entity({ name: 'kilometer_point' })
 export class Kp {
   @PrimaryGeneratedColumn({ name: 'kp_id' })
   kpId: number;
