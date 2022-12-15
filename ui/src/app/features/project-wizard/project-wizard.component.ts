@@ -13,7 +13,7 @@ import { ProjectService } from 'src/app/core/services/project.service';
 export class ProjectWizardComponent implements OnInit {
   public project: IProject;
   public fields: object = { text: 'name', id: 'projectId' };
-  public headerText = [{ text: word('EXEC_TYPES') }, { text: word('KILO_POINTS') }, { text: word('MEASUREMENT_QUANTITIES') }];
+  public headerText = [{ text: word('EXEC_TYPES') }, { text: word('KPS') }, { text: word('MEASUREMENT_QUANTITIES') }];
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {}
 

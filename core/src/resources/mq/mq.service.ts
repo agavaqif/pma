@@ -1,3 +1,4 @@
+import { Project } from 'src/resources/project/entities/project.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,13 +13,14 @@ export class MqService {
     private readonly repo: Repository<Mq>,
   ) {}
 
-  async create(createMqDto: CreateMqDto) {
+  async create(createMqDto: CreateMqDto, projectId: number) {
     const mq = this.repo.create(createMqDto);
+    mq.project = { projectId } as Project;
     return await this.repo.save(mq);
   }
 
-  async findAll() {
-    const mqs = await this.repo.find();
+  async findAllByProjectId(projectId: number) {
+    const mqs = await this.repo.find({ where: { project: { projectId } } });
     return mqs;
   }
 

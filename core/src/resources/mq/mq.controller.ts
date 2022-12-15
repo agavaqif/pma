@@ -8,13 +8,13 @@ export class MqController {
   constructor(private readonly mqService: MqService) {}
 
   @Post()
-  create(@Body() createMqDto: CreateMqDto) {
-    return this.mqService.create(createMqDto);
+  create(@Body() createMqDto: CreateMqDto, @Param('projectId') projectId: string) {
+    return this.mqService.create(createMqDto, +projectId);
   }
 
   @Get()
-  findAll() {
-    return this.mqService.findAll();
+  findAllByProjectId(@Param('projectId') projectId: string) {
+    return this.mqService.findAllByProjectId(+projectId);
   }
 
   @Get(':mqId')

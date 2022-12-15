@@ -9,7 +9,7 @@ export const wordsMap: any = {
   END: 'End',
   KP_UNIT: 'Kp Unit',
   ACCURACY: 'Accuracy',
-  KILO_POINTS: 'Kilometer Points',
+  KPS: 'Kps',
 
   // Kp Unit
   METER: 'Meter',
@@ -19,6 +19,7 @@ export const wordsMap: any = {
   EXEC_TYPES: 'Execution Types',
   EXEC_TYPE: 'Execution Type',
   CREATE_EXEC_TYPES: 'Create Execution Types',
+  CREATE_EXEC_TYPE: 'Create Execution Type',
   CREATE: 'Create',
   NAME: 'Name',
   CODE: 'Code',
@@ -26,6 +27,7 @@ export const wordsMap: any = {
   // MEASUREMENT QUANTITIES
   MEASUREMENT_QUANTITIES: 'Measurement Quantities',
   CREATE_MQS: 'Create MQs',
+  CREATE_MQS_TITLE: 'New Measurement Quantity',
   IS_BALANCED: 'Is Balanced?',
   MQ_UNIT: 'Measurement Quantity Unit',
 };

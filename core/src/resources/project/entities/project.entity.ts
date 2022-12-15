@@ -2,6 +2,7 @@ import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from 'ty
 import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 import { Kp } from 'src/resources/kp/entities/kp.entity';
 import { ProjectSettings } from './project-settings.entity';
+import { Mq } from 'src/resources/mq/entities/mq.entity';
 
 @Entity()
 export class Project {
@@ -21,4 +22,8 @@ export class Project {
   @JoinTable()
   @OneToMany(() => ExecType, (execType) => execType.project)
   execTypes: ExecType[];
+
+  @JoinTable()
+  @OneToMany(() => Mq, (mq) => mq.project)
+  mqs: Mq[];
 }

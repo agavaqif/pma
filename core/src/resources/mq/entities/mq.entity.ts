@@ -1,5 +1,6 @@
+import { Project } from 'src/resources/project/entities/project.entity';
 import { MqUnit } from 'src/shared/enums/mq-unit.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'measurable_quantity' })
 export class Mq {
@@ -14,4 +15,7 @@ export class Mq {
 
   @Column({ name: 'unit_of_measure', type: 'enum', enum: MqUnit })
   unitOfMeasure: MqUnit;
+
+  @ManyToOne(() => Project, (project) => project.mqs, { onDelete: 'CASCADE' })
+  project: Project;
 }
