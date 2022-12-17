@@ -1,4 +1,5 @@
 export enum KpUnit {
-  METER = 'm',
-  KILOMETER = 'km',
+  // Kilometer point unit
+  METER,
+  KILOMETER,
 }

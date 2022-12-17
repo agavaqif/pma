@@ -1,3 +1,4 @@
+import { word } from 'src/app/core/utils/words';
 import { IProject } from './../../shared/interfaces/project.interface';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +13,7 @@ import { ProjectService } from 'src/app/core/services/project.service';
 export class ProjectWizardComponent implements OnInit {
   public project: IProject;
   public fields: object = { text: 'name', id: 'projectId' };
-  public headerText = [{ text: 'Tab 1' }, { text: 'Tab 2' }, { text: 'Tab 3' }];
+  public headerText = [{ text: word('EXEC_TYPES') }, { text: word('KPS') }, { text: word('MEASUREMENT_QUANTITIES') }];
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {}
 

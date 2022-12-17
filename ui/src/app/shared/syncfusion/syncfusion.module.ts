@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SidebarModule, ToolbarAllModule, ToolbarModule, TreeViewModule } from '@syncfusion/ej2-angular-navigations';
-import { ButtonAllModule } from '@syncfusion/ej2-angular-buttons';
+import { ButtonAllModule, CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 import { ListViewModule } from '@syncfusion/ej2-angular-lists';
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
@@ -53,6 +53,7 @@ import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
     BreadcrumbModule,
     AutoCompleteModule,
     ListBoxModule,
+    CheckBoxModule,
   ],
 })
 export class SyncfusionModule {}

@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { ProjectModule } from './resources/project/project.module';
 import { KpModule } from './resources/kp/kp.module';
 import { ExecTypeModule } from './resources/exec-type/exec-type.module';
+import { MqModule } from './resources/mq/mq.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ExecTypeModule } from './resources/exec-type/exec-type.module';
     ProjectModule,
     KpModule,
     ExecTypeModule,
+    MqModule,
   ],
   controllers: [AppController],
   providers: [AppService],

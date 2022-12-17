@@ -1,0 +1,31 @@
+<div class="mqs-header">
+  <h2>{{word('CREATE_MQS')}}</h2>
+  <button ejs-button [isPrimary]="true" (click)="openModal()">{{word('CREATE')}}</button>
+</div>
+
+<div class="list">
+  <ng-container *ngIf="!!mqs?.length; else noData">
+    <div class="list-item" *ngFor="let item of mqs">
+      <div class="list-item__name">Name: {{item.name}}</div>
+      <div class="list-item__code">isBalanced: {{item.isBalanced}}</div>
+      <div class="list-item__code">Unit: {{mqUnits[item.unitOfMeasure]}}</div>
+    </div>
+  </ng-container>
+  <ng-template #noData>
+    <div class="list-item">No Measurement Quantities Created Yet!</div>
+  </ng-template>
+</div>
+
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_MQS_TITLE')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="kp-form" [formGroup]="mqForm">
+      <app-input [label]="word('NAME')" [fn]="'name'" [fg]="mqForm"></app-input>
+      <ejs-checkbox [label]="word('IS_BALANCED')" formControlName="isBalanced"></ejs-checkbox>
+      <app-dropdown [label]="word('MQ_UNIT')" [fn]="'unitOfMeasure'" [fg]="mqForm"
+        [data]="mqUnitOptions"></app-dropdown>
+    </form>
+  </ng-template>
+</ejs-dialog>
