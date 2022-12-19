@@ -22,8 +22,8 @@ export class ProjectExecTypesComponent implements OnInit {
   public initTarget = () => (this.targetEl = this.container?.nativeElement?.parentElement);
   public initBtns() {
     this.btns = [
-      { click: this.onSubmit.bind(this), buttonModel: { content: 'Create', isPrimary: true } },
-      { click: this.closeModal.bind(this), buttonModel: { content: 'Cancel' } },
+      { click: this.onSubmit.bind(this), buttonModel: { content: word('CREATE'), isPrimary: true } },
+      { click: this.closeModal.bind(this), buttonModel: { content: word('CANCEL') } },
     ];
   }
 

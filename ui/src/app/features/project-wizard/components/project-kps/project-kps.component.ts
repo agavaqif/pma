@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 
+import { BatchUpdateKpsComponent } from './../batch-update-kps/batch-update-kps.component';
 import { IKp, IKpCreate } from 'src/app/shared/interfaces/kp.interface';
 import { KpService } from 'src/app/core/services/kp.service';
 import { word } from 'src/app/core/utils/words';
@@ -15,16 +16,21 @@ import { ExecTypesService } from 'src/app/core/services/exec-types.service';
   styleUrls: ['./project-kps.component.scss'],
 })
 export class ProjectKpsComponent implements OnInit {
+  @ViewChild('batchUpdateKps') batchUpdate: BatchUpdateKpsComponent;
   public projectKps: IKp[];
 
   kpUnits = Object.entries(kpUnits).map((kpUnit) => ({ value: kpUnit[0], text: kpUnit[1] }));
   execTypes: any[];
-  word = word;
 
   constructor(private kpService: KpService, private route: ActivatedRoute, private execTypesService: ExecTypesService) {}
 
   get projectId() {
     return +this.route.snapshot.paramMap.get('projectId');
+  }
+  word = word;
+
+  onBatchUpdate() {
+    this.batchUpdate.openModal();
   }
 
   ngOnInit(): void {
@@ -80,7 +86,7 @@ export class ProjectKpsComponent implements OnInit {
         accuracy: +this.kpForm.value.accuracy,
         execTypeId: +this.kpForm.value.execType,
       };
-      this.kpService.createKp(this.projectId, kp).subscribe((kp) => this.kpService.getKpsByProjectId(this.projectId));
+      this.kpService.createKp(this.projectId, kp).subscribe(() => this.kpService.getKpsByProjectId(this.projectId));
       this.closeModal();
     } else {
       this.kpForm.markAllAsTouched();

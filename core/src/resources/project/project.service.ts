@@ -25,7 +25,6 @@ export class ProjectService {
   }
 
   async findOne(projectId: number) {
-    // select relations
     const project = await this.repo.findOneOrFail({ projectId }, { relations: ['kps', 'execTypes', 'mqs'] });
     return project;
   }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { IKp, IKpCreate } from 'src/app/shared/interfaces/kp.interface';
+import { IBatchUpdateKps, IKp, IKpCreate } from 'src/app/shared/interfaces/kp.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -38,5 +38,9 @@ export class KpService {
 
   deleteKp(projectId: number, kpId: number) {
     return this.http.delete(this.baseUrl(projectId, 'kp', kpId));
+  }
+
+  batchUpdateKps(projectId: number, kps: IBatchUpdateKps) {
+    return this.http.patch(this.baseUrl(projectId, 'kp', 'batch'), kps);
   }
 }

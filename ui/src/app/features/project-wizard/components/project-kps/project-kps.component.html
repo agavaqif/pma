@@ -1,18 +1,19 @@
 <div class="kps-header">
+  <button ejs-button [isPrimary]="true" cssClass="e-outline" (click)="onBatchUpdate()">{{word('BATCH_UPDATE')}}</button>
   <button ejs-button [isPrimary]="true" (click)="openModal()">{{word('CREATE')}}</button>
 </div>
 <ejs-grid [dataSource]='projectKps'>
   <e-columns>
     <e-column field='start' [headerText]='word("START")'></e-column>
     <e-column field='end' [headerText]='word("END")'></e-column>
-    <e-column field='execType.name' [headerText]='word("EXEC_TYPE")'></e-column>w
+    <e-column field='execType.name' [headerText]='word("EXEC_TYPE")'></e-column>
   </e-columns>
 </ejs-grid>
 
 <!-- MODAL -->
 <div #container class="root-container"></div>
-<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_KPS')"
-  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_KPS')" [width]="400"
+  (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
   <ng-template #content>
     <form class="kp-form" [formGroup]="kpForm">
       <app-input [label]="word('START')" [fn]="'start'" [fg]="kpForm" [type]="'number'"></app-input>
@@ -23,3 +24,6 @@
     </form>
   </ng-template>
 </ejs-dialog>
+
+
+<app-batch-update-kps #batchUpdateKps></app-batch-update-kps>

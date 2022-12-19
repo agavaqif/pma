@@ -53,26 +53,16 @@ export class KpService {
 
   async updateBatch(projectId: number, batchUpdateKpsDto: BatchUpdateKpsDto) {
     const { execTypeId, ranges } = batchUpdateKpsDto;
-    const kps = [];
-    for (const range of ranges) {
-      const { start, end } = range;
-      const kpsInRanges = await this.repo
-        .createQueryBuilder('kp')
-        .leftJoinAndSelect('kp.execType', 'execType')
-        .leftJoinAndSelect('kp.project', 'project')
-        .where('kp.start >= :start', { start })
-        .andWhere('kp.end <= :end', { end })
-        .andWhere({ project: { projectId } })
-        .getMany();
-      kps.push(...kpsInRanges);
-    }
-    console.log({
-      execTypeId,
-      kps,
-      projectId,
+    const allKps = await this.findAllByProjectId(projectId);
+    const kpsInRanges = allKps.filter((kp) => {
+      const { start, end } = kp;
+      return ranges.some((range) => start >= range.start && end <= range.end);
     });
-    const updatedKps = await this.repo.update(kps, { execType: { execTypeId } as ExecType });
-    return updatedKps;
+    kpsInRanges.forEach((kp) => this.repo.update(kp, { execType: { execTypeId } as ExecType }));
+    for (const kp of kpsInRanges) {
+      await this.repo.update(kp, { execType: { execTypeId } as ExecType });
+    }
+    return true;
   }
 
   async remove(kpId: number) {

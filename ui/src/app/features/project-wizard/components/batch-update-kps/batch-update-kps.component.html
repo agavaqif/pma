@@ -1,0 +1,28 @@
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('BATCH_UPDATE_KPS')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="kp-form" [formGroup]="kpsForm">
+      <app-dropdown [label]="word('EXEC_TYPE')" [fn]="'execType'" [fg]="kpsForm" [data]="execTypes"></app-dropdown>
+      <app-input [label]="word('KPS')" [fn]="'kps'" [fg]="kpsForm"></app-input>
+    </form>
+  </ng-template>
+</ejs-dialog>
+
+
+<!-- <div class="selected-ranges-list">
+        <div class="selected-range-value" *ngFor="let range of ranges">
+          <div class="start">{{ range.start }}</div>
+          -
+          <div class="end">{{ range.end }}</div>
+        </div>
+      </div>
+      <div class="slider-form">
+        <div class="custom-slider">
+          <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"></ngx-slider>
+        </div>
+        <div class="actions">
+          <button ejs-button [isPrimary]="true" (click)="addRange()">{{ word('ADD') }}</button>
+          <button ejs-button (click)="clearRanges()">{{ word('CLEAR') }}</button>
+        </div>
+      </div> -->
