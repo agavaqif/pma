@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+
 import { ExecTypeService } from './exec-type.service';
 import { CreateExecTypeDto } from './dto/create-exec-type.dto';
 import { UpdateExecTypeDto } from './dto/update-exec-type.dto';
@@ -25,6 +26,11 @@ export class ExecTypeController {
   @Patch(':execTypeId')
   update(@Param('execTypeId') execTypeId: string, @Body() updateExecTypeDto: UpdateExecTypeDto) {
     return this.execTypeService.update(+execTypeId, updateExecTypeDto);
+  }
+
+  @Patch(':execTypeId/mq/:mqId')
+  addMq(@Param('execTypeId') execTypeId: string, @Param('mqId') mqId: string) {
+    return this.execTypeService.addMq(+execTypeId, +mqId);
   }
 
   @Delete(':execTypeId')
