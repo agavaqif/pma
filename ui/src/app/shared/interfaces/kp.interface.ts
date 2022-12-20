@@ -17,3 +17,13 @@ export interface IKpCreate {
   accuracy: number;
   execTypeId: number;
 }
+
+export interface IBatchUpdateKps {
+  execTypeId: number;
+  ranges: IRange[];
+}
+
+export interface IRange {
+  start: number;
+  end: number;
+}

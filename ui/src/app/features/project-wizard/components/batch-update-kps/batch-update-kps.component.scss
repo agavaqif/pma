@@ -1,0 +1,89 @@
+.e-dlg-header-content {
+  padding-bottom: 10px;
+}
+
+.e-dialog .e-footer-content {
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
+
+.kp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+// ! ngx-slider
+// We need to use ::ng-deep to overcome view encapsulation
+::ng-deep {
+  .custom-slider .ngx-slider .ngx-slider-bar {
+    background: #ffe4d1;
+    height: 2px;
+  }
+  .custom-slider .ngx-slider .ngx-slider-selection {
+    background: orange;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-pointer {
+    width: 8px;
+    height: 16px;
+    top: auto; /* to remove the default positioning */
+    bottom: 0;
+    background-color: #333;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-pointer:after {
+    display: none;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-bubble {
+    bottom: 14px;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-limit {
+    font-weight: bold;
+    color: orange;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-tick {
+    width: 1px;
+    height: 10px;
+    margin-left: 4px;
+    border-radius: 0;
+    background: #ffe4d1;
+    top: -1px;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-tick.ngx-slider-selected {
+    background: orange;
+  }
+}
+
+.selected-ranges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 1rem;
+  margin-bottom: 5px;
+
+  .selected-range-value {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+  }
+}
+
+.actions {
+  button {
+    margin-right: 5px;
+  }
+}
+
+.slider-form {
+  margin-bottom: 1rem;
+}

@@ -18,12 +18,14 @@ export class ProjectService {
   }
 
   async findAll() {
-    const projects = await this.repo.find();
+    const projects = await this.repo.find({
+      relations: ['kps', 'execTypes', 'mqs'],
+    });
     return projects;
   }
 
   async findOne(projectId: number) {
-    const project = await this.repo.findOneOrFail({ projectId });
+    const project = await this.repo.findOneOrFail({ projectId }, { relations: ['kps', 'execTypes', 'mqs'] });
     return project;
   }
 

@@ -1,11 +1,13 @@
-import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 import { Project } from '../project/entities/project.entity';
 import { CreateKpsDto } from './dto/create-kps.dto';
 import { UpdateKpDto } from './dto/update-kp.dto';
 import { Kp } from './entities/kp.entity';
+import { BatchUpdateKpsDto } from './dto/batch-update-kps.dto';
 
 @Injectable()
 export class KpService {
@@ -47,6 +49,20 @@ export class KpService {
   async update(kpId: number, updateKpDto: UpdateKpDto) {
     const kp = this.repo.update(kpId, updateKpDto);
     return kp;
+  }
+
+  async updateBatch(projectId: number, batchUpdateKpsDto: BatchUpdateKpsDto) {
+    const { execTypeId, ranges } = batchUpdateKpsDto;
+    const allKps = await this.findAllByProjectId(projectId);
+    const kpsInRanges = allKps.filter((kp) => {
+      const { start, end } = kp;
+      return ranges.some((range) => start >= range.start && end <= range.end);
+    });
+    kpsInRanges.forEach((kp) => this.repo.update(kp, { execType: { execTypeId } as ExecType }));
+    for (const kp of kpsInRanges) {
+      await this.repo.update(kp, { execType: { execTypeId } as ExecType });
+    }
+    return true;
   }
 
   async remove(kpId: number) {

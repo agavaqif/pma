@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { KpService } from './kp.service';
 import { CreateKpsDto } from './dto/create-kps.dto';
 import { UpdateKpDto } from './dto/update-kp.dto';
+import { BatchUpdateKpsDto } from './dto/batch-update-kps.dto';
 
 @Controller('api/project/:projectId/kp')
 export class KpController {
@@ -17,6 +18,12 @@ export class KpController {
     return this.kpService.findAllByProjectId(+projectId);
   }
 
+  @Patch('batch')
+  updateBatch(@Param('projectId') projectId: string, @Body() updateKpsDto: BatchUpdateKpsDto) {
+    console.log(updateKpsDto);
+    return this.kpService.updateBatch(+projectId, updateKpsDto);
+  }
+
   @Get(':kpId')
   findOne(@Param('kpId') kpId: string) {
     return this.kpService.findOne(+kpId);
@@ -29,6 +36,7 @@ export class KpController {
 
   @Delete(':kpId')
   remove(@Param('kpId') kpId: string) {
+    return this.kpService.removeAll();
     return this.kpService.remove(+kpId);
   }
 }

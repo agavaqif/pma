@@ -1,0 +1,10 @@
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('BATCH_UPDATE_KPS')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="kp-form" [formGroup]="kpsForm">
+      <app-dropdown [label]="word('EXEC_TYPE')" [fn]="'execType'" [fg]="kpsForm" [data]="execTypes"></app-dropdown>
+      <app-input [label]="word('KPS')" [fn]="'kps'" [fg]="kpsForm"></app-input>
+    </form>
+  </ng-template>
+</ejs-dialog>

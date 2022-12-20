@@ -10,6 +10,13 @@ export const wordsMap: any = {
   KP_UNIT: 'Kp Unit',
   ACCURACY: 'Accuracy',
   KPS: 'Kps',
+  BATCH_UPDATE: 'Batch Update',
+  BATCH_UPDATE_KPS: 'Batch Update Kps',
+  ADD_RANGE: 'Add Range',
+  CLEAR_RANGES: 'Clear Ranges',
+  ADD: 'Add',
+  CLEAR: 'Clear',
+  UPDATE: 'Update',
 
   // Kp Unit
   METER: 'Meter',
@@ -23,6 +30,7 @@ export const wordsMap: any = {
   CREATE: 'Create',
   NAME: 'Name',
   CODE: 'Code',
+  CANCEL: 'Cancel',
 
   // MEASUREMENT QUANTITIES
   MEASUREMENT_QUANTITIES: 'Measurement Quantities',
