@@ -1,10 +1,10 @@
-import { mqUnits } from './../../../../shared/enums/mq-unit.enum';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
-import { word } from 'src/app/core/utils/words';
 
+import { mqUnits } from 'src/app/shared/enums/mq-unit.enum';
+import { word } from 'src/app/core/utils/words';
 import { IMq } from 'src/app/shared/interfaces/mq.interface';
 import { MqService } from 'src/app/core/services/mq.service';
 

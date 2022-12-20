@@ -40,10 +40,15 @@ export class ExecTypeService {
 
   async addMq(execTypeId: number, mqId: number) {
     const execType = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs'] });
-    console.log({ execType });
     const mq = await this.mqRepo.findOne(mqId);
-    console.log({ mq });
     execType.mqs.push(mq);
+    return await this.execTypeRepo.save(execType);
+  }
+
+  async removeMq(execTypeId: number, mqId: number) {
+    const execType = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs'] });
+    const mq = await this.mqRepo.findOne(mqId);
+    execType.mqs = execType.mqs.filter((m) => m.mqId !== mq.mqId);
     return await this.execTypeRepo.save(execType);
   }
 

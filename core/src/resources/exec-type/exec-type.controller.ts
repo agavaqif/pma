@@ -28,9 +28,14 @@ export class ExecTypeController {
     return this.execTypeService.update(+execTypeId, updateExecTypeDto);
   }
 
-  @Patch(':execTypeId/mq/:mqId')
+  @Patch(':execTypeId/connectMq/:mqId')
   addMq(@Param('execTypeId') execTypeId: string, @Param('mqId') mqId: string) {
     return this.execTypeService.addMq(+execTypeId, +mqId);
+  }
+
+  @Patch(':execTypeId/disconnectMq/:mqId')
+  removeMq(@Param('execTypeId') execTypeId: string, @Param('mqId') mqId: string) {
+    return this.execTypeService.removeMq(+execTypeId, +mqId);
   }
 
   @Delete(':execTypeId')

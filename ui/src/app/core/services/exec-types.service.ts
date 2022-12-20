@@ -33,6 +33,22 @@ export class ExecTypesService {
     return this.http.patch(this.baseUrl(projectId, 'execType', execTypeId), execType);
   }
 
+  connectMq(projectId: number, execTypeId: number, mqId: number) {
+    return this.http.patch(this.baseUrl(projectId, 'execType', execTypeId, 'connectMq', mqId), {});
+  }
+
+  disconnectMq(projectId: number, execTypeId: number, mqId: number) {
+    return this.http.patch(this.baseUrl(projectId, 'execType', execTypeId, 'disconnectMq', mqId), {});
+  }
+
+  toggleMq(projectId: number, execTypeId: number, mqId: number, connected: boolean) {
+    if (connected) {
+      return this.disconnectMq(projectId, execTypeId, mqId);
+    } else {
+      return this.connectMq(projectId, execTypeId, mqId);
+    }
+  }
+
   deleteExecType(projectId: number, execTypeId: number) {
     return this.http.delete(this.baseUrl(projectId, 'execType', execTypeId));
   }
