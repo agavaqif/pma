@@ -24,14 +24,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/project",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project"
 							]
 						}
@@ -44,14 +41,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project"
 							]
 						}
@@ -64,16 +58,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2"
+								":projectId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -94,16 +91,19 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/project/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"1"
+								":projectId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -115,14 +115,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
 								"1"
 							]
@@ -142,7 +139,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start\": 0,\r\n    \"end\": 30,\r\n    \"kpUnit\": 0,\r\n    \"accuracy\": 15\r\n}",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"end\": 300,\r\n    \"kpUnit\": 0,\r\n    \"accuracy\": 15,\r\n    \"execTypeId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -150,17 +147,20 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/kp",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/kp",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"kp"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -172,17 +172,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/kp",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/kp",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"kp"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -194,18 +197,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/kp/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/kp/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"kp",
 								"1"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -226,17 +232,55 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/kp",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/kp",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"kp"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch Update Kps",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ranges\": [\r\n        {\r\n            \"start\": 0,\r\n            \"end\": 45\r\n        },\r\n        {\r\n            \"start\": 30,\r\n            \"end\": 90\r\n        }\r\n    ],\r\n    \"execTypeId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/kp/batch",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"kp",
+								"batch"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -248,18 +292,21 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/kp/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/kp/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"kp",
 								"1"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -277,7 +324,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"test exec type 1\",\r\n    \"code\": \"et1\"\r\n}",
+							"raw": "{\r\n    \"name\": \"test exec type 2\",\r\n    \"code\": \"et2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -285,17 +332,20 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/execType",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/execType",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"execType"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -307,17 +357,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/execType",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/execType",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"execType"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -329,18 +382,25 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/execType/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/execType/:execType",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"execType",
-								"1"
+								":execType"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								},
+								{
+									"key": "execType",
+									"value": "{{execType}}"
+								}
 							]
 						}
 					},
@@ -361,18 +421,111 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/execType/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/execType/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"execType",
 								"1"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Connect Execution type with Measurement quantity",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"exec type updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/execType/:execTypeId/connectMq/:mqId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"execType",
+								":execTypeId",
+								"connectMq",
+								":mqId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								},
+								{
+									"key": "execTypeId",
+									"value": "{{execTypeId}}"
+								},
+								{
+									"key": "mqId",
+									"value": "{{mqId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disconnect Execution type with Measurement quantity",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"exec type updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/execType/:execTypeId/disconnectMq/:mqId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"execType",
+								":execTypeId",
+								"disconnectMq",
+								":mqId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								},
+								{
+									"key": "execTypeId",
+									"value": "{{execTypeId}}"
+								},
+								{
+									"key": "mqId",
+									"value": "{{mqId}}"
+								}
 							]
 						}
 					},
@@ -384,14 +537,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/execType/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/2/execType/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
 								"2",
 								"execType",
@@ -443,17 +593,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/mq",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/project/:projectId/mq",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"project",
-								"2",
+								":projectId",
 								"mq"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "{{projectId}}"
+								}
 							]
 						}
 					},
@@ -465,7 +618,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/project/2/mq/1",
+							"raw": "http://localhost:3000/api/project/2/mq/:mId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -476,7 +629,13 @@
 								"project",
 								"2",
 								"mq",
-								"1"
+								":mId"
+							],
+							"variable": [
+								{
+									"key": "mId",
+									"value": "{{mqId}}"
+								}
 							]
 						}
 					},
@@ -538,6 +697,48 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api"
+		},
+		{
+			"key": "projectId",
+			"value": "2"
+		},
+		{
+			"key": "mqId",
+			"value": "1"
+		},
+		{
+			"key": "execType",
+			"value": "3"
+		},
+		{
+			"key": "execTypeId",
+			"value": "3"
 		}
 	]
 }

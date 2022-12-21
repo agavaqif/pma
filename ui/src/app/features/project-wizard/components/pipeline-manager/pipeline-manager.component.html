@@ -1,0 +1,14 @@
+<ejs-grid #grid [dataSource]="rowsData">
+  <e-columns>
+    <e-column field="execTypeId" [headerText]='word("EXEC_TYPE")' [width]="140" textAlign="center"></e-column>
+    <e-column [field]='mq.name' [headerText]='mq.name' *ngFor="let mq of mqs" textAlign="center"></e-column>
+  </e-columns>
+  <ng-template #rowTemplate let-data>
+    <tr class="custom-row">
+      <td class="exec-type-value">{{data.code}}</td>
+      <td *ngFor="let mq of mqs" [ngClass]="{ 'mq-value-true': !!data[mq.name] }"
+        (dblclick)="toggleConnection(data.execTypeId, mq.mqId, !!data[mq.name])">
+      </td>
+    </tr>
+  </ng-template>
+</ejs-grid>

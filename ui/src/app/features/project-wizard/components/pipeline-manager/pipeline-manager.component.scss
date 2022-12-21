@@ -1,0 +1,15 @@
+.custom-row {
+  td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+  }
+  .exec-type-value {
+    text-align: center;
+    border-right: 1px solid rgb(112, 112, 112);
+  }
+}
+
+.mq-value-true {
+  background-color: rgba($color: #00ff00, $alpha: 0.5);
+}

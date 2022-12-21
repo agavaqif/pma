@@ -1,6 +1,8 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+
 import { Project } from 'src/resources/project/entities/project.entity';
 import { MqUnit } from 'src/shared/enums/mq-unit.enum';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 
 @Entity({ name: 'measurable_quantity' })
 export class Mq {
@@ -18,4 +20,7 @@ export class Mq {
 
   @ManyToOne(() => Project, (project) => project.mqs, { onDelete: 'CASCADE' })
   project: Project;
+
+  @ManyToMany(() => ExecType, (execType) => execType.mqs)
+  execTypes: ExecType[];
 }

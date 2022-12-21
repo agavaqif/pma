@@ -22,6 +22,7 @@ import { TooltipModule } from '@syncfusion/ej2-angular-popups';
 import { BreadcrumbModule } from '@syncfusion/ej2-angular-navigations';
 import { AutoCompleteModule } from '@syncfusion/ej2-angular-dropdowns';
 import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
+import { PivotViewModule } from '@syncfusion/ej2-angular-pivotview';
 
 @NgModule({
   declarations: [],
@@ -54,6 +55,7 @@ import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
     AutoCompleteModule,
     ListBoxModule,
     CheckBoxModule,
+    PivotViewModule,
   ],
 })
 export class SyncfusionModule {}
