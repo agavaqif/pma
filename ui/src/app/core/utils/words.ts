@@ -41,6 +41,15 @@ export const wordsMap: any = {
 
   // Pipeline Management
   PIPELINE_MANAGER: 'Pipeline Manager',
+
+  // Project Crews
+  CREWS: 'Crews',
+  CREATE_CREW: 'Create Crew',
+  CREATE_CREWS_TITLE: 'New Crew',
+  START_DATE: 'Start Date',
+  END_DATE: 'End Date',
+  IS_ACTIVE: 'Is Active?',
+  MAIN_PERFORMING_ACTIVITY: 'Main Performing Activity',
 };
 
 export const validateWords: any = {

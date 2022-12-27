@@ -1,0 +1,38 @@
+<div class="header">
+  <h2>{{word('CREATE_CREW')}}</h2>
+  <button ejs-button [isPrimary]="true" (click)="openModal()">{{word('CREATE')}}</button>
+</div>
+
+<div class="list">
+  <ng-container *ngIf="!!crews?.length; else noData">
+    <div class="list-item" *ngFor="let item of crews">
+      <div>Name: {{item.name}}</div>
+      <div>Start Date: {{item.startDate | date: dateFormat}}</div>
+      <div>End Date: {{item.endDate | date: dateFormat}}</div>
+      <div>Is Active: {{item.isActive}}</div>
+    </div>
+  </ng-container>
+  <ng-template #noData>
+    <div class="list-item">No Measurement Quantities Created Yet!</div>
+  </ng-template>
+</div>
+
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_CREWS_TITLE')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="form" [formGroup]="crewForm">
+      <app-input [label]="word('NAME')" [fn]="'name'" [fg]="crewForm"></app-input>
+      <ejs-datepicker formControlName="startDate" name="startDate" [placeholder]="word('START_DATE')"
+        floatLabelType="Always" [strictMode]="!!maxStartDate" [max]="maxStartDate" [format]='dateFormat'>
+      </ejs-datepicker>
+      <ejs-datepicker formControlName="endDate" name="endDate" [placeholder]="word('END_DATE')" floatLabelType="Always"
+        [strictMode]="!!minEndDate" [min]="minEndDate" [format]='dateFormat'>
+      </ejs-datepicker>
+      <app-dropdown [label]="word('MAIN_PERFORMING_ACTIVITY')" [fn]="'mainPerformingActivity'" [fg]="crewForm"
+        [data]="mqs"></app-dropdown>
+      <ejs-checkbox [label]="word('IS_ACTIVE')" formControlName="isActive"></ejs-checkbox>
+    </form>
+  </ng-template>
+</ejs-dialog>
