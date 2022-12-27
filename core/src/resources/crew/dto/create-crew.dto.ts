@@ -11,7 +11,7 @@ export class CreateCrewDto {
   @IsOptional()
   endDate: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   isActive: boolean;
 
   @IsOptional()
