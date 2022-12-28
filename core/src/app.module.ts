@@ -8,6 +8,7 @@ import { ProjectModule } from './resources/project/project.module';
 import { KpModule } from './resources/kp/kp.module';
 import { ExecTypeModule } from './resources/exec-type/exec-type.module';
 import { MqModule } from './resources/mq/mq.module';
+import { CrewModule } from './resources/crew/crew.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { MqModule } from './resources/mq/mq.module';
     KpModule,
     ExecTypeModule,
     MqModule,
+    CrewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

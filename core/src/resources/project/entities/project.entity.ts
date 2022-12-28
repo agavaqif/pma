@@ -3,6 +3,7 @@ import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 import { Kp } from 'src/resources/kp/entities/kp.entity';
 import { ProjectSettings } from './project-settings.entity';
 import { Mq } from 'src/resources/mq/entities/mq.entity';
+import { Crew } from 'src/resources/crew/entities/crew.entity';
 
 @Entity()
 export class Project {
@@ -26,4 +27,8 @@ export class Project {
   @JoinTable()
   @OneToMany(() => Mq, (mq) => mq.project)
   mqs: Mq[];
+
+  @JoinTable()
+  @OneToMany(() => Crew, (crew) => crew.crewProject)
+  crews: Crew[];
 }

@@ -1,8 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
 
 import { Project } from 'src/resources/project/entities/project.entity';
 import { MqUnit } from 'src/shared/enums/mq-unit.enum';
 import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
+import { Crew } from 'src/resources/crew/entities/crew.entity';
 
 @Entity({ name: 'measurable_quantity' })
 export class Mq {
@@ -23,4 +24,7 @@ export class Mq {
 
   @ManyToMany(() => ExecType, (execType) => execType.mqs)
   execTypes: ExecType[];
+
+  @OneToMany(() => Crew, (crew) => crew.mainPerformingActivity)
+  crews: Crew[];
 }

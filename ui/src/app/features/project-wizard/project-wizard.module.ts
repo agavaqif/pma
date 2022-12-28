@@ -8,9 +8,10 @@ import { ProjectExecTypesComponent } from './components/project-exec-types/proje
 import { ProjectMqsComponent } from './components/project-mqs/project-mqs.component';
 import { BatchUpdateKpsComponent } from './components/batch-update-kps/batch-update-kps.component';
 import { PipelineManagerComponent } from './components/pipeline-manager/pipeline-manager.component';
+import { ProjectCrewsComponent } from './components/project-crews/project-crews.component';
 
 @NgModule({
-  declarations: [ProjectWizardComponent, ProjectKpsComponent, ProjectExecTypesComponent, ProjectMqsComponent, BatchUpdateKpsComponent, PipelineManagerComponent],
+  declarations: [ProjectWizardComponent, ProjectKpsComponent, ProjectExecTypesComponent, ProjectMqsComponent, BatchUpdateKpsComponent, PipelineManagerComponent, ProjectCrewsComponent],
   imports: [CommonModule, SharedModule],
 })
 export class ProjectWizardModule {}
