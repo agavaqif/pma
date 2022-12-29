@@ -50,6 +50,14 @@ export const wordsMap: any = {
   END_DATE: 'End Date',
   IS_ACTIVE: 'Is Active?',
   MAIN_PERFORMING_ACTIVITY: 'Main Performing Activity',
+
+  // Measurement Quantity Steps
+  MEASUREMENT_QUANTITY_STEPS: 'Measurement Quantity Steps',
+  STEPS: 'Steps',
+  CREATE_STEPS: 'Create Steps',
+  TITLE: 'Title',
+  WEIGHT: 'Weight',
+  ADD_STEP: 'Add Step',
 };
 
 export const validateWords: any = {

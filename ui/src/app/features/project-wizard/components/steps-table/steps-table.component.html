@@ -1,0 +1,7 @@
+<ejs-grid #grid id="Grid" [dataSource]="steps" [allowRowDragAndDrop]="isDraggable" [selectionSettings]="selectOptions"
+  [rowDropSettings]="rowDropOptions" (rowDrop)="rowDrop($event)">
+  <e-columns>
+    <e-column field="title" headerText="{{word('TITLE')}}"></e-column>
+    <e-column field="weight" headerText="{{word('WEIGHT')}}" type="number"></e-column>
+  </e-columns>
+</ejs-grid>
