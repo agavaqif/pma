@@ -2,15 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 
 import { MqStepService } from './mq-step.service';
 import { UpdateMqStepDto } from './dto/update-mq-step.dto';
-import { CreateMqStepsDto } from './dto/create-mq-steps.dto';
+import { CreateMqStepDto } from './dto/create-mq-step.dto';
 
-@Controller('api/project/:projectId/kp/:kpId/mq/:mqId/steps')
+@Controller('api/project/:projectId/mq/:mqId/steps')
 export class MqStepController {
   constructor(private readonly mqStepService: MqStepService) {}
 
   @Post()
-  create(@Body() { mqSteps }: CreateMqStepsDto, @Param('kpId') kpId: string, @Param('mqId') mqId: string) {
-    return mqSteps.map((step) => this.mqStepService.create(+kpId, +mqId, step));
+  create(@Body() createMqStepDto: CreateMqStepDto, @Param('mqId') mqId: string) {
+    return this.mqStepService.create(+mqId, createMqStepDto);
   }
 
   @Get()

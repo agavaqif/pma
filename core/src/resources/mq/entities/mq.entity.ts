@@ -31,7 +31,7 @@ export class Mq {
   crews: Crew[];
 
   @JoinTable()
-  @OneToMany(() => MqStep, (mqStep) => mqStep.mq)
+  @OneToMany(() => MqStep, (mqStep) => mqStep.mq, { cascade: true })
   mqSteps: MqStep[];
 
   @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.mq)

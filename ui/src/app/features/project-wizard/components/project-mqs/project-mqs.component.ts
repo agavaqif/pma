@@ -90,8 +90,7 @@ export class ProjectMqsComponent implements OnInit {
     if (this.mqForm.valid && isStepsFull) {
       const { name, isBalanced, unitOfMeasure } = this.mqForm.value;
       const mqSteps = this.stepsTable?.getSteps();
-      // this.mqService.createMq(this.projectId, { name, isBalanced, unitOfMeasure: +unitOfMeasure, mqSteps }).subscribe(() => this.mqService.getAllMqs(this.projectId));
-      console.log({ name, isBalanced, unitOfMeasure, mqSteps });
+      this.mqService.createMq(this.projectId, { name, isBalanced, unitOfMeasure: +unitOfMeasure, mqSteps }).subscribe(() => this.mqService.getAllMqs(this.projectId));
       this.closeAddMqDialog();
     } else if (!this.mqForm.valid) {
       this.mqForm.markAllAsTouched();

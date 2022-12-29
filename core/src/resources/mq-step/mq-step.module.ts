@@ -9,5 +9,6 @@ import { IsCompletedModule } from '../is-completed/is-completed.module';
   imports: [TypeOrmModule.forFeature([MqStep]), IsCompletedModule],
   controllers: [MqStepController],
   providers: [MqStepService],
+  exports: [MqStepService],
 })
 export class MqStepModule {}

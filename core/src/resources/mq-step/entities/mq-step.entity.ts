@@ -7,13 +7,16 @@ export class MqStep {
   @PrimaryGeneratedColumn()
   stepId: number;
 
-  @Column()
+  @Column({ nullable: false })
+  order: number;
+
+  @Column({ nullable: false })
   title: string;
 
-  @Column()
+  @Column({ nullable: false })
   weight: number;
 
-  @ManyToOne(() => Mq, (mq) => mq.mqSteps)
+  @ManyToOne(() => Mq, (mq) => mq.mqSteps, { onDelete: 'CASCADE' })
   mq: Mq;
 
   @OneToOne(() => IsCompleted, (isCompleted) => isCompleted.mqStep)
