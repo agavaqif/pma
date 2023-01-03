@@ -6,9 +6,10 @@ import { ExecTypeController } from './exec-type.controller';
 import { ExecType } from './entities/exec-type.entity';
 import { Kp } from '../kp/entities/kp.entity';
 import { Mq } from '../mq/entities/mq.entity';
+import { IsCompletedModule } from '../is-completed/is-completed.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ExecType, Kp, Mq])],
+  imports: [TypeOrmModule.forFeature([ExecType, Kp, Mq]), IsCompletedModule],
   controllers: [ExecTypeController],
   providers: [ExecTypeService],
 })

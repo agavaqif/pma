@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { Kp } from '../../kp/entities/kp.entity';
 import { Mq } from '../../mq/entities/mq.entity';
 import { MqStep } from '../../mq-step/entities/mq-step.entity';
@@ -19,7 +19,7 @@ export class IsCompleted {
   @JoinColumn()
   mq: Mq;
 
-  @OneToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { onDelete: 'CASCADE' })
+  @ManyToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { onDelete: 'CASCADE' })
   @JoinColumn()
   mqStep: MqStep;
 }
