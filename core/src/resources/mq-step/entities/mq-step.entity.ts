@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Mq } from 'src/resources/mq/entities/mq.entity';
 import { IsCompleted } from 'src/resources/is-completed/entities/is-completed.entity';
 
@@ -19,6 +19,6 @@ export class MqStep {
   @ManyToOne(() => Mq, (mq) => mq.mqSteps, { onDelete: 'CASCADE' })
   mq: Mq;
 
-  @OneToOne(() => IsCompleted, (isCompleted) => isCompleted.mqStep)
-  isCompleted: IsCompleted;
+  @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.mqStep)
+  isCompleted: IsCompleted[];
 }

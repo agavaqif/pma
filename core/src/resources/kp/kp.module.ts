@@ -11,5 +11,6 @@ import { ExecType } from '../exec-type/entities/exec-type.entity';
   imports: [TypeOrmModule.forFeature([Kp, Project, ExecType])],
   controllers: [KpController],
   providers: [KpService],
+  exports: [KpService],
 })
 export class KpModule {}

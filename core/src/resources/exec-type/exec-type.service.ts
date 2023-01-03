@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { IsCompletedService } from '../is-completed/is-completed.service';
 import { Mq } from '../mq/entities/mq.entity';
 import { Project } from '../project/entities/project.entity';
 import { CreateExecTypeDto } from './dto/create-exec-type.dto';
@@ -14,6 +15,7 @@ export class ExecTypeService {
     private readonly execTypeRepo: Repository<ExecType>,
     @InjectRepository(Mq)
     private readonly mqRepo: Repository<Mq>,
+    private readonly isCompletedService: IsCompletedService,
   ) {}
 
   async create(createExecTypeDto: CreateExecTypeDto, projectId: number) {
@@ -39,8 +41,13 @@ export class ExecTypeService {
   }
 
   async addMq(execTypeId: number, mqId: number) {
-    const execType = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs'] });
-    const mq = await this.mqRepo.findOne(mqId);
+    const execType = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs', 'kps'] });
+    const mq = await this.mqRepo.findOne(mqId, { relations: ['mqSteps'] });
+    for (const { kpId } of execType.kps) {
+      for (const { stepId } of mq.mqSteps) {
+        await this.isCompletedService.create(kpId, mqId, stepId);
+      }
+    }
     execType.mqs.push(mq);
     return await this.execTypeRepo.save(execType);
   }
@@ -49,6 +56,7 @@ export class ExecTypeService {
     const execType = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs'] });
     const mq = await this.mqRepo.findOne(mqId);
     execType.mqs = execType.mqs.filter((m) => m.mqId !== mq.mqId);
+    await this.isCompletedService.removeByMqId(mqId);
     return await this.execTypeRepo.save(execType);
   }
 
