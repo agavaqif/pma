@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Project } from 'src/resources/project/entities/project.entity';
 import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
+import { IsCompleted } from 'src/resources/is-completed/entities/is-completed.entity';
 
 @Entity()
 export class Kp {
@@ -18,4 +19,7 @@ export class Kp {
 
   @ManyToOne(() => ExecType, (execType) => execType.kps)
   execType: ExecType;
+
+  @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.kp)
+  isCompleted: IsCompleted[];
 }

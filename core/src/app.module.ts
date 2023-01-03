@@ -9,6 +9,8 @@ import { KpModule } from './resources/kp/kp.module';
 import { ExecTypeModule } from './resources/exec-type/exec-type.module';
 import { MqModule } from './resources/mq/mq.module';
 import { CrewModule } from './resources/crew/crew.module';
+import { MqStepModule } from './resources/mq-step/mq-step.module';
+import { IsCompletedModule } from './resources/is-completed/is-completed.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import { CrewModule } from './resources/crew/crew.module';
     ExecTypeModule,
     MqModule,
     CrewModule,
+    MqStepModule,
+    IsCompletedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

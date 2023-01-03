@@ -1,0 +1,11 @@
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #stepDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_STEPS')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="form" [formGroup]="stepForm">
+      <app-input [label]="word('TITLE')" [fn]="'title'" [fg]="stepForm"></app-input>
+      <app-input [label]="word('WEIGHT')" [fn]="'weight'" [fg]="stepForm"></app-input>
+    </form>
+  </ng-template>
+</ejs-dialog>

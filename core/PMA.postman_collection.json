@@ -697,6 +697,189 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Is Completed",
+			"item": [
+				{
+					"name": "Get All Steps by Kp ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/kp/:kpId/mq/:mqId/isCompleted/findAllByKpId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"kp",
+								":kpId",
+								"mq",
+								":mqId",
+								"isCompleted",
+								"findAllByKpId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "kpId",
+									"value": "1"
+								},
+								{
+									"key": "mqId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Steps by Mq ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/kp/:kpId/mq/:mqId/isCompleted/findAllByMqId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"kp",
+								":kpId",
+								"mq",
+								":mqId",
+								"isCompleted",
+								"findAllByMqId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "kpId",
+									"value": "1"
+								},
+								{
+									"key": "mqId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle the Value",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isCompleted\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/kp/:kpId/mq/:mqId/isCompleted/:isCompletedId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"kp",
+								":kpId",
+								"mq",
+								":mqId",
+								"isCompleted",
+								":isCompletedId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "kpId",
+									"value": "1"
+								},
+								{
+									"key": "mqId",
+									"value": "1"
+								},
+								{
+									"key": "isCompletedId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mq Steps",
+			"item": [
+				{
+					"name": "Create Steps",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mqSteps\": [\r\n        {\r\n            \"title\": \"Step 1\",\r\n            \"weight\": 30\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/kp/:kpId/mq/:mqId/steps",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"kp",
+								":kpId",
+								"mq",
+								":mqId",
+								"steps"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "kpId",
+									"value": "1"
+								},
+								{
+									"key": "mqId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

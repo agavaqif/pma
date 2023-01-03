@@ -1,14 +1,14 @@
 <div class="mqs-header">
   <h2>{{word('CREATE_MQS')}}</h2>
-  <button ejs-button [isPrimary]="true" (click)="openModal()">{{word('CREATE')}}</button>
+  <button ejs-button [isPrimary]="true" (click)="openAddMqDialog()">{{word('CREATE')}}</button>
 </div>
 
 <div class="list">
   <ng-container *ngIf="!!mqs?.length; else noData">
-    <div class="list-item" *ngFor="let item of mqs">
-      <div class="list-item__name">Name: {{item.name}}</div>
-      <div class="list-item__code">isBalanced: {{item.isBalanced}}</div>
-      <div class="list-item__code">Unit: {{mqUnits[item.unitOfMeasure]}}</div>
+    <div class="list-item" *ngFor="let mq of mqs" (dblclick)="openViewStepsDialog(mq)">
+      <div class="list-item__name">Name: {{mq.name}}</div>
+      <div class="list-item__code">isBalanced: {{mq.isBalanced}}</div>
+      <div class="list-item__code">Unit: {{mqUnits[mq.unitOfMeasure]}}</div>
     </div>
   </ng-container>
   <ng-template #noData>
@@ -18,8 +18,8 @@
 
 <!-- MODAL -->
 <div #container class="root-container"></div>
-<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_MQS_TITLE')"
-  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+<ejs-dialog #addMqDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_MQS_TITLE')"
+  [width]="400" (overlayClick)="closeAddMqDialog()" [visible]="false" [buttons]="btns">
   <ng-template #content>
     <form class="kp-form" [formGroup]="mqForm">
       <app-input [label]="word('NAME')" [fn]="'name'" [fg]="mqForm"></app-input>
@@ -27,5 +27,20 @@
       <app-dropdown [label]="word('MQ_UNIT')" [fn]="'unitOfMeasure'" [fg]="mqForm"
         [data]="mqUnitOptions"></app-dropdown>
     </form>
+    <hr class="hr">
+    <div class="add-step">
+      <button ejs-button [isPrimary]="true" cssClass="e-outline"
+        (click)="onClickAddStep()">{{word('ADD_STEP')}}</button>
+    </div>
+    <app-steps-table #stepsTable [steps]="addedSteps" [isDraggable]="true"></app-steps-table>
   </ng-template>
 </ejs-dialog>
+
+<ejs-dialog #viewStepsDialog isModal="true" [target]="targetEl" [width]="400" (overlayClick)="closeViewStepsDialog()"
+  [visible]="false">
+  <ng-template #content>
+    <app-steps-table [steps]="selectedMq?.mqSteps"></app-steps-table>
+  </ng-template>
+</ejs-dialog>
+
+<app-add-steps #addStepDialog (onAddStep)="onAddStep($event)"></app-add-steps>

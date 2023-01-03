@@ -20,12 +20,19 @@ export class MqService {
   }
 
   async findAllByProjectId(projectId: number) {
-    const mqs = await this.repo.find({ where: { project: { projectId } } });
+    const mqs = await this.repo.find({
+      where: { project: { projectId } },
+      relations: ['mqSteps'],
+    });
+    mqs.forEach((mq) => {
+      mq.mqSteps.sort((a, b) => a.order - b.order);
+    });
     return mqs;
   }
 
   async findOne(mqId: number) {
-    const mq = await this.repo.findOne(mqId);
+    const mq = await this.repo.findOne(mqId, { relations: ['mqSteps'] });
+    mq.mqSteps.sort((a, b) => a.order - b.order);
     return mq;
   }
 

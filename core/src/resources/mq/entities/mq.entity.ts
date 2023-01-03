@@ -1,9 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, OneToMany, JoinTable } from 'typeorm';
 
 import { Project } from 'src/resources/project/entities/project.entity';
 import { MqUnit } from 'src/shared/enums/mq-unit.enum';
 import { ExecType } from 'src/resources/exec-type/entities/exec-type.entity';
 import { Crew } from 'src/resources/crew/entities/crew.entity';
+import { MqStep } from 'src/resources/mq-step/entities/mq-step.entity';
+import { IsCompleted } from 'src/resources/is-completed/entities/is-completed.entity';
 
 @Entity({ name: 'measurable_quantity' })
 export class Mq {
@@ -27,4 +29,11 @@ export class Mq {
 
   @OneToMany(() => Crew, (crew) => crew.mainPerformingActivity)
   crews: Crew[];
+
+  @JoinTable()
+  @OneToMany(() => MqStep, (mqStep) => mqStep.mq, { cascade: true })
+  mqSteps: MqStep[];
+
+  @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.mq)
+  isCompleted: IsCompleted[];
 }
