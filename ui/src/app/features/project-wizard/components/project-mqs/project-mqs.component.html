@@ -8,6 +8,7 @@
     <div class="list-item" *ngFor="let mq of mqs" (dblclick)="openViewStepsDialog(mq)">
       <div class="list-item__name">Name: {{mq.name}}</div>
       <div class="list-item__code">isBalanced: {{mq.isBalanced}}</div>
+      <div class="list-item__code">Quantity: {{mq.quantity}}</div>
       <div class="list-item__code">Unit: {{mqUnits[mq.unitOfMeasure]}}</div>
     </div>
   </ng-container>
@@ -24,6 +25,8 @@
     <form class="kp-form" [formGroup]="mqForm">
       <app-input [label]="word('NAME')" [fn]="'name'" [fg]="mqForm"></app-input>
       <ejs-checkbox [label]="word('IS_BALANCED')" formControlName="isBalanced"></ejs-checkbox>
+      <app-input *ngIf="!isBalanced" [label]="word('QUANTITY')" [fn]="'quantity'" type="number"
+        [fg]="mqForm"></app-input>
       <app-dropdown [label]="word('MQ_UNIT')" [fn]="'unitOfMeasure'" [fg]="mqForm"
         [data]="mqUnitOptions"></app-dropdown>
     </form>

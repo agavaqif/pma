@@ -76,6 +76,7 @@ export class ProjectMqsComponent implements OnInit {
     this.mqForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       isBalanced: new FormControl(false),
+      quantity: new FormControl(''),
       unitOfMeasure: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     });
   }
@@ -88,15 +89,26 @@ export class ProjectMqsComponent implements OnInit {
   onSubmit() {
     const isStepsFull = this.addedSteps.reduce((acc, { weight }) => acc + weight, 0) === 100;
     if (this.mqForm.valid && isStepsFull) {
-      const { name, isBalanced, unitOfMeasure } = this.mqForm.value;
+      const { name, isBalanced, unitOfMeasure, quantity } = this.mqForm.value;
       const mqSteps = this.stepsTable?.getSteps();
-      this.mqService.createMq(this.projectId, { name, isBalanced, unitOfMeasure: +unitOfMeasure, mqSteps }).subscribe(() => this.mqService.getAllMqs(this.projectId));
+      const body = {
+        name,
+        isBalanced,
+        ...(!isBalanced ? { quantity: +quantity } : {}),
+        unitOfMeasure: +unitOfMeasure,
+        mqSteps,
+      };
+      this.mqService.createMq(this.projectId, body).subscribe(() => this.mqService.getAllMqs(this.projectId));
       this.closeAddMqDialog();
     } else if (!this.mqForm.valid) {
       this.mqForm.markAllAsTouched();
     } else if (!isStepsFull) {
       alert('Steps weight must be 100%');
     }
+  }
+
+  get isBalanced() {
+    return this.mqForm.get('isBalanced').value;
   }
 
   get projectId() {

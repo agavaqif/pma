@@ -38,6 +38,7 @@ export const wordsMap: any = {
   CREATE_MQS_TITLE: 'New Measurement Quantity',
   IS_BALANCED: 'Is Balanced?',
   MQ_UNIT: 'Measurement Quantity Unit',
+  QUANTITY: 'Quantity',
 
   // Pipeline Management
   PIPELINE_MANAGER: 'Pipeline Manager',
