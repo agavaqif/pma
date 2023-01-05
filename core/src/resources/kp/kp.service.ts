@@ -40,6 +40,7 @@ export class KpService {
       kps.push(kp);
     }
     const savedKps = await this.repo.save(kps);
+    await this.batchUpdateIsCompleted(execTypeId, savedKps);
     return { updatedProject, savedKps };
   }
 
@@ -97,7 +98,6 @@ export class KpService {
         }
       }
     }
-
     return true;
   }
 }
