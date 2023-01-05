@@ -20,6 +20,7 @@ export class ProjectWizardComponent implements OnInit {
     { text: word('STEPS') },
     { text: word('PIPELINE_MANAGER') },
     { text: word('CREWS') },
+    { text: word('KP_ASSIGNMENTS') },
   ];
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {}

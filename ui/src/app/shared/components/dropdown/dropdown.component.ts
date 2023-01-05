@@ -12,6 +12,7 @@ export class DropdownComponent {
   @Input() fg: FormGroup;
   @Input() fn: string;
   @Input() label: string;
+  @Input() floatLabel: 'Always' | 'Never' = 'Always';
   @Input() fields = { value: 'value', text: 'text' };
 
   public onFiltering(e: any) {

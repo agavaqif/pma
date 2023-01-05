@@ -59,6 +59,10 @@ export const wordsMap: any = {
   TITLE: 'Title',
   WEIGHT: 'Weight',
   ADD_STEP: 'Add Step',
+
+  // Kp Assignments
+  KP_ASSIGNMENTS: 'Kp Assignments',
+  SELECT_MQ: 'Select MQ',
 };
 
 export const validateWords: any = {
