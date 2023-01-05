@@ -18,6 +18,9 @@ export class Mq {
   @Column({ name: 'is_balanced', type: 'boolean', default: false })
   isBalanced: boolean;
 
+  @Column({ nullable: true })
+  quantity: number;
+
   @Column({ name: 'unit_of_measure', type: 'enum', enum: MqUnit })
   unitOfMeasure: MqUnit;
 
