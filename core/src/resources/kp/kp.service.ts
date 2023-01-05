@@ -8,6 +8,8 @@ import { CreateKpsDto } from './dto/create-kps.dto';
 import { UpdateKpDto } from './dto/update-kp.dto';
 import { Kp } from './entities/kp.entity';
 import { BatchUpdateKpsDto } from './dto/batch-update-kps.dto';
+import { IsCompletedService } from '../is-completed/is-completed.service';
+import { Mq } from '../mq/entities/mq.entity';
 
 @Injectable()
 export class KpService {
@@ -16,6 +18,11 @@ export class KpService {
     private repo: Repository<Kp>,
     @InjectRepository(Project)
     private projectRepo: Repository<Project>,
+    private isCompletedService: IsCompletedService,
+    @InjectRepository(ExecType)
+    private execTypeRepo: Repository<ExecType>,
+    @InjectRepository(Mq)
+    private mqRepo: Repository<Mq>,
   ) {}
 
   async createKps(projectId: number, { start, end, kpUnit, accuracy, execTypeId }: CreateKpsDto) {
@@ -62,6 +69,8 @@ export class KpService {
     for (const kp of kpsInRanges) {
       await this.repo.update(kp, { execType: { execTypeId } as ExecType });
     }
+
+    await this.batchUpdateIsCompleted(execTypeId, kpsInRanges);
     return true;
   }
 
@@ -73,5 +82,22 @@ export class KpService {
   async removeAll() {
     const kps = await this.repo.delete({});
     return kps;
+  }
+
+  async batchUpdateIsCompleted(execTypeId: number, kps: Kp[]) {
+    for (const kp of kps) {
+      await this.isCompletedService.removeByKpId(kp.kpId);
+    }
+    const { mqs } = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs'] });
+    for (const kp of kps) {
+      for (const mq of mqs) {
+        const { mqSteps } = await this.mqRepo.findOne(mq.mqId, { relations: ['mqSteps'] });
+        for (const mqStep of mqSteps) {
+          await this.isCompletedService.create(kp.kpId, mq.mqId, mqStep.stepId);
+        }
+      }
+    }
+
+    return true;
   }
 }

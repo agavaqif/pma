@@ -26,6 +26,11 @@ export class IsCompletedService {
     return await this.isCompletedRepository.remove(isCompleted);
   }
 
+  async removeByKpId(kpId: number) {
+    const isCompleted = await this.isCompletedRepository.find({ where: { kp: { kpId } } });
+    return await this.isCompletedRepository.remove(isCompleted);
+  }
+
   async findAllByKpId(kpId: number) {
     const isCompleted = await this.isCompletedRepository.find({
       where: { kp: { kpId } },

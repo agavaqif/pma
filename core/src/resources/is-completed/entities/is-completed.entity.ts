@@ -11,15 +11,15 @@ export class IsCompleted {
   @Column({ default: false })
   isCompleted: boolean;
 
-  @ManyToOne(() => Kp, (kp) => kp.isCompleted, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Kp, (kp) => kp.isCompleted, { cascade: true })
   @JoinColumn()
   kp: Kp;
 
-  @ManyToOne(() => Mq, (mq) => mq.isCompleted, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Mq, (mq) => mq.isCompleted, { cascade: true })
   @JoinColumn()
   mq: Mq;
 
-  @ManyToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { onDelete: 'CASCADE' })
+  @ManyToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { cascade: true })
   @JoinColumn()
   mqStep: MqStep;
 }
