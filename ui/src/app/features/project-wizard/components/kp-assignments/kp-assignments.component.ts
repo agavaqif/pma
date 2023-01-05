@@ -42,6 +42,7 @@ export class KpAssignmentsComponent implements OnInit {
     this.kpService.onKps().subscribe((kps) => {
       this.gridData = kps.map((kp) => ({ start: kp.start, end: kp.end }));
       this.projectKps = kps;
+      this.grid.refresh();
     });
     this.kpService.getKpsByProjectId(this.projectId);
 
@@ -52,43 +53,37 @@ export class KpAssignmentsComponent implements OnInit {
     });
     this.mqService.getAllMqs(this.projectId);
 
-    this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => {
-      console.log({ data });
-      this.isCompletedData = data;
-    });
+    this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => (this.isCompletedData = data));
 
     this.mqForm.valueChanges.subscribe((value) => {
       this.selectedMq = this.projectMqs.find((mq) => mq.mqId === value.mqId);
-
-      this.gridData = this.projectKps.map(({ kpId, start, end }) => {
-        let steps = {};
-        this.selectedMq.mqSteps.forEach(({ stepId, title }) => {
-          const isCompleted = this.isCompletedData.find(({ kp, mqStep, isCompletedId }) => kp.kpId === kpId && mqStep.stepId === stepId);
-          steps = { ...steps, [`${title}`]: isCompleted ? isCompleted.isCompleted : null };
-        });
-        return { kpId, start, end, ...steps };
-      });
-
-      console.log({ gridData: this.gridData });
-
-      this.grid.refresh();
+      this.initGridData();
     });
+  }
+
+  initGridData() {
+    this.gridData = this.projectKps.map(({ kpId, start, end }) => {
+      let steps = {};
+      this.selectedMq.mqSteps.forEach(({ stepId, title }) => {
+        const isCompleted = this.isCompletedData.find(({ kp, mqStep, isCompletedId }) => kp.kpId === kpId && mqStep.stepId === stepId);
+        steps = { ...steps, [`${title}`]: isCompleted ? isCompleted.isCompleted : null };
+      });
+      return { kpId, start, end, ...steps };
+    });
+
+    this.grid.refresh();
   }
 
   updateStep(kpId: number, stepId: number, isCompleted: boolean) {
-    console.log({
-      kpId,
-      stepId,
-      isCompleted,
-    });
-
     if (isCompleted !== null) {
       const isCompletedId = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === kpId && mqStep.stepId === stepId)?.isCompletedId;
-      if (isCompletedId) this.isCompletedService.updateStep(isCompletedId, !isCompleted).subscribe();
+      if (isCompletedId)
+        this.isCompletedService.updateStep(isCompletedId, !isCompleted).subscribe(() =>
+          this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => {
+            this.isCompletedData = data;
+            this.initGridData();
+          }),
+        );
     }
-  }
-
-  test(data: any) {
-    console.log({ data });
   }
 }
