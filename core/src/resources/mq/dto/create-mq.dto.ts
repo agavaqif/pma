@@ -1,4 +1,4 @@
-import { IsBoolean, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 import { MqUnit } from 'src/shared/enums/mq-unit.enum';
 import { CreateMqStepDto } from 'src/resources/mq-step/dto/create-mq-step.dto';
 
@@ -9,6 +9,10 @@ export class CreateMqDto {
   @IsOptional()
   @IsBoolean()
   isBalanced: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  quantity: number;
 
   @IsNotEmpty()
   @IsEnum(MqUnit)

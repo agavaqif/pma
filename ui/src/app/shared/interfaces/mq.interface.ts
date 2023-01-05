@@ -5,6 +5,7 @@ export interface IMq {
   mqId?: number;
   name: string;
   isBalanced: boolean;
+  quantity?: number;
   unitOfMeasure: MqUnit;
   mqSteps: IMqStep[] | Partial<IMqStep>[];
 }
