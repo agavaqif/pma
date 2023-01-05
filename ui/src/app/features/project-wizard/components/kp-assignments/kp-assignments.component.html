@@ -5,8 +5,8 @@
   <div class="toolbar-items">
     <div class="toolbar-item">
       <div>
-        <app-dropdown [data]='mqOptions' floatLabel="Never" [fg]='mqForm' fn="mqId"
-          [label]="word('SELECT_MQ')"></app-dropdown>
+        <app-dropdown [data]='mqOptions' floatLabel="Never" [fg]='mqForm' fn="mqId" [label]="word('SELECT_MQ')"
+          (onChange)="onSelectMq($event)"></app-dropdown>
       </div>
     </div>
   </div>

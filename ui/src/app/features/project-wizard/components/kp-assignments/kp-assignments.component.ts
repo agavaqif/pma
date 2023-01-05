@@ -23,9 +23,7 @@ export class KpAssignmentsComponent implements OnInit {
   public isCompletedData: IisCompleted[] = [];
   public gridData: any[] = [];
   public selectedMq: IMq;
-
   public mqOptions: { value: number; text: string }[] = [];
-
   public mqForm: FormGroup;
 
   getMqSteps() {}
@@ -39,26 +37,29 @@ export class KpAssignmentsComponent implements OnInit {
   word = word;
 
   ngOnInit(): void {
-    this.kpService.onKps().subscribe((kps) => {
-      this.gridData = kps.map((kp) => ({ start: kp.start, end: kp.end }));
-      this.projectKps = kps;
-      this.grid.refresh();
-    });
-    this.kpService.getKpsByProjectId(this.projectId);
-
-    this.mqForm = new FormGroup({ mqId: new FormControl('') });
+    this.kpService.onKps().subscribe((kps) => (this.projectKps = kps));
     this.mqService.onMqs().subscribe((mqs) => {
       this.mqOptions = mqs.map(({ mqId, name }) => ({ value: mqId, text: name }));
       this.projectMqs = mqs;
+      this.resetGridData();
     });
-    this.mqService.getAllMqs(this.projectId);
 
+    this.mqForm = new FormGroup({ mqId: new FormControl('') });
     this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => (this.isCompletedData = data));
+    this.kpService.getKpsByProjectId(this.projectId);
+    this.mqService.getAllMqs(this.projectId);
+  }
 
-    this.mqForm.valueChanges.subscribe((value) => {
-      this.selectedMq = this.projectMqs.find((mq) => mq.mqId === value.mqId);
-      this.initGridData();
-    });
+  onSelectMq({ value }: any) {
+    this.selectedMq = this.projectMqs.find(({ mqId }) => mqId === value) || null;
+    if (this.selectedMq) {
+      this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => {
+        this.isCompletedData = data;
+        this.initGridData();
+      });
+    } else {
+      this.resetGridData();
+    }
   }
 
   initGridData() {
@@ -70,7 +71,12 @@ export class KpAssignmentsComponent implements OnInit {
       });
       return { kpId, start, end, ...steps };
     });
+  }
 
+  resetGridData() {
+    this.gridData = this.projectKps.map(({ kpId, start, end }) => ({ kpId, start, end }));
+    this.selectedMq = null;
+    this.mqForm.reset();
     this.grid.refresh();
   }
 

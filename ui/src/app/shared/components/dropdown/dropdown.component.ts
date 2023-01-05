@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Query, Predicate } from '@syncfusion/ej2-data';
 
@@ -14,6 +14,7 @@ export class DropdownComponent {
   @Input() label: string;
   @Input() floatLabel: 'Always' | 'Never' = 'Always';
   @Input() fields = { value: 'value', text: 'text' };
+  @Output() onChange = new EventEmitter<any>();
 
   public onFiltering(e: any) {
     e.preventDefaultAction = true;
@@ -27,5 +28,9 @@ export class DropdownComponent {
 
   get fcn() {
     return this.fg.get(this.fn);
+  }
+
+  onChangeFn(e: any) {
+    this.onChange.emit(e);
   }
 }
