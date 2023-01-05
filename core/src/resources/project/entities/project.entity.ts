@@ -4,6 +4,7 @@ import { Kp } from 'src/resources/kp/entities/kp.entity';
 import { ProjectSettings } from './project-settings.entity';
 import { Mq } from 'src/resources/mq/entities/mq.entity';
 import { Crew } from 'src/resources/crew/entities/crew.entity';
+import { IsCompleted } from 'src/resources/is-completed/entities/is-completed.entity';
 
 @Entity()
 export class Project {
@@ -31,4 +32,7 @@ export class Project {
   @JoinTable()
   @OneToMany(() => Crew, (crew) => crew.crewProject)
   crews: Crew[];
+
+  @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.project)
+  isCompleted: IsCompleted[];
 }

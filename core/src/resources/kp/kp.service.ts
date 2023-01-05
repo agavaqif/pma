@@ -40,7 +40,7 @@ export class KpService {
       kps.push(kp);
     }
     const savedKps = await this.repo.save(kps);
-    await this.batchUpdateIsCompleted(execTypeId, savedKps);
+    await this.batchUpdateIsCompleted(projectId, execTypeId, savedKps);
     return { updatedProject, savedKps };
   }
 
@@ -71,7 +71,7 @@ export class KpService {
       await this.repo.update(kp, { execType: { execTypeId } as ExecType });
     }
 
-    await this.batchUpdateIsCompleted(execTypeId, kpsInRanges);
+    await this.batchUpdateIsCompleted(projectId, execTypeId, kpsInRanges);
     return true;
   }
 
@@ -85,7 +85,7 @@ export class KpService {
     return kps;
   }
 
-  async batchUpdateIsCompleted(execTypeId: number, kps: Kp[]) {
+  async batchUpdateIsCompleted(projectId: number, execTypeId: number, kps: Kp[]) {
     for (const kp of kps) {
       await this.isCompletedService.removeByKpId(kp.kpId);
     }
@@ -94,7 +94,7 @@ export class KpService {
       for (const mq of mqs) {
         const { mqSteps } = await this.mqRepo.findOne(mq.mqId, { relations: ['mqSteps'] });
         for (const mqStep of mqSteps) {
-          await this.isCompletedService.create(kp.kpId, mq.mqId, mqStep.stepId);
+          await this.isCompletedService.create(projectId, kp.kpId, mq.mqId, mqStep.stepId);
         }
       }
     }

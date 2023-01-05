@@ -66,7 +66,7 @@ export class KpAssignmentsComponent implements OnInit {
           const isCompleted = this.isCompletedData.find(({ kp, mqStep, isCompletedId }) => kp.kpId === kpId && mqStep.stepId === stepId);
           steps = { ...steps, [`${title}`]: isCompleted ? isCompleted.isCompleted : null };
         });
-        return { start, end, ...steps };
+        return { kpId, start, end, ...steps };
       });
 
       console.log({ gridData: this.gridData });
@@ -75,8 +75,20 @@ export class KpAssignmentsComponent implements OnInit {
     });
   }
 
-  updateStep(data: any) {
-    const { isCompleted, isCompletedId } = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === data.kpId && mqStep.stepId === data.stepId);
-    if (isCompletedId) this.isCompletedService.updateStep(isCompletedId, !isCompleted).subscribe();
+  updateStep(kpId: number, stepId: number, isCompleted: boolean) {
+    console.log({
+      kpId,
+      stepId,
+      isCompleted,
+    });
+
+    if (isCompleted !== null) {
+      const isCompletedId = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === kpId && mqStep.stepId === stepId)?.isCompletedId;
+      if (isCompletedId) this.isCompletedService.updateStep(isCompletedId, !isCompleted).subscribe();
+    }
+  }
+
+  test(data: any) {
+    console.log({ data });
   }
 }

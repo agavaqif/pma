@@ -15,21 +15,51 @@
   <e-columns>
     <e-column field='start' [headerText]='word("START")' width="20"></e-column>
     <e-column field='end' [headerText]='word("END")' width="20"></e-column>
-    <!-- [ngClass]="{
-    'not-done': data === false,
-    'done': data === true,
-    'disabled': data === null
-    }" -->
-    <!-- (dblclick)="updateStep(data)" -->
     <ng-container *ngIf="!!selectedMq?.mqSteps">
-      <e-column *ngFor="let step of selectedMq.mqSteps" [field]='step.title' [headerText]='step.title' width="20"
-        class="test">
-        <ng-template #template let-data>
-          <div class="test">
-            {{data}} Hello
-          </div>
-        </ng-template>
+      <e-column *ngFor="let step of selectedMq.mqSteps" [field]='step.title' [headerText]='step.title' width="20">
       </e-column>
     </ng-container>
   </e-columns>
-</ejs-grid> 
+  <ng-template #rowTemplate let-data>
+    <tr class="custom-row">
+      <td class="start">{{data.start}}</td>
+      <td class="end">{{data.end}}</td>
+      <ng-container *ngIf="!!selectedMq?.mqSteps">
+        <td *ngFor="let step of selectedMq.mqSteps" [ngClass]="{
+            'not-done': data[step.title] === false,
+            'done':  data[step.title] === true,
+            'disabled': data[step.title] === null
+          }" (dblclick)="updateStep(data.kpId, step.stepId, data[step.title])">
+          <div class="step">
+            <span>
+              {{data[step.title]}}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+</ejs-grid>
+
+
+<!-- <e-columns>
+  <e-column field='start' [headerText]='word("START")' width="20"></e-column>
+  <e-column field='end' [headerText]='word("END")' width="20"></e-column>
+  <ng-container *ngIf="!!selectedMq?.mqSteps">
+    <e-column *ngFor="let step of selectedMq.mqSteps" [field]='step.title' [headerText]='step.title' width="20"
+      class="test">
+      <ng-template #template let-data>
+        <div class="test">
+          {{data}} Hello
+        </div>
+      </ng-template>
+    </e-column>
+  </ng-container>
+</e-columns> -->
+
+<!-- [ngClass]="{
+      'not-done': data === false,
+      'done': data === true,
+      'disabled': data === null
+      }" -->
+<!-- (dblclick)="updateStep(data)" -->

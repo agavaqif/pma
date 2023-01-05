@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 't
 import { Kp } from '../../kp/entities/kp.entity';
 import { Mq } from '../../mq/entities/mq.entity';
 import { MqStep } from '../../mq-step/entities/mq-step.entity';
+import { Project } from 'src/resources/project/entities/project.entity';
 
 @Entity()
 export class IsCompleted {
@@ -22,4 +23,8 @@ export class IsCompleted {
   @ManyToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { cascade: true })
   @JoinColumn()
   mqStep: MqStep;
+
+  @ManyToOne(() => Project, (project) => project.isCompleted, { cascade: true })
+  @JoinColumn()
+  project: Project;
 }
