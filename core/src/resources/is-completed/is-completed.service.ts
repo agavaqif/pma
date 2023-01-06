@@ -35,12 +35,13 @@ export class IsCompletedService {
   }
 
   async findAll(
-    { projectId, kpId, mqId, stepId }: any,
+    { projectId, kpId, mqId, stepId, noteId }: any,
     relations: object = {
       project: false,
       kp: true,
       mq: true,
       mqStep: true,
+      stepNote: false,
     },
   ) {
     const isCompleted = await this.isCompletedRepository.find({
@@ -49,6 +50,7 @@ export class IsCompletedService {
         ...(kpId && { kp: { kpId } }),
         ...(mqId && { mq: { mqId } }),
         ...(stepId && { mqStep: { stepId } }),
+        ...(noteId && { stepNote: { noteId } }),
       },
       relations: Object.keys(relations).filter((key) => relations[key]),
     });

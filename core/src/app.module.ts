@@ -11,6 +11,7 @@ import { MqModule } from './resources/mq/mq.module';
 import { CrewModule } from './resources/crew/crew.module';
 import { MqStepModule } from './resources/mq-step/mq-step.module';
 import { IsCompletedModule } from './resources/is-completed/is-completed.module';
+import { StepNoteModule } from './resources/step-note/step-note.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { IsCompletedModule } from './resources/is-completed/is-completed.module'
     CrewModule,
     MqStepModule,
     IsCompletedModule,
+    StepNoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
