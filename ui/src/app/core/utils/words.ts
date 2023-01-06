@@ -63,6 +63,11 @@ export const wordsMap: any = {
   // Kp Assignments
   KP_ASSIGNMENTS: 'Kp Assignments',
   SELECT_MQ: 'Select MQ',
+
+  // Is Completed Modal
+  SUBMIT: 'Submit',
+  COMPLETED_NOTE: 'Completed Note',
+  COMPLETE: 'Complete',
 };
 
 export const validateWords: any = {

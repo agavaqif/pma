@@ -1,3 +1,4 @@
+import { IsCompletedModalComponent } from './../is-completed-modal/is-completed-modal.component';
 import { IMq } from 'src/app/shared/interfaces/mq.interface';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -17,6 +18,7 @@ import { IisCompleted } from 'src/app/shared/interfaces/is-completed.interface';
 })
 export class KpAssignmentsComponent implements OnInit {
   @ViewChild('grid') grid: GridComponent;
+  @ViewChild('isCompletedModal') isCompletedModal: IsCompletedModalComponent;
 
   public projectKps: IKp[];
   public projectMqs: IMq[];
@@ -81,16 +83,32 @@ export class KpAssignmentsComponent implements OnInit {
     this.grid.refresh();
   }
 
-  updateStep(kpId: number, stepId: number, isCompleted: boolean) {
+  openModal(kpId: number, stepId: number, isCompleted: boolean) {
     if (isCompleted !== null) {
-      const isCompletedId = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === kpId && mqStep.stepId === stepId)?.isCompletedId;
-      if (isCompletedId)
-        this.isCompletedService.updateStep(isCompletedId, !isCompleted).subscribe(() =>
+      const selectedIsCompleted = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === kpId && mqStep.stepId === stepId);
+      if (selectedIsCompleted.isCompletedId) {
+        this.isCompletedModal.openModal('view');
+        this.isCompletedModal.data = selectedIsCompleted;
+      } else {
+        this.isCompletedModal.openModal('complete');
+      }
+    }
+  }
+
+  completeStep({ kpId, stepId, crewId, completedDate, note }: { kpId: number; stepId: number; crewId: number; completedDate: string; note: string }) {
+    const isCompletedId = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === kpId && mqStep.stepId === stepId)?.isCompletedId;
+    if (isCompletedId)
+      this.isCompletedService
+        .completeStep(isCompletedId, {
+          crewId,
+          completedDate,
+          note,
+        })
+        .subscribe(() =>
           this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => {
             this.isCompletedData = data;
             this.initGridData();
           }),
         );
-    }
   }
 }
