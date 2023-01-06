@@ -26,8 +26,6 @@ export class KpAssignmentsComponent implements OnInit {
   public mqOptions: { value: number; text: string }[] = [];
   public mqForm: FormGroup;
 
-  getMqSteps() {}
-
   constructor(private kpService: KpService, private route: ActivatedRoute, private mqService: MqService, private isCompletedService: IsCompletedService) {}
 
   get projectId() {
@@ -37,7 +35,10 @@ export class KpAssignmentsComponent implements OnInit {
   word = word;
 
   ngOnInit(): void {
-    this.kpService.onKps().subscribe((kps) => (this.projectKps = kps));
+    this.kpService.onKps().subscribe((kps) => {
+      this.projectKps = kps;
+      this.resetGridData();
+    });
     this.mqService.onMqs().subscribe((mqs) => {
       this.mqOptions = mqs.map(({ mqId, name }) => ({ value: mqId, text: name }));
       this.projectMqs = mqs;
