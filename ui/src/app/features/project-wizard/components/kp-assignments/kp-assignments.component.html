@@ -1,0 +1,42 @@
+<div class="header">
+  <h2>{{word('KP_ASSIGNMENTS')}}</h2>
+</div>
+<ejs-toolbar>
+  <div class="toolbar-items">
+    <div class="toolbar-item">
+      <div>
+        <app-dropdown [data]='mqOptions' floatLabel="Never" [fg]='mqForm' fn="mqId" [label]="word('SELECT_MQ')"
+          (onChange)="onSelectMq($event)"></app-dropdown>
+      </div>
+    </div>
+  </div>
+</ejs-toolbar>
+<ejs-grid #grid [dataSource]='gridData' width="auto">
+  <e-columns>
+    <e-column field='start' [headerText]='word("START")' width="20"></e-column>
+    <e-column field='end' [headerText]='word("END")' width="20"></e-column>
+    <ng-container *ngIf="!!selectedMq?.mqSteps">
+      <e-column *ngFor="let step of selectedMq.mqSteps" [field]='step.title' [headerText]='step.title' width="20">
+      </e-column>
+    </ng-container>
+  </e-columns>
+  <ng-template #rowTemplate let-data>
+    <tr class="custom-row">
+      <td class="start">{{data.start}}</td>
+      <td class="end">{{data.end}}</td>
+      <ng-container *ngIf="!!selectedMq?.mqSteps">
+        <td *ngFor="let step of selectedMq.mqSteps" [ngClass]="{
+            'not-done': data[step.title] === false,
+            'done':  data[step.title] === true,
+            'disabled': data[step.title] === null
+          }" (dblclick)="updateStep(data.kpId, step.stepId, data[step.title])">
+          <div class="step">
+            <span>
+              {{data[step.title]}}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+</ejs-grid>

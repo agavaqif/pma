@@ -40,12 +40,12 @@ export class ExecTypeService {
     return await this.execTypeRepo.save(execType);
   }
 
-  async addMq(execTypeId: number, mqId: number) {
+  async addMq(projectId: number, execTypeId: number, mqId: number) {
     const execType = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs', 'kps'] });
     const mq = await this.mqRepo.findOne(mqId, { relations: ['mqSteps'] });
     for (const { kpId } of execType.kps) {
       for (const { stepId } of mq.mqSteps) {
-        await this.isCompletedService.create(kpId, mqId, stepId);
+        await this.isCompletedService.create(projectId, kpId, mqId, stepId);
       }
     }
     execType.mqs.push(mq);

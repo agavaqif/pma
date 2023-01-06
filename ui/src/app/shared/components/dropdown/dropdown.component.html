@@ -3,8 +3,9 @@
     'e-error': fcn.invalid && (fcn.dirty || fcn.touched),
     'e-valid': fcn.valid && (fcn.dirty || fcn.touched)
   }">
-    <ejs-dropdownlist floatLabelType="Always" [dataSource]="data" [fields]="fields" [placeholder]="label"
-      [allowFiltering]="true" (filtering)="onFiltering($event)" [formControlName]="fn"></ejs-dropdownlist>
+    <ejs-dropdownlist [floatLabelType]="floatLabel" [dataSource]="data" [fields]="fields" [placeholder]="label"
+      [allowFiltering]="true" (filtering)="onFiltering($event)" [formControlName]="fn"
+      (change)="onChangeFn($event)"></ejs-dropdownlist>
     <app-validation-error [fcn]="fcn"></app-validation-error>
   </div>
 </form>

@@ -11,6 +11,7 @@ import { PipelineManagerComponent } from './components/pipeline-manager/pipeline
 import { ProjectCrewsComponent } from './components/project-crews/project-crews.component';
 import { AddStepsComponent } from './components/add-steps/add-steps.component';
 import { StepsTableComponent } from './components/steps-table/steps-table.component';
+import { KpAssignmentsComponent } from './components/kp-assignments/kp-assignments.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { StepsTableComponent } from './components/steps-table/steps-table.compon
     ProjectCrewsComponent,
     AddStepsComponent,
     StepsTableComponent,
+    KpAssignmentsComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

@@ -1,19 +1,14 @@
-import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { IsCompletedService } from './is-completed.service';
 import { UpdateIsCompletedDto } from './dto/update-is-completed.dto';
 
-@Controller('api/project/:projectId/kp/:kpId/mq/:mqId/isCompleted')
+@Controller('api/isCompleted')
 export class IsCompletedController {
   constructor(private readonly isCompletedService: IsCompletedService) {}
 
-  @Get('findAllByKpId')
-  findAllByKpId(@Param('kpId') kpId: string) {
-    return this.isCompletedService.findAllByKpId(+kpId);
-  }
-
-  @Get('findAllByMqId')
-  findAllByMqId(@Param('mqId') mqId: string) {
-    return this.isCompletedService.findAllByMqId(+mqId);
+  @Get('findAll')
+  findAll(@Query('projectId') projectId: number, @Query('kpId') kpId: number, @Query('mqId') mqId: number, @Query('stepId') stepId: number) {
+    return this.isCompletedService.findAll({ projectId, kpId, mqId, stepId });
   }
 
   @Get(':isCompletedId')
