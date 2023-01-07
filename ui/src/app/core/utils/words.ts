@@ -68,6 +68,10 @@ export const wordsMap: any = {
   SUBMIT: 'Submit',
   COMPLETED_NOTE: 'Completed Note',
   COMPLETE: 'Complete',
+  NOTE: 'Note',
+  CREW: 'Crew',
+  COMPLETE_DATE: 'Complete Date',
+  COMPLETED_DATE: 'Completed Date',
 };
 
 export const validateWords: any = {

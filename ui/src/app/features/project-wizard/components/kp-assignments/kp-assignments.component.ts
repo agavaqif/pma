@@ -86,9 +86,9 @@ export class KpAssignmentsComponent implements OnInit {
   openModal(kpId: number, stepId: number, isCompleted: boolean) {
     if (isCompleted !== null) {
       const selectedIsCompleted = this.isCompletedData.find(({ kp, mqStep }) => kp.kpId === kpId && mqStep.stepId === stepId);
-      if (selectedIsCompleted.isCompletedId) {
+      this.isCompletedModal.data = selectedIsCompleted;
+      if (selectedIsCompleted.isCompleted) {
         this.isCompletedModal.openModal('view');
-        this.isCompletedModal.data = selectedIsCompleted;
       } else {
         this.isCompletedModal.openModal('complete');
       }

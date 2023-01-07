@@ -3,6 +3,9 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { word } from 'src/app/core/utils/words';
+import { CrewService } from 'src/app/core/services/crew.service';
+import { ActivatedRoute } from '@angular/router';
+import { formatDateTime } from 'src/app/core/utils/date-helpers';
 
 @Component({
   selector: 'app-is-completed-modal',
@@ -13,6 +16,7 @@ export class IsCompletedModalComponent implements OnInit {
   @Output() onSave: EventEmitter<any> = new EventEmitter();
 
   public data: IisCompleted = null;
+  public crewOptions: { value: number; text: string }[] = [];
 
   // Modal
   @ViewChild('ejDialog') ejDialog: DialogComponent;
@@ -34,9 +38,9 @@ export class IsCompletedModalComponent implements OnInit {
 
   public openModal(type: 'view' | 'complete' = 'view'): void {
     this.actionType = type;
+    this.initForm();
     if (type === 'complete') {
       this.initBtns();
-      this.initForm();
     } else {
       this.btns = [];
     }
@@ -54,15 +58,15 @@ export class IsCompletedModalComponent implements OnInit {
     if (this.actionType === 'view') {
       const { crew, completedDate, stepNote } = this.data;
       this.stepForm = new FormGroup({
-        crew: new FormControl(crew.name),
-        date: new FormControl(new Date(+completedDate)),
-        note: new FormControl(stepNote.note),
+        crew: new FormControl(crew?.name || ''),
+        date: new FormControl(formatDateTime(+completedDate) || ''),
+        note: new FormControl(stepNote?.note || ''),
       });
       return;
     }
     this.stepForm = new FormGroup({
       crewId: new FormControl('', [Validators.required]),
-      date: new FormControl('', [Validators.required]),
+      date: new FormControl(new Date(), [Validators.required]),
       note: new FormControl(''),
     });
   }
@@ -75,7 +79,7 @@ export class IsCompletedModalComponent implements OnInit {
         kpId: kp.kpId,
         stepId: mqStep.stepId,
         crewId,
-        completedDate: date,
+        completedDate: new Date(date).getTime().toString(),
         note,
       });
       this.closeModal();
@@ -85,9 +89,17 @@ export class IsCompletedModalComponent implements OnInit {
   }
   word = word;
 
-  constructor() {}
+  get projectId() {
+    return +this.route.snapshot.paramMap.get('projectId');
+  }
+
+  constructor(private crewService: CrewService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.initTarget();
+    this.initBtns();
+
+    this.crewService.onCrews().subscribe((crews) => (this.crewOptions = crews.map(({ crewId, name }) => ({ value: crewId, text: name }))));
+    this.crewService.getAllCrews(this.projectId);
   }
 }
