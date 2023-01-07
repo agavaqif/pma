@@ -1,6 +1,7 @@
+import { IsCompleted } from 'src/resources/is-completed/entities/is-completed.entity';
 import { Mq } from 'src/resources/mq/entities/mq.entity';
 import { Project } from 'src/resources/project/entities/project.entity';
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class Crew {
@@ -25,4 +26,7 @@ export class Crew {
 
   @ManyToOne(() => Project, (project) => project.crews)
   crewProject: Project;
+
+  @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.crew)
+  isCompleted: IsCompleted[];
 }

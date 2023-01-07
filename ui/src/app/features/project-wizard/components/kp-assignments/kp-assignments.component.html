@@ -29,7 +29,7 @@
             'not-done': data[step.title] === false,
             'done':  data[step.title] === true,
             'disabled': data[step.title] === null
-          }" (dblclick)="updateStep(data.kpId, step.stepId, data[step.title])">
+          }" (dblclick)="openModal(data.kpId, step.stepId, data[step.title])">
           <div class="step">
             <span>
               {{data[step.title]}}
@@ -40,3 +40,5 @@
     </tr>
   </ng-template>
 </ejs-grid>
+
+<app-is-completed-modal #isCompletedModal (onSave)="completeStep($event)"></app-is-completed-modal>
