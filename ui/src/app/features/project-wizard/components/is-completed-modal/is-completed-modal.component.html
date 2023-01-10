@@ -1,0 +1,24 @@
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="getHeader()" [width]="400"
+  (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="form" [formGroup]="stepForm" *ngIf="actionType === 'complete'">
+      <app-dropdown [label]="word('CREW')" [fn]="'crewId'" [fg]="stepForm" [data]="crewOptions"></app-dropdown>
+      <app-input [label]="word('COMPLETE_DATE')" [fn]="'date'" [fg]="stepForm" [type]="'date'"></app-input>
+      <div class="e-float-input e-input-group">
+        <textarea id="note" formControlName="note"></textarea>
+        <label for="note" class="e-label-top e-float-text">{{ word('NOTE') }}</label>
+      </div>
+    </form>
+
+    <form class="view" *ngIf="actionType === 'view'" [formGroup]="stepForm">
+      <app-input [label]="word('CREW')" [fn]="'crew'" [fg]="stepForm" [readonly]="true"></app-input>
+      <app-input [label]="word('COMPLETED_DATE')" [fn]="'date'" [fg]="stepForm" [readonly]="true"></app-input>
+      <div class="e-float-input e-input-group">
+        <textarea id="note" formControlName="note"></textarea>
+        <label for="note" class="e-label-top e-float-text">{{ word('NOTE') }}</label>
+      </div>
+    </form>
+  </ng-template>
+</ejs-dialog>

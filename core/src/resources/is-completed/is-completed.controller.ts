@@ -1,6 +1,6 @@
 import { Controller, Get, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { CompleteStepDto } from './dto/complete-step.dto';
 import { IsCompletedService } from './is-completed.service';
-import { UpdateIsCompletedDto } from './dto/update-is-completed.dto';
 
 @Controller('api/isCompleted')
 export class IsCompletedController {
@@ -16,9 +16,9 @@ export class IsCompletedController {
     return this.isCompletedService.findOne(+isCompletedId);
   }
 
-  @Patch(':isCompletedId')
-  update(@Param('isCompletedId') isCompletedId: string, @Body() { isCompleted }: UpdateIsCompletedDto) {
-    return this.isCompletedService.update(+isCompletedId, isCompleted);
+  @Patch(':isCompletedId/complete')
+  update(@Param('isCompletedId') isCompletedId: string, @Body() isCompleted: CompleteStepDto) {
+    return this.isCompletedService.complete(+isCompletedId, isCompleted);
   }
 
   @Delete(':isCompletedId')

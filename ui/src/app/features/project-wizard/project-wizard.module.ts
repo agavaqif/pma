@@ -12,6 +12,7 @@ import { ProjectCrewsComponent } from './components/project-crews/project-crews.
 import { AddStepsComponent } from './components/add-steps/add-steps.component';
 import { StepsTableComponent } from './components/steps-table/steps-table.component';
 import { KpAssignmentsComponent } from './components/kp-assignments/kp-assignments.component';
+import { IsCompletedModalComponent } from './components/is-completed-modal/is-completed-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { KpAssignmentsComponent } from './components/kp-assignments/kp-assignmen
     AddStepsComponent,
     StepsTableComponent,
     KpAssignmentsComponent,
+    IsCompletedModalComponent,
   ],
   imports: [CommonModule, SharedModule],
 })
