@@ -39,7 +39,7 @@ export class ExecTypeController {
   }
 
   @Delete(':execTypeId')
-  remove(@Param('execTypeId') execTypeId: string) {
-    return this.execTypeService.remove(+execTypeId);
+  remove(@Param('projectId') projectId: string, @Param('execTypeId') execTypeId: string) {
+    return this.execTypeService.remove(+projectId, +execTypeId);
   }
 }

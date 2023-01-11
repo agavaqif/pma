@@ -10,28 +10,32 @@ import { Kp } from './entities/kp.entity';
 import { BatchUpdateKpsDto } from './dto/batch-update-kps.dto';
 import { IsCompletedService } from '../is-completed/is-completed.service';
 import { Mq } from '../mq/entities/mq.entity';
+import { ProjectService } from '../project/project.service';
 
 @Injectable()
 export class KpService {
   constructor(
     @InjectRepository(Kp)
-    private repo: Repository<Kp>,
-    @InjectRepository(Project)
-    private projectRepo: Repository<Project>,
+    private kpRepo: Repository<Kp>,
+    // @InjectRepository(Project)
+    // private projectRepo: Repository<Project>,
     private isCompletedService: IsCompletedService,
     @InjectRepository(ExecType)
     private execTypeRepo: Repository<ExecType>,
     @InjectRepository(Mq)
     private mqRepo: Repository<Mq>,
+    private readonly projectService: ProjectService,
   ) {}
 
   async createKps(projectId: number, { start, end, kpUnit, accuracy, execTypeId }: CreateKpsDto) {
+    // ! 👈 Breakpoint
     const kps = [];
     const length = (end - start) / accuracy;
-    const projectSettings = { kpUnit, accuracy };
-    const updatedProject = await this.projectRepo.update({ projectId }, { projectSettings });
+    // const projectSettings = { kpUnit, accuracy };
+    // const updatedProject = await this.projectRepo.update({ projectId }, { projectSettings });
+    const updatedProjectSettings = await this.projectService.updateProjectSettings(projectId, { kpUnit, accuracy, defaultExecTypeId: execTypeId }); // ! 👈 Might be a problem
     for (let i = 0; i < length; i++) {
-      const kp = this.repo.create({
+      const kp = this.kpRepo.create({
         start: start + accuracy * i,
         end: start + accuracy * (i + 1),
         project: { projectId } as Project,
@@ -39,23 +43,23 @@ export class KpService {
       });
       kps.push(kp);
     }
-    const savedKps = await this.repo.save(kps);
+    const savedKps = await this.kpRepo.save(kps);
     await this.batchUpdateIsCompleted(projectId, execTypeId, savedKps);
-    return { updatedProject, savedKps };
+    return { savedKps, updatedProjectSettings };
   }
 
   async findAllByProjectId(projectId: number) {
-    const kps = await this.repo.find({ where: { project: { projectId } }, relations: ['execType'] });
+    const kps = await this.kpRepo.find({ where: { project: { projectId } }, relations: ['execType'] });
     return kps;
   }
 
   findOne(kpId: number) {
-    const kp = this.repo.findOne(kpId);
+    const kp = this.kpRepo.findOne(kpId);
     return kp;
   }
 
   async update(kpId: number, updateKpDto: UpdateKpDto) {
-    const kp = this.repo.update(kpId, updateKpDto);
+    const kp = this.kpRepo.update(kpId, updateKpDto);
     return kp;
   }
 
@@ -66,9 +70,9 @@ export class KpService {
       const { start, end } = kp;
       return ranges.some((range) => start >= range.start && end <= range.end);
     });
-    kpsInRanges.forEach((kp) => this.repo.update(kp, { execType: { execTypeId } as ExecType }));
+    kpsInRanges.forEach((kp) => this.kpRepo.update(kp, { execType: { execTypeId } as ExecType }));
     for (const kp of kpsInRanges) {
-      await this.repo.update(kp, { execType: { execTypeId } as ExecType });
+      await this.kpRepo.update(kp, { execType: { execTypeId } as ExecType });
     }
 
     await this.batchUpdateIsCompleted(projectId, execTypeId, kpsInRanges);
@@ -76,12 +80,12 @@ export class KpService {
   }
 
   async remove(kpId: number) {
-    const kp = await this.repo.delete(kpId);
+    const kp = await this.kpRepo.delete(kpId);
     return kp;
   }
 
   async removeAll() {
-    const kps = await this.repo.delete({});
+    const kps = await this.kpRepo.delete({});
     return kps;
   }
 
@@ -99,5 +103,16 @@ export class KpService {
       }
     }
     return true;
+  }
+
+  async updateIsCompletedByExecType(projectId: number, execTypeId: number) {
+    const kps = await this.kpRepo.find({
+      where: {
+        execType: { execTypeId },
+      },
+      relations: ['execType', 'project'],
+    });
+    const { defaultExecType } = await this.projectService.getProjectSettings(projectId);
+    return await this.batchUpdateIsCompleted(projectId, defaultExecType.execTypeId, kps);
   }
 }

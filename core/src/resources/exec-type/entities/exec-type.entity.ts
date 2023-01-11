@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn, JoinTable, OneToMany, ManyToOne, ManyToMany } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, JoinTable, OneToMany, ManyToOne, ManyToMany, OneToOne } from 'typeorm';
 import { Kp } from 'src/resources/kp/entities/kp.entity';
 import { Project } from 'src/resources/project/entities/project.entity';
 import { Mq } from 'src/resources/mq/entities/mq.entity';
+import { ProjectSettings } from 'src/resources/project/entities/project-settings.entity';
 
 @Entity('exec_type')
 export class ExecType {
@@ -24,4 +25,7 @@ export class ExecType {
   @JoinTable()
   @ManyToMany(() => Mq, (mq) => mq.execTypes)
   mqs: Mq[];
+
+  @OneToOne(() => ProjectSettings, (projectSettings) => projectSettings.defaultExecType)
+  projectSettings: ProjectSettings;
 }
