@@ -43,3 +43,24 @@
     border-bottom: 1px solid #cfcfcf;
   }
 }
+
+.exect-type-tabel {
+  max-width: 500px;
+}
+
+.modal-content {
+  .delete-content {
+    color: #ff0000;
+    font-size: 1rem;
+    p {
+      margin-block: 10px;
+    }
+  }
+  .actions {
+    margin-top: 1rem;
+    text-align: right;
+    button {
+      margin-left: 10px;
+    }
+  }
+}
