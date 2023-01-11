@@ -15,6 +15,9 @@ export class ExecType {
   @Column()
   code: string;
 
+  @Column({ name: 'is_default', default: false })
+  isDefault: boolean;
+
   @JoinTable()
   @OneToMany(() => Kp, (kp) => kp.execType)
   kps: Kp[];

@@ -1,0 +1,12 @@
+<ejs-toolbar>
+  <e-items>
+    <e-item 
+    *ngFor="let btn of btns" 
+    [text]="btn.text" 
+    (click)="onBtnClick(btn.id)" 
+    [prefixIcon]="btn.prefixIcon"
+    [align]="btn.align"
+    [disabled]="btn.disabled"
+    ></e-item>
+  </e-items>
+</ejs-toolbar>

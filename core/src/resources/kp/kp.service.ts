@@ -10,6 +10,7 @@ import { Kp } from './entities/kp.entity';
 import { BatchUpdateKpsDto } from './dto/batch-update-kps.dto';
 import { IsCompletedService } from '../is-completed/is-completed.service';
 import { Mq } from '../mq/entities/mq.entity';
+import { ProjectService } from '../project/project.service';
 
 @Injectable()
 export class KpService {
@@ -17,19 +18,28 @@ export class KpService {
     @InjectRepository(Kp)
     private repo: Repository<Kp>,
     @InjectRepository(Project)
-    private projectRepo: Repository<Project>,
     private isCompletedService: IsCompletedService,
     @InjectRepository(ExecType)
     private execTypeRepo: Repository<ExecType>,
     @InjectRepository(Mq)
     private mqRepo: Repository<Mq>,
+    private projectService: ProjectService,
   ) {}
 
   async createKps(projectId: number, { start, end, kpUnit, accuracy, execTypeId }: CreateKpsDto) {
     const kps = [];
     const length = (end - start) / accuracy;
-    const projectSettings = { kpUnit, accuracy };
-    const updatedProject = await this.projectRepo.update({ projectId }, { projectSettings });
+    const projectSettings = { kpUnit, accuracy, defaultExecTypeId: execTypeId };
+
+    // Updating projectSettings
+    const updatedProjectSettings = await this.projectService.updateProjectSettings(projectId, projectSettings);
+
+    // Updating execType.isDefault
+    const execType = await this.execTypeRepo.findOneOrFail({ execTypeId });
+    execType.isDefault = true;
+    await this.execTypeRepo.save(execType);
+
+    // Creating kps
     for (let i = 0; i < length; i++) {
       const kp = this.repo.create({
         start: start + accuracy * i,
@@ -40,8 +50,8 @@ export class KpService {
       kps.push(kp);
     }
     const savedKps = await this.repo.save(kps);
-    await this.batchUpdateIsCompleted(projectId, execTypeId, savedKps);
-    return { updatedProject, savedKps };
+    await this.batchUpdateIsCompleted(projectId, execTypeId, savedKps); // ! Thows error
+    return { updatedProjectSettings };
   }
 
   async findAllByProjectId(projectId: number) {
@@ -87,7 +97,7 @@ export class KpService {
 
   async batchUpdateIsCompleted(projectId: number, execTypeId: number, kps: Kp[]) {
     for (const kp of kps) {
-      await this.isCompletedService.removeByKpId(kp.kpId);
+      await this.isCompletedService.removeByKpId(kp.kpId); // ! Thows error
     }
     const { mqs } = await this.execTypeRepo.findOne(execTypeId, { relations: ['mqs'] });
     for (const kp of kps) {

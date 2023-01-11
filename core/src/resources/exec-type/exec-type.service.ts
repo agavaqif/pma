@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IsCompletedService } from '../is-completed/is-completed.service';
+import { Kp } from '../kp/entities/kp.entity';
 import { Mq } from '../mq/entities/mq.entity';
 import { Project } from '../project/entities/project.entity';
 import { CreateExecTypeDto } from './dto/create-exec-type.dto';
@@ -15,6 +16,8 @@ export class ExecTypeService {
     private readonly execTypeRepo: Repository<ExecType>,
     @InjectRepository(Mq)
     private readonly mqRepo: Repository<Mq>,
+    @InjectRepository(Kp)
+    private readonly kpRepo: Repository<Kp>,
     private readonly isCompletedService: IsCompletedService,
   ) {}
 
@@ -61,7 +64,13 @@ export class ExecTypeService {
   }
 
   async remove(execTypeId: number) {
-    const execType = await this.execTypeRepo.findOne(execTypeId);
+    const execType = await this.findOne(execTypeId);
+    const { kps, project } = execType;
+    const defaultExecType = await this.execTypeRepo.findOne({ where: { project, isDefault: true } });
+    for (const kp of kps) {
+      kp.execType = defaultExecType;
+      await this.kpRepo.save(kp);
+    }
     return await this.execTypeRepo.remove(execType);
   }
 }

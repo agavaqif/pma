@@ -9,5 +9,6 @@ import { ProjectSettings } from './entities/project-settings.entity';
   imports: [TypeOrmModule.forFeature([Project, ProjectSettings])],
   controllers: [ProjectController],
   providers: [ProjectService],
+  exports: [ProjectService],
 })
 export class ProjectModule {}

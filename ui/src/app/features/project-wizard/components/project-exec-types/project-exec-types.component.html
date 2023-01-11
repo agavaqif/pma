@@ -1,28 +1,33 @@
 <div class="kps-header">
   <h2>{{word('CREATE_EXEC_TYPES')}}</h2>
-  <button ejs-button [isPrimary]="true" (click)="openModal()">{{word('CREATE')}}</button>
+  <button ejs-button [isPrimary]="true" (click)="openModal(execTypeActions.CREATE)">{{word('CREATE')}}</button>
 </div>
 
-<div class="list">
-  <ng-container *ngIf="!!execTypes?.length; else noData">
-    <div class="list-item" *ngFor="let item of execTypes">
-      <div class="list-item__name">Name: {{item.name}}</div>
-      <div class="list-item__code">Code: {{item.code}}</div>
-    </div>
-  </ng-container>
-  <ng-template #noData>
-    <div class="list-item">No Execution Types Created Yet!</div>
-  </ng-template>
+<div class="exect-type-tabel">
+  <app-toolbar #kpTableToolbar [btns]="toolbarBtns" (btnClick)="onToolbarBtnClick($event)"></app-toolbar>
+  <app-table #kpTable [data]="execTypes" [columns]="tableColumns" (onSetRecord)="onSetRecord($event)"></app-table>
 </div>
 
 <!-- MODAL -->
 <div #container class="root-container"></div>
-<ejs-dialog #ejDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_EXEC_TYPE')"
-  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+<ejs-dialog #ejDialog isModal="true" [target]="targetEl" [header]="getModalHeader()" [width]="400"
+  (overlayClick)="closeModal()" [visible]="false">
   <ng-template #content>
-    <form class="kp-form" [formGroup]="execTypeForm">
-      <app-input [label]="word('NAME')" [fn]="'name'" [fg]="execTypeForm"></app-input>
-      <app-input [label]="word('CODE')" [fn]="'code'" [fg]="execTypeForm"></app-input>
-    </form>
+    <div class="modal-content">
+      <form class="kp-form" [formGroup]="execTypeForm" *ngIf="action !== 'delete'">
+        <app-input [label]="word('NAME')" [fn]="'name'" [fg]="execTypeForm"></app-input>
+        <app-input [label]="word('CODE')" [fn]="'code'" [fg]="execTypeForm"></app-input>
+      </form>
+      <div class="delete-content" *ngIf="action === 'delete'">
+        <p>{{getDeleteContent()}}</p>
+      </div>
+      <div class="actions">
+        <button ejs-button [isPrimary]="true" *ngIf="action === 'create' || action === 'update'"
+          (click)="onSubmit()">{{word('SAVE')}}</button>
+        <button ejs-button [isPrimary]="true" *ngIf="action === 'delete'"
+          (click)="onDelete()">{{word('DELETE')}}</button>
+        <button ejs-button (click)="onDelete()">{{word('CANCEL')}}</button>
+      </div>
+    </div>
   </ng-template>
 </ejs-dialog>

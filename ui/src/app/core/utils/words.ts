@@ -31,6 +31,10 @@ export const wordsMap: any = {
   NAME: 'Name',
   CODE: 'Code',
   CANCEL: 'Cancel',
+  DELETE: 'Delete',
+  UPDATE_EXEC_TYPE: 'Update Execution Type',
+  DELETE_EXEC_TYPE: 'Delete Execution Type',
+  SAVE: 'Save',
 
   // MEASUREMENT QUANTITIES
   MEASUREMENT_QUANTITIES: 'Measurement Quantities',
@@ -80,6 +84,8 @@ export const validateWords: any = {
   maxlength: 'This field is too long',
   email: 'This field must be a valid email',
 };
+
+export const confirmDelete = (type?: string, name?: string): string => `Are you sure you want to delete ${type || ''} ${name || ''}?`;
 
 export const word = (key: string): string => wordsMap[key] || 'No word';
 export const errorMessage = (key: string): string => validateWords[key] || key;

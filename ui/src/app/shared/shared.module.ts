@@ -9,8 +9,10 @@ import { DirectivesModule } from './directives/directives.module';
 import { InputComponent } from './components/input/input.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { TableComponent } from './components/table/table.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
-const components = [InputComponent, ValidationErrorComponent, DropdownComponent];
+const components = [InputComponent, ValidationErrorComponent, DropdownComponent, TableComponent, ToolbarComponent];
 
 const modules: any[] = [CommonModule, SyncfusionModule, ReactiveFormsModule, RouterModule, DirectivesModule];
 
