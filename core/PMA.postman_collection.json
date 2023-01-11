@@ -69,7 +69,32 @@
 							"variable": [
 								{
 									"key": "projectId",
-									"value": "{{projectId}}"
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the Project Settings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/settings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"settings"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "5"
 								}
 							]
 						}
@@ -103,6 +128,40 @@
 								{
 									"key": "projectId",
 									"value": "{{projectId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update the Project Settings",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"defaultExecTypeId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/project/:projectId/settings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"project",
+								":projectId",
+								"settings"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "5"
 								}
 							]
 						}
@@ -184,7 +243,7 @@
 							"variable": [
 								{
 									"key": "projectId",
-									"value": "{{projectId}}"
+									"value": "1"
 								}
 							]
 						}
@@ -344,7 +403,7 @@
 							"variable": [
 								{
 									"key": "projectId",
-									"value": "{{projectId}}"
+									"value": "6"
 								}
 							]
 						}
