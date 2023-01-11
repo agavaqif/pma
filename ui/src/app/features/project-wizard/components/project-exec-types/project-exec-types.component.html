@@ -14,7 +14,7 @@
   (overlayClick)="closeModal()" [visible]="false">
   <ng-template #content>
     <div class="modal-content">
-      <form class="kp-form" [formGroup]="execTypeForm" *ngIf="action !== 'delete'">
+      <form class="kp-form" [formGroup]="execTypeForm" *ngIf="action === 'create' || action === 'update'">
         <app-input [label]="word('NAME')" [fn]="'name'" [fg]="execTypeForm"></app-input>
         <app-input [label]="word('CODE')" [fn]="'code'" [fg]="execTypeForm"></app-input>
       </form>

@@ -18,11 +18,9 @@ export class ProjectService {
   ) {}
 
   async create(createProjectDto: CreateProjectDto) {
-    // ! 👈 Breakpoint
     const project = this.projectRepo.create(createProjectDto);
-    const projectSettings = this.projectSettingsRepo.create(); // ! 👈 Might be a problem
-    projectSettings.project = project; // ! 👈 Doesn't cause an error
-    // project.projectSettings = projectSettings; // ! 👈 cause an error
+    const projectSettings = this.projectSettingsRepo.create();
+    projectSettings.project = project;
     await this.projectRepo.save(project);
     await this.projectSettingsRepo.save(projectSettings);
     return project;

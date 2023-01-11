@@ -8,6 +8,9 @@ import { ExecTypesService } from 'src/app/core/services/exec-types.service';
 import { IExecType } from 'src/app/shared/interfaces/exec-type.interface';
 import { IToolbarBtn, ToolbarComponent } from 'src/app/shared/components/toolbar/toolbar.component';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { ProjectService } from 'src/app/core/services/project.service';
+import { IProjectSettings } from 'src/app/shared/interfaces/project.interface';
+import { KpService } from 'src/app/core/services/kp.service';
 
 enum ExecTypeActions {
   CREATE = 'create',
@@ -22,6 +25,7 @@ enum ExecTypeActions {
 })
 export class ProjectExecTypesComponent implements OnInit {
   public execTypes: IExecType[];
+  public projectSettings: IProjectSettings;
   public selectedExecType: IExecType = null;
 
   @ViewChild('kpTableToolbar') kpTableToolbar: ToolbarComponent;
@@ -46,15 +50,15 @@ export class ProjectExecTypesComponent implements OnInit {
   ];
 
   public onToolbarBtnClick = (action: ExecTypeActions) => {
-    // this.action = action;
-    // switch (action) {
-    //   case 'update':
-    //     this.openModal(ExecTypeActions.UPDATE);
-    //     break;
-    //   case 'delete':
-    //     this.openModal(ExecTypeActions.DELETE);
-    //     break;
-    // }
+    this.action = action;
+    switch (action) {
+      case 'update':
+        this.openModal(ExecTypeActions.UPDATE);
+        break;
+      case 'delete':
+        this.openModal(ExecTypeActions.DELETE);
+        break;
+    }
   };
 
   public updateToolbarBtns = () => {
@@ -74,8 +78,7 @@ export class ProjectExecTypesComponent implements OnInit {
       case 'update':
         return !this.selectedExecType;
       case 'delete':
-        // TODO: Update
-        return !this.selectedExecType;
+        return !this.selectedExecType || this.projectSettings?.defaultExecType?.execTypeId === this.selectedExecType?.execTypeId;
     }
   }
 
@@ -165,12 +168,16 @@ export class ProjectExecTypesComponent implements OnInit {
 
   word = word;
 
-  constructor(private execTypeService: ExecTypesService, private route: ActivatedRoute) {}
+  constructor(private execTypeService: ExecTypesService, private route: ActivatedRoute, private projectService: ProjectService, private kpService: KpService) {}
 
   ngOnInit(): void {
     this.execTypeService.onExecTypes().subscribe((execTypes) => {
       this.execTypes = execTypes;
-      this.kpTable.refreshGrid();
+      this.projectService.getProjectSettings(this.projectId).subscribe((projectSettings) => {
+        this.projectSettings = projectSettings;
+        this.kpTable.refreshGrid();
+      });
+      this.kpService.getKpsByProjectId(this.projectId);
     });
     this.execTypeService.getExecTypesByProjectId(this.projectId);
     this.initTarget();

@@ -63,7 +63,6 @@ export class ExecTypeService {
   }
 
   async remove(projectId: number, execTypeId: number) {
-    await this.kpService.updateIsCompletedByExecType(projectId, execTypeId);
-    return await this.execTypeRepo.delete(execTypeId);
+    return await this.kpService.updateIsCompletedByExecType(projectId, execTypeId).then(() => this.execTypeRepo.delete(execTypeId));
   }
 }

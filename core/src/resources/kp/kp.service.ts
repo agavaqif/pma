@@ -17,8 +17,6 @@ export class KpService {
   constructor(
     @InjectRepository(Kp)
     private kpRepo: Repository<Kp>,
-    // @InjectRepository(Project)
-    // private projectRepo: Repository<Project>,
     private isCompletedService: IsCompletedService,
     @InjectRepository(ExecType)
     private execTypeRepo: Repository<ExecType>,
@@ -28,12 +26,9 @@ export class KpService {
   ) {}
 
   async createKps(projectId: number, { start, end, kpUnit, accuracy, execTypeId }: CreateKpsDto) {
-    // ! 👈 Breakpoint
     const kps = [];
     const length = (end - start) / accuracy;
-    // const projectSettings = { kpUnit, accuracy };
-    // const updatedProject = await this.projectRepo.update({ projectId }, { projectSettings });
-    const updatedProjectSettings = await this.projectService.updateProjectSettings(projectId, { kpUnit, accuracy, defaultExecTypeId: execTypeId }); // ! 👈 Might be a problem
+    const updatedProjectSettings = await this.projectService.updateProjectSettings(projectId, { kpUnit, accuracy, defaultExecTypeId: execTypeId });
     for (let i = 0; i < length; i++) {
       const kp = this.kpRepo.create({
         start: start + accuracy * i,
@@ -113,6 +108,11 @@ export class KpService {
       relations: ['execType', 'project'],
     });
     const { defaultExecType } = await this.projectService.getProjectSettings(projectId);
-    return await this.batchUpdateIsCompleted(projectId, defaultExecType.execTypeId, kps);
+    for (const kp of kps) {
+      await this.kpRepo.update(kp, { execType: { execTypeId: defaultExecType.execTypeId } as ExecType });
+    }
+    await this.batchUpdateIsCompleted(projectId, defaultExecType.execTypeId, kps);
+    console.log({ projectId, defaultExecType, kps });
+    return true;
   }
 }
