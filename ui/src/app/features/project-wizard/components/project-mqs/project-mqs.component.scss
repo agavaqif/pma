@@ -60,3 +60,37 @@ ejs-checkbox {
 .add-step {
   text-align: right;
 }
+
+.mqs-table {
+  max-width: 650px;
+}
+
+.modal-content {
+  .delete-content {
+    color: #ff0000;
+    font-size: 1rem;
+    p {
+      margin-block: 10px;
+    }
+  }
+  .actions {
+    margin-top: 1rem;
+    text-align: right;
+    button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.custom-row {
+  td {
+    border-bottom: 1px solid #ccc;
+    padding: 8px;
+  }
+} 
+
+.details-mq {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

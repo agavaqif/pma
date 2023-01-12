@@ -10,6 +10,14 @@ import { MqService } from 'src/app/core/services/mq.service';
 import { AddStepsComponent } from '../add-steps/add-steps.component';
 import { IMqStep } from 'src/app/shared/interfaces/mq-step.interface';
 import { StepsTableComponent } from '../steps-table/steps-table.component';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
+
+enum MqActions {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  DETAILS = 'details',
+}
 
 @Component({
   selector: 'app-project-mqs',
@@ -17,7 +25,29 @@ import { StepsTableComponent } from '../steps-table/steps-table.component';
   styleUrls: ['./project-mqs.component.scss'],
 })
 export class ProjectMqsComponent implements OnInit {
-  mqs: IMq[];
+  public mqs: IMq[];
+
+  @ViewChild('grid') grid: GridComponent;
+  public gridColumns = gridColumns;
+  public mqActions = MqActions;
+
+  setRecord() {
+    this.selectedMq = this.grid?.getSelectedRecords()[0] as IMq;
+  }
+
+  clearRecord() {
+    this.selectedMq = null;
+  }
+
+  getUnit(unit: number) {
+    return mqUnits[unit as keyof typeof mqUnits];
+  }
+
+  toolbarClick(action: MqActions = MqActions.CREATE) {
+    this.mqModalActions = action;
+    this.initForm();
+    this.openMqDialog();
+  }
 
   // Add Step Modal
   @ViewChild('addStepDialog') addStepDialog: AddStepsComponent;
@@ -35,50 +65,48 @@ export class ProjectMqsComponent implements OnInit {
   }
 
   // Modals
-  @ViewChild('addMqDialog') addMqDialog: DialogComponent;
+  @ViewChild('mqDialog') mqDialog: DialogComponent;
   @ViewChild('container', { read: ElementRef, static: false }) container: ElementRef;
   public targetEl: HTMLElement;
+  public mqModalActions: MqActions = null;
   public btns: object[];
   public initTarget = () => (this.targetEl = this.container?.nativeElement?.parentElement);
-  public initBtns() {
-    this.btns = [
-      { click: this.onSubmit.bind(this), buttonModel: { content: 'Create', isPrimary: true } },
-      { click: this.closeAddMqDialog.bind(this), buttonModel: { content: 'Cancel' } },
-    ];
-  }
 
-  public openAddMqDialog(): void {
+  public openMqDialog(): void {
     this.initForm();
-    this.addMqDialog?.show();
+    this.mqDialog?.show();
   }
 
-  public closeAddMqDialog(): void {
+  public closeMqDialog(): void {
     this.mqForm.reset();
     this.addedSteps = [];
-    this.addMqDialog?.hide();
-  }
-
-  @ViewChild('viewStepsDialog') viewStepsDialog: DialogComponent;
-  public openViewStepsDialog(mq: IMq): void {
-    this.selectedMq = mq;
-    this.viewStepsDialog?.show();
-  }
-
-  public closeViewStepsDialog(): void {
     this.selectedMq = null;
-    this.viewStepsDialog?.hide();
+    this.mqModalActions = null;
+    this.grid?.clearSelection();
+    this.mqDialog?.hide();
   }
 
   // Forms
   public mqForm: FormGroup;
   public addedSteps: Partial<IMqStep>[] = [];
   public initForm() {
-    this.mqForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      isBalanced: new FormControl(false),
-      quantity: new FormControl(''),
-      unitOfMeasure: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    });
+    const { name, isBalanced, unitOfMeasure, quantity } = this.selectedMq || {};
+    if ([MqActions.DETAILS, MqActions.UPDATE].includes(this.mqModalActions)) {
+      return (this.mqForm = new FormGroup({
+        name: new FormControl(name, [Validators.required, Validators.maxLength(50)]),
+        isBalanced: new FormControl(isBalanced),
+        quantity: new FormControl(quantity),
+        unitOfMeasure: new FormControl(this.mqModalActions === MqActions.DETAILS ? this.getUnit(unitOfMeasure) : unitOfMeasure, [Validators.required, Validators.maxLength(50)]),
+      }));
+    } else if (this.mqModalActions === MqActions.CREATE) {
+      return (this.mqForm = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        isBalanced: new FormControl(false),
+        quantity: new FormControl(''),
+        unitOfMeasure: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      }));
+    }
+    return this.mqForm?.reset();
   }
 
   public onAddStep(step: Partial<IMqStep>) {
@@ -88,7 +116,7 @@ export class ProjectMqsComponent implements OnInit {
 
   onSubmit() {
     const isStepsFull = this.addedSteps.reduce((acc, { weight }) => acc + weight, 0) === 100;
-    if (this.mqForm.valid && isStepsFull) {
+    if (this.mqForm.valid) {
       const { name, isBalanced, unitOfMeasure, quantity } = this.mqForm.value;
       const mqSteps = this.stepsTable?.getSteps();
       const body = {
@@ -98,12 +126,15 @@ export class ProjectMqsComponent implements OnInit {
         unitOfMeasure: +unitOfMeasure,
         mqSteps,
       };
-      this.mqService.createMq(this.projectId, body).subscribe(() => this.mqService.getAllMqs(this.projectId));
-      this.closeAddMqDialog();
-    } else if (!this.mqForm.valid) {
+      if (this.mqModalActions === MqActions.CREATE) {
+        if (!isStepsFull) return alert('Steps weight must be 100%');
+        this.mqService.createMq(this.projectId, body).subscribe(() => this.mqService.getAllMqs(this.projectId));
+      } else if (this.mqModalActions === MqActions.UPDATE) {
+        this.mqService.updateMq(this.projectId, this.selectedMq.mqId, body).subscribe(() => this.mqService.getAllMqs(this.projectId));
+      }
+      this.closeMqDialog();
+    } else {
       this.mqForm.markAllAsTouched();
-    } else if (!isStepsFull) {
-      alert('Steps weight must be 100%');
     }
   }
 
@@ -126,6 +157,13 @@ export class ProjectMqsComponent implements OnInit {
     this.mqService.getAllMqs(this.projectId);
     this.initTarget();
     this.initForm();
-    this.initBtns();
   }
 }
+
+const gridColumns: any[] = [
+  { field: 'mqId', visible: false, isPrimaryKey: true },
+  { field: 'name', headerText: word('NAME'), width: 100 },
+  { field: 'isBalanced', headerText: word('IS_BALANCED'), width: 100 },
+  { field: 'quantity', headerText: word('QUANTITY'), width: 100 },
+  { field: 'unitOfMeasure', headerText: word('UNIT_OF_MEASURE'), width: 100 },
+];
