@@ -26,7 +26,7 @@
           (click)="onSubmit()">{{word('SAVE')}}</button>
         <button ejs-button [isPrimary]="true" *ngIf="action === 'delete'"
           (click)="onDelete()">{{word('DELETE')}}</button>
-        <button ejs-button (click)="onDelete()">{{word('CANCEL')}}</button>
+        <button ejs-button (click)="closeModal()">{{word('CANCEL')}}</button>
       </div>
     </div>
   </ng-template>
