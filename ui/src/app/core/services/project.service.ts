@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Subject } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
-import { IProject } from 'src/app/shared/interfaces/project.interface';
+import { IProject, IProjectSettings } from 'src/app/shared/interfaces/project.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -44,10 +45,12 @@ export class ProjectService {
   }
 
   getProjectSettings(projectId: number) {
-    return this.http.get<IProject>(this.baseUrl(projectId)).pipe(
-      map(({ projectSettings: { kpUnit, accuracy }, kps }) => ({
-        kpUnit,
-        accuracy,
+    const projectSettings = this.http.get<IProjectSettings>(this.baseUrl(projectId, 'settings'));
+    const project = this.http.get<IProject>(this.baseUrl(projectId));
+
+    return forkJoin([projectSettings, project]).pipe(
+      map(([projectSettings, { kps }]) => ({
+        ...projectSettings,
         start: kps.reduce((min, kp) => (kp.start < min ? kp.start : min), Infinity),
         end: kps.reduce((max, kp) => (kp.end > max ? kp.end : max), -Infinity),
       })),

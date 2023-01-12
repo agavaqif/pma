@@ -66,7 +66,7 @@ export class KpAssignmentsComponent implements OnInit {
   }
 
   initGridData() {
-    this.gridData = this.projectKps.map(({ kpId, start, end }) => {
+    this.gridData = this.projectKps?.map(({ kpId, start, end }) => {
       let steps = {};
       this.selectedMq.mqSteps.forEach(({ stepId, title }) => {
         const isCompleted = this.isCompletedData.find(({ kp, mqStep, isCompletedId }) => kp.kpId === kpId && mqStep.stepId === stepId);
@@ -80,7 +80,7 @@ export class KpAssignmentsComponent implements OnInit {
     this.gridData = this.projectKps.map(({ kpId, start, end }) => ({ kpId, start, end }));
     this.selectedMq = null;
     this.mqForm.reset();
-    this.grid.refresh();
+    this.grid?.refresh();
   }
 
   openModal(kpId: number, stepId: number, isCompleted: boolean) {

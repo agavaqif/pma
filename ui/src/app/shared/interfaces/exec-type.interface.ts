@@ -6,5 +6,6 @@ export interface IExecType {
   name: string;
   code: string;
   project?: IProject;
+  projectSetting?: any; // TODO: add interface
   mqs?: IMq[];
 }

@@ -17,7 +17,7 @@ export class Kp {
   @ManyToOne(() => Project, (project) => project.kps, { onDelete: 'CASCADE' })
   project: Project;
 
-  @ManyToOne(() => ExecType, (execType) => execType.kps)
+  @ManyToOne(() => ExecType, (execType) => execType.kps, { cascade: true })
   execType: ExecType;
 
   @OneToMany(() => IsCompleted, (isCompleted) => isCompleted.kp)

@@ -15,4 +15,5 @@ export interface IProject {
 export interface IProjectSettings {
   kpUnit: KpUnit;
   accuracy: number;
+  defaultExecType?: IExecType;
 }

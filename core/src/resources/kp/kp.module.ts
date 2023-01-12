@@ -9,9 +9,10 @@ import { Project } from '../project/entities/project.entity';
 import { ExecType } from '../exec-type/entities/exec-type.entity';
 import { IsCompletedModule } from '../is-completed/is-completed.module';
 import { Mq } from '../mq/entities/mq.entity';
+import { ProjectModule } from '../project/project.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Kp, Project, ExecType, MqStep, Mq]), IsCompletedModule],
+  imports: [TypeOrmModule.forFeature([Kp, Project, ExecType, MqStep, Mq]), IsCompletedModule, ProjectModule],
   controllers: [KpController],
   providers: [KpService],
   exports: [KpService],
