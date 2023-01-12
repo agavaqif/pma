@@ -66,7 +66,7 @@ export class KpAssignmentsComponent implements OnInit {
   }
 
   initGridData() {
-    this.gridData = this.projectKps.map(({ kpId, start, end }) => {
+    this.gridData = this.projectKps?.map(({ kpId, start, end }) => {
       let steps = {};
       this.selectedMq.mqSteps.forEach(({ stepId, title }) => {
         const isCompleted = this.isCompletedData.find(({ kp, mqStep, isCompletedId }) => kp.kpId === kpId && mqStep.stepId === stepId);
