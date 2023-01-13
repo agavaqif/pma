@@ -63,6 +63,10 @@ export const wordsMap: any = {
   TITLE: 'Title',
   WEIGHT: 'Weight',
   ADD_STEP: 'Add Step',
+  UNIT: 'Unit',
+  BALANCED: 'Balanced',
+  DETAILS: 'Details',
+  OK: 'OK',
 
   // Kp Assignments
   KP_ASSIGNMENTS: 'Kp Assignments',

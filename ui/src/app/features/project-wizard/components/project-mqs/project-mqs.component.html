@@ -1,48 +1,96 @@
 <div class="mqs-header">
   <h2>{{word('CREATE_MQS')}}</h2>
-  <button ejs-button [isPrimary]="true" (click)="openAddMqDialog()">{{word('CREATE')}}</button>
+  <button ejs-button [isPrimary]="true" (click)="toolbarClick()">{{word('CREATE')}}</button>
 </div>
 
-<div class="list">
-  <ng-container *ngIf="!!mqs?.length; else noData">
-    <div class="list-item" *ngFor="let mq of mqs" (dblclick)="openViewStepsDialog(mq)">
-      <div class="list-item__name">Name: {{mq.name}}</div>
-      <div class="list-item__code">isBalanced: {{mq.isBalanced}}</div>
-      <div class="list-item__code">Quantity: {{mq.quantity}}</div>
-      <div class="list-item__code">Unit: {{mqUnits[mq.unitOfMeasure]}}</div>
-    </div>
-  </ng-container>
-  <ng-template #noData>
-    <div class="list-item">No Measurement Quantities Created Yet!</div>
-  </ng-template>
+<div class="mqs-table">
+  <ejs-toolbar>
+    <e-items>
+      <e-item [text]="word('DETAILS')" prefixIcon="fa-solid fa-info" [align]="'right'" [disabled]="!selectedMq"
+        (click)="toolbarClick(mqActions.DETAILS)"></e-item>
+      <e-item [text]="word('UPDATE')" prefixIcon="e-edit" [align]="'right'" [disabled]="!selectedMq"
+        (click)="toolbarClick(mqActions.UPDATE)"></e-item>
+      <e-item [text]="word('DELETE')" prefixIcon="e-delete" [align]="'right'" [disabled]="!selectedMq"
+        (click)="toolbarClick(mqActions.DELETE)"></e-item>
+    </e-items>
+  </ejs-toolbar>
+  <ejs-grid #grid [dataSource]="mqs" (rowSelected)="setRecord()" (rowDeselected)="clearRecord()">
+    <e-columns>
+      <e-column field="mqId" [visible]="false" isPrimaryKey="true"></e-column>
+      <e-column field="name" [headerText]="word('NAME')"></e-column>
+      <e-column field="isBalanced" [headerText]="word('BALANCED')"></e-column>
+      <e-column field="quantity" [headerText]="word('QUANTITY')"></e-column>
+      <e-column field="unitOfMeasure" [headerText]="word('UNIT')">
+        <ng-template #template let-data>
+          <span>{{getUnit(data.unitOfMeasure)}}</span>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
 </div>
 
 <!-- MODAL -->
 <div #container class="root-container"></div>
-<ejs-dialog #addMqDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_MQS_TITLE')"
-  [width]="400" (overlayClick)="closeAddMqDialog()" [visible]="false" [buttons]="btns">
+<ejs-dialog #mqDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_MQS_TITLE')"
+  [width]="400" (overlayClick)="closeMqDialog()" [visible]="false">
   <ng-template #content>
-    <form class="kp-form" [formGroup]="mqForm">
-      <app-input [label]="word('NAME')" [fn]="'name'" [fg]="mqForm"></app-input>
-      <ejs-checkbox [label]="word('IS_BALANCED')" formControlName="isBalanced"></ejs-checkbox>
-      <app-input *ngIf="!isBalanced" [label]="word('QUANTITY')" [fn]="'quantity'" type="number"
-        [fg]="mqForm"></app-input>
-      <app-dropdown [label]="word('MQ_UNIT')" [fn]="'unitOfMeasure'" [fg]="mqForm"
-        [data]="mqUnitOptions"></app-dropdown>
-    </form>
-    <hr class="hr">
-    <div class="add-step">
-      <button ejs-button [isPrimary]="true" cssClass="e-outline"
-        (click)="onClickAddStep()">{{word('ADD_STEP')}}</button>
+    <div class="modal-content">
+      <!-- ! CREATE -->
+      <div class="create-mq" *ngIf="mqModalActions === 'create'">
+        <form class="kp-form" [formGroup]="mqForm">
+          <app-input [label]="word('NAME')" [fn]="'name'" [fg]="mqForm"></app-input>
+          <ejs-checkbox [label]="word('IS_BALANCED')" formControlName="isBalanced"></ejs-checkbox>
+          <app-input *ngIf="!isBalanced" [label]="word('QUANTITY')" [fn]="'quantity'" type="number"
+            [fg]="mqForm"></app-input>
+          <app-dropdown [label]="word('MQ_UNIT')" [fn]="'unitOfMeasure'" [fg]="mqForm"
+            [data]="mqUnitOptions"></app-dropdown>
+        </form>
+        <hr class="hr">
+        <div class="add-step">
+          <button ejs-button [isPrimary]="true" cssClass="e-outline"
+            (click)="onClickAddStep()">{{word('ADD_STEP')}}</button>
+        </div>
+        <app-steps-table #stepsTable [steps]="addedSteps" [isDraggable]="true"></app-steps-table>
+      </div>
+      <!-- ! UPDATE -->
+      <div class="update-mq" *ngIf="mqModalActions === 'update'">
+        <form class="kp-form" [formGroup]="mqForm">
+          <app-input [label]="word('NAME')" [fn]="'name'" [fg]="mqForm"></app-input>
+          <ejs-checkbox [label]="word('IS_BALANCED')" formControlName="isBalanced"></ejs-checkbox>
+          <app-input *ngIf="!isBalanced" [label]="word('QUANTITY')" [fn]="'quantity'" type="number"
+            [fg]="mqForm"></app-input>
+          <app-dropdown [label]="word('MQ_UNIT')" [fn]="'unitOfMeasure'" [fg]="mqForm"
+            [data]="mqUnitOptions"></app-dropdown>
+        </form>
+        <hr class="hr">
+        <!-- <app-steps-table #stepsTable [steps]="selectedMq?.mqSteps" [isDraggable]="true"></app-steps-table> -->
+      </div>
+      <!-- ! DELETE -->
+      <div class="delete-mq" *ngIf="mqModalActions === 'delete'">
+        <p>{{word('DELETE_MQ_WARNING')}}</p>
+      </div>
+      <!-- ! DETAILS -->
+      <form [formGroup]="mqForm" class="details-mq" *ngIf="mqModalActions === 'details'">
+        <app-input fn="name" [label]="word('NAME')" [fg]="mqForm" [readonly]="true"></app-input>
+        <app-input fn="isBalanced" [label]="word('IS_BALANCED')" [fg]="mqForm" [readonly]="true"
+          *ngIf="!!selectedMq.isBalanced"></app-input>
+        <app-input fn="quantity" [label]="word('QUANTITY')" [fg]="mqForm" [readonly]="true"
+          *ngIf="!selectedMq.isBalanced"></app-input>
+        <app-input fn="unitOfMeasure" [label]="word('MQ_UNIT')" [fg]="mqForm" [readonly]="true"></app-input>
+        <app-steps-table [steps]="selectedMq?.mqSteps" [isDraggable]="false"></app-steps-table>
+      </form>
+      <div class="actions">
+        <button ejs-button [isPrimary]="true" *ngIf="['create', 'update'].includes(mqModalActions)"
+          (click)="onSubmit()">
+          {{word('SAVE')}}</button>
+        <button ejs-button [isPrimary]="true" cssClass="e-danger"
+          *ngIf="mqModalActions === 'delete'">{{word('DELETE')}}</button>
+        <button ejs-button cssClass="e-outline" (click)="closeMqDialog()"
+          *ngIf="mqModalActions !== 'details'">{{word('CANCEL')}}</button>
+        <button ejs-button [isPrimary]="true" (click)="closeMqDialog()"
+          *ngIf="mqModalActions === 'details'">{{word('OK')}}</button>
+      </div>
     </div>
-    <app-steps-table #stepsTable [steps]="addedSteps" [isDraggable]="true"></app-steps-table>
-  </ng-template>
-</ejs-dialog>
-
-<ejs-dialog #viewStepsDialog isModal="true" [target]="targetEl" [width]="400" (overlayClick)="closeViewStepsDialog()"
-  [visible]="false">
-  <ng-template #content>
-    <app-steps-table [steps]="selectedMq?.mqSteps"></app-steps-table>
   </ng-template>
 </ejs-dialog>
 
