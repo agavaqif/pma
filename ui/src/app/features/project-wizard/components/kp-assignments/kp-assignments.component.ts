@@ -70,14 +70,17 @@ export class KpAssignmentsComponent implements OnInit {
 
   onSelectMq({ value }: any) {
     this.selectedMq = this.projectMqs.find(({ mqId }) => mqId === value) || null;
+    console.log(this.selectedMq);
     if (this.selectedMq) {
       this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => {
         this.isCompletedData = data;
         this.initGridData();
+        this.grid.refresh();
       });
     } else {
       this.resetGridData();
     }
+    console.log(this.selectedMq);
   }
 
   initGridData() {
@@ -95,7 +98,6 @@ export class KpAssignmentsComponent implements OnInit {
     this.gridData = this.projectKps.map(({ kpId, start, end }) => ({ kpId, start, end }));
     this.selectedMq = null;
     this.mqForm.reset();
-    this.grid?.refresh();
   }
 
   openModal(kpId: number, stepId: number, isCompleted: boolean) {
