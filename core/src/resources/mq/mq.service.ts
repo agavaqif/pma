@@ -50,6 +50,7 @@ export class MqService {
       const mqStep = this.mqStepRepo.create(step);
       await this.mqStepRepo.save(mqStep);
       mq.mqSteps.push(mqStep);
+      await this.repo.save(mq);
       (mq.execTypes as any).forEach((execType: any) => {
         for (const { kpId } of (execType as any).kps) {
           this.isCompletedService.create(projectId, kpId, mqId, mqStep.stepId);
