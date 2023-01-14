@@ -1,5 +1,5 @@
 import { IsCompleted } from 'src/resources/is-completed/entities/is-completed.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 
 @Entity()
 export class StepNote {
@@ -10,5 +10,6 @@ export class StepNote {
   note: string;
 
   @OneToOne(() => IsCompleted, (isCompleted) => isCompleted.stepNote, { onDelete: 'CASCADE', cascade: true })
+  @JoinColumn()
   isCompleted: IsCompleted;
 }

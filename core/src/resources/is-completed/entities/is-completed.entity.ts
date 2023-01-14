@@ -34,7 +34,6 @@ export class IsCompleted {
   project: Project;
 
   @OneToOne(() => StepNote, (stepNote) => stepNote.isCompleted)
-  @JoinColumn()
   stepNote: StepNote;
 
   @ManyToOne(() => Crew, (crew) => crew.isCompleted, { cascade: true })

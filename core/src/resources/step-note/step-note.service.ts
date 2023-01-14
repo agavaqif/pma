@@ -12,9 +12,9 @@ export class StepNoteService {
     private stepNoteRepository: Repository<StepNote>,
   ) {}
 
-  async create(IsCompletedId: number, createStepNoteDto: CreateStepNoteDto) {
+  async create(isCompletedId: number, createStepNoteDto: CreateStepNoteDto) {
     const stepNote = this.stepNoteRepository.create({ ...createStepNoteDto });
-    stepNote.isCompleted = { isCompletedId: IsCompletedId } as IsCompleted;
+    stepNote.isCompleted = { isCompletedId } as IsCompleted;
     return await this.stepNoteRepository.save(stepNote);
   }
 
