@@ -9,6 +9,7 @@ export class MqController {
 
   @Post()
   create(@Body() createMqDto: CreateMqDto, @Param('projectId') projectId: string) {
+    console.log({ createMqDto });
     return this.mqService.create(createMqDto, +projectId);
   }
 
@@ -23,8 +24,16 @@ export class MqController {
   }
 
   @Patch(':mqId')
-  update(@Param('mqId') mqId: string, @Body() updateMqDto: UpdateMqDto) {
-    return this.mqService.update(+mqId, updateMqDto);
+  update(@Param('projectId') projectId: string, @Param('mqId') mqId: string, @Body() updateMqDto: UpdateMqDto) {
+    const { stepsList } = updateMqDto;
+    console.log({
+      stepsList: {
+        createList: stepsList.createList.map((step) => step.title),
+        updateList: stepsList.updateList.map((step) => step.title),
+        deleteList: stepsList.deleteList,
+      },
+    });
+    return this.mqService.update(+projectId, +mqId, { stepsList, ...updateMqDto });
   }
 
   @Delete(':mqId')

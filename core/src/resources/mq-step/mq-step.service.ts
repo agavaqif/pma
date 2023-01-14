@@ -16,6 +16,7 @@ export class MqStepService {
   async create(mqId: number, createMqStepDto: CreateMqStepDto) {
     const mqStep = this.mqStepRepository.create({ ...createMqStepDto });
     mqStep.mq = { mqId } as Mq;
+    console.log({ createdMqStep: mqStep });
     return await this.mqStepRepository.save(mqStep);
   }
 
@@ -31,11 +32,13 @@ export class MqStepService {
 
   async update(stepId: number, updateMqStepDto: UpdateMqStepDto) {
     const mqStep = await this.mqStepRepository.update(stepId, updateMqStepDto);
+    console.log({ updatedMqStep: mqStep });
     return mqStep;
   }
 
   async remove(stepId: number) {
     const mqStep = await this.mqStepRepository.delete(stepId);
+    console.log({ deletedMqStep: mqStep });
     return mqStep;
   }
 }

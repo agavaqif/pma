@@ -2,15 +2,16 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
 
 import { mqUnits } from 'src/app/shared/enums/mq-unit.enum';
 import { word } from 'src/app/core/utils/words';
 import { IMq } from 'src/app/shared/interfaces/mq.interface';
 import { MqService } from 'src/app/core/services/mq.service';
-import { AddStepsComponent } from '../add-steps/add-steps.component';
 import { IMqStep } from 'src/app/shared/interfaces/mq-step.interface';
-import { StepsTableComponent } from '../steps-table/steps-table.component';
-import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { MqStepsTableComponent } from '../mq-steps-table/mq-steps-table.component';
+import { IGridStep, StepState } from '../../types/mq-step-types';
+import { generateGUID } from 'src/app/core/utils/guid';
 
 enum MqActions {
   CREATE = 'create',
@@ -49,20 +50,10 @@ export class ProjectMqsComponent implements OnInit {
     this.openMqDialog();
   }
 
-  // Add Step Modal
-  @ViewChild('addStepDialog') addStepDialog: AddStepsComponent;
-
-  onClickAddStep() {
-    this.addStepDialog.openModal();
-  }
-
   // Steps Table
-  @ViewChild('stepsTable') stepsTable: StepsTableComponent;
+  @ViewChild('stepsTable') stepsTable: MqStepsTableComponent;
   selectedMq: IMq;
-  onSetSteps(steps: Partial<IMqStep>[]) {
-    this.addedSteps = steps;
-    console.log({ steps: this.addedSteps });
-  }
+  public gridSteps: IGridStep[] = [];
 
   // Modals
   @ViewChild('mqDialog') mqDialog: DialogComponent;
@@ -86,11 +77,16 @@ export class ProjectMqsComponent implements OnInit {
     this.mqDialog?.hide();
   }
 
+  public setGridSteps(steps: IMqStep[]) {
+    this.gridSteps = steps.map((step) => ({ ...step, state: StepState.LOADED, guid: generateGUID() }));
+  }
+
   // Forms
   public mqForm: FormGroup;
   public addedSteps: Partial<IMqStep>[] = [];
   public initForm() {
     const { name, isBalanced, unitOfMeasure, quantity } = this.selectedMq || {};
+    this.setGridSteps((this.selectedMq?.mqSteps as IMqStep[]) || []);
     if ([MqActions.DETAILS, MqActions.UPDATE].includes(this.mqModalActions)) {
       return (this.mqForm = new FormGroup({
         name: new FormControl(name, [Validators.required, Validators.maxLength(50)]),
@@ -109,25 +105,21 @@ export class ProjectMqsComponent implements OnInit {
     return this.mqForm?.reset();
   }
 
-  public onAddStep(step: Partial<IMqStep>) {
-    this.addedSteps.push({ ...step, order: this.addedSteps.length + 1 });
-    this.stepsTable?.refreshGrid();
-  }
-
   onSubmit() {
-    const isStepsFull = this.addedSteps.reduce((acc, { weight }) => acc + weight, 0) === 100;
+    const stepsList = this.stepsTable?.getStepsLists();
+    const isWeightFull = this.stepsTable?.isWeightFull();
+    console.log({ stepsList });
     if (this.mqForm.valid) {
       const { name, isBalanced, unitOfMeasure, quantity } = this.mqForm.value;
-      const mqSteps = this.stepsTable?.getSteps();
       const body = {
         name,
         isBalanced,
         ...(!isBalanced ? { quantity: +quantity } : {}),
         unitOfMeasure: +unitOfMeasure,
-        mqSteps,
+        ...(this.mqModalActions === MqActions.UPDATE ? { stepsList } : { mqSteps: stepsList.createList }),
       };
+      if (!isWeightFull) return alert('Steps weight must be 100%');
       if (this.mqModalActions === MqActions.CREATE) {
-        if (!isStepsFull) return alert('Steps weight must be 100%');
         this.mqService.createMq(this.projectId, body).subscribe(() => this.mqService.getAllMqs(this.projectId));
       } else if (this.mqModalActions === MqActions.UPDATE) {
         this.mqService.updateMq(this.projectId, this.selectedMq.mqId, body).subscribe(() => this.mqService.getAllMqs(this.projectId));

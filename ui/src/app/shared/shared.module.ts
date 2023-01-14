@@ -16,7 +16,7 @@ const components = [InputComponent, ValidationErrorComponent, DropdownComponent,
 const modules: any[] = [CommonModule, SyncfusionModule, ReactiveFormsModule, RouterModule, DirectivesModule];
 
 @NgModule({
-  declarations: [...components, TableComponent, ToolbarComponent],
+  declarations: [...components],
   imports: [...modules],
   exports: [...components, ...modules],
 })
