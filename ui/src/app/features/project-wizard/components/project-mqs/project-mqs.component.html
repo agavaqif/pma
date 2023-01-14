@@ -46,11 +46,7 @@
             [data]="mqUnitOptions"></app-dropdown>
         </form>
         <hr class="hr">
-        <div class="add-step">
-          <button ejs-button [isPrimary]="true" cssClass="e-outline"
-            (click)="onClickAddStep()">{{word('ADD_STEP')}}</button>
-        </div>
-        <app-steps-table #stepsTable [steps]="addedSteps" [isDraggable]="true"></app-steps-table>
+        <app-mq-steps-table #stepsTable [isDraggable]="true"></app-mq-steps-table>
       </div>
       <!-- ! UPDATE -->
       <div class="update-mq" *ngIf="mqModalActions === 'update'">
@@ -63,7 +59,7 @@
             [data]="mqUnitOptions"></app-dropdown>
         </form>
         <hr class="hr">
-        <!-- <app-steps-table #stepsTable [steps]="selectedMq?.mqSteps" [isDraggable]="true"></app-steps-table> -->
+        <app-mq-steps-table #stepsTable [isDraggable]="true" [gridSteps]="gridSteps"></app-mq-steps-table>
       </div>
       <!-- ! DELETE -->
       <div class="delete-mq" *ngIf="mqModalActions === 'delete'">
@@ -93,5 +89,3 @@
     </div>
   </ng-template>
 </ejs-dialog>
-
-<app-add-steps #addStepDialog (onAddStep)="onAddStep($event)"></app-add-steps>

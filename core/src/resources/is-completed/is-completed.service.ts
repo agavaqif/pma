@@ -39,6 +39,11 @@ export class IsCompletedService {
     return await this.isCompletedRepository.remove(isCompleted);
   }
 
+  async removeByStepId(stepId: number) {
+    const isCompleted = await this.isCompletedRepository.find({ where: { mqStep: { stepId } } });
+    return await this.isCompletedRepository.remove(isCompleted);
+  }
+
   async findAll(
     { projectId, kpId, mqId, stepId },
     relations = {

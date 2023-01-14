@@ -67,6 +67,8 @@ export const wordsMap: any = {
   BALANCED: 'Balanced',
   DETAILS: 'Details',
   OK: 'OK',
+  EDIT: 'Edit',
+  REMOVE: 'Remove',
 
   // Kp Assignments
   KP_ASSIGNMENTS: 'Kp Assignments',

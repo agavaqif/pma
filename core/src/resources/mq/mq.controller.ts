@@ -23,8 +23,9 @@ export class MqController {
   }
 
   @Patch(':mqId')
-  update(@Param('mqId') mqId: string, @Body() updateMqDto: UpdateMqDto) {
-    return this.mqService.update(+mqId, updateMqDto);
+  update(@Param('projectId') projectId: string, @Param('mqId') mqId: string, @Body() updateMqDto: UpdateMqDto) {
+    const { stepsList } = updateMqDto;
+    return this.mqService.update(+projectId, +mqId, { stepsList, ...updateMqDto });
   }
 
   @Delete(':mqId')

@@ -1,3 +1,4 @@
+import { IStepLists } from 'src/app/features/project-wizard/types/mq-step-types';
 import { MqUnit } from '../enums/mq-unit.enum';
 import { IMqStep } from './mq-step.interface';
 
@@ -7,5 +8,6 @@ export interface IMq {
   isBalanced: boolean;
   quantity?: number;
   unitOfMeasure: MqUnit;
-  mqSteps: IMqStep[] | Partial<IMqStep>[];
+  mqSteps?: IMqStep[] | Partial<IMqStep>[];
+  stepsList?: IStepLists;
 }

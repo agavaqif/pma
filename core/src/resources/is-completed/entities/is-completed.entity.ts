@@ -25,7 +25,7 @@ export class IsCompleted {
   @JoinColumn()
   mq: Mq;
 
-  @ManyToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { cascade: true })
+  @ManyToOne(() => MqStep, (mqStep) => mqStep.isCompleted, { onDelete: 'CASCADE', cascade: true })
   @JoinColumn()
   mqStep: MqStep;
 
@@ -34,7 +34,6 @@ export class IsCompleted {
   project: Project;
 
   @OneToOne(() => StepNote, (stepNote) => stepNote.isCompleted)
-  @JoinColumn()
   stepNote: StepNote;
 
   @ManyToOne(() => Crew, (crew) => crew.isCompleted, { cascade: true })

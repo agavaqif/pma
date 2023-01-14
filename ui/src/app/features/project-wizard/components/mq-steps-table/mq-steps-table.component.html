@@ -1,0 +1,31 @@
+<ejs-toolbar>
+  <e-items>
+    <e-item [text]="word('ADD')" (click)="toolbarClick()" prefixIcon="e-plus" [align]="'right'"
+      [disabled]="isWeightFull()"></e-item>
+    <e-item [text]="word('EDIT')" (click)="toolbarClick(actions.UPDATED)" prefixIcon="e-edit" [align]="'right'"
+      [disabled]="!selectedStep"></e-item>
+    <e-item [text]="word('REMOVE')" prefixIcon="e-delete" [align]="'right'" [disabled]="!selectedStep"
+      (click)="removeStep()"></e-item>
+  </e-items>
+</ejs-toolbar>
+<ejs-grid #grid id="Grid" [dataSource]="gridSteps" [allowRowDragAndDrop]="isDraggable"
+  [selectionSettings]="selectOptions" [rowDropSettings]="rowDropOptions" (rowDrop)="rowDrop($event)"
+  (rowSelected)="rowSelected()" (rowDeselected)="rowDeselected()">
+  <e-columns>
+    <e-column field="guid" isPrimaryKey="true" [visible]="false"></e-column>
+    <e-column field="title" [headerText]="word('TITLE')"></e-column>
+    <e-column field="weight" [headerText]="word('WEIGHT')" type="number"></e-column>
+  </e-columns>
+</ejs-grid>
+
+<!-- MODAL -->
+<div #container class="root-container"></div>
+<ejs-dialog #stepDialog isModal="true" [target]="targetEl" cssClass="modal" [header]="word('CREATE_STEPS')"
+  [width]="400" (overlayClick)="closeModal()" [visible]="false" [buttons]="btns">
+  <ng-template #content>
+    <form class="form" [formGroup]="stepForm">
+      <app-input [label]="word('TITLE')" [fn]="'title'" [fg]="stepForm"></app-input>
+      <app-input [label]="word('WEIGHT')" [fn]="'weight'" [fg]="stepForm" type="number"></app-input>
+    </form>
+  </ng-template>
+</ejs-dialog>
