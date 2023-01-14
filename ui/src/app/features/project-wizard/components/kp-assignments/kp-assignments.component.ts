@@ -10,6 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { IsCompletedService } from 'src/app/core/services/is-completed.service';
 import { IisCompleted } from 'src/app/shared/interfaces/is-completed.interface';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-kp-assignments',
@@ -37,13 +38,27 @@ export class KpAssignmentsComponent implements OnInit {
   word = word;
 
   ngOnInit(): void {
-    this.kpService.onKps().subscribe((kps) => {
-      this.projectKps = kps;
-      this.resetGridData();
+    // this.kpService.onKps().subscribe((kps) => {
+    //   this.projectKps = kps;
+    //   this.resetGridData();
+    // });
+    // this.mqService.onMqs().subscribe((mqs) => {
+    //   this.mqOptions = mqs.map(({ mqId, name }) => ({ value: mqId, text: name }));
+    //   this.projectMqs = mqs;
+    //   this.resetGridData();
+    // });
+
+    const joinedWithObjectForm$ = combineLatest({
+      kps: this.kpService.onKps(),
+      mqs: this.mqService.onMqs(),
     });
-    this.mqService.onMqs().subscribe((mqs) => {
-      this.mqOptions = mqs.map(({ mqId, name }) => ({ value: mqId, text: name }));
-      this.projectMqs = mqs;
+    joinedWithObjectForm$.subscribe((data) => {
+      this.projectKps = data.kps;
+      this.mqOptions = data.mqs.map(({ mqId, name }) => ({ value: mqId, text: name }));
+      this.projectMqs = data.mqs;
+      console.log(this.projectKps);
+      console.log(this.mqOptions);
+      console.log(this.projectMqs);
       this.resetGridData();
     });
 

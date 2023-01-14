@@ -9,6 +9,6 @@ export class StepNote {
   @Column()
   note: string;
 
-  @OneToOne(() => IsCompleted, (isCompleted) => isCompleted.stepNote, { cascade: true })
+  @OneToOne(() => IsCompleted, (isCompleted) => isCompleted.stepNote, { onDelete: 'CASCADE', cascade: true })
   isCompleted: IsCompleted;
 }

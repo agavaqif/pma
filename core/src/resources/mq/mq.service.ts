@@ -44,20 +44,12 @@ export class MqService {
   }
 
   async update(projectId: number, mqId: number, { stepsList, ...updateMqDto }: UpdateMqDto) {
-    console.log(projectId);
-
     const mq = await this.repo.findOne(mqId, { relations: ['mqSteps', 'execTypes', 'execTypes.kps'] });
-    // await this.isCompletedService.removeByMqId(mqId);
-    console.log(mq.execTypes);
     const { createList, updateList, deleteList } = stepsList;
     for (const step of createList) {
       const mqStep = this.mqStepRepo.create(step);
-      // mqStep.mq = mq;
       await this.mqStepRepo.save(mqStep);
       mq.mqSteps.push(mqStep);
-      // console.log('mqStep', mqStep.stepId);
-
-      // await this.isCompletedService.create(projectId, kpId, mqId, mqStep.stepId);
       (mq.execTypes as any).forEach((execType: any) => {
         for (const { kpId } of (execType as any).kps) {
           this.isCompletedService.create(projectId, kpId, mqId, mqStep.stepId);
@@ -74,10 +66,13 @@ export class MqService {
     }
     for (const stepId of deleteList) {
       await this.mqStepRepo.delete(stepId);
+      // await this.isCompletedService.removeByStepId(stepId);
     }
-    console.log(updateMqDto);
-    console.log(mq);
-    return await this.repo.save({ ...updateMqDto });
+
+    // Update Only Mq
+    const currentMq = await this.repo.findOne(mqId);
+    await this.repo.merge(currentMq, updateMqDto);
+    return await this.repo.save(currentMq);
   }
 
   async remove(mqId: number) {
