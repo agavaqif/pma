@@ -70,7 +70,6 @@ export class IsCompletedService {
       item.mq = item.mq && filterObj(item.mq, 'mqId', 'name');
       item.mqStep = item.mqStep && filterObj(item.mqStep, 'stepId', 'name');
     });
-    console.log({ isCompleted });
     return isCompleted;
   }
 

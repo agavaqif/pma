@@ -20,7 +20,6 @@ export class KpController {
 
   @Patch('batch')
   updateBatch(@Param('projectId') projectId: string, @Body() updateKpsDto: BatchUpdateKpsDto) {
-    console.log(updateKpsDto);
     return this.kpService.updateBatch(+projectId, updateKpsDto);
   }
 

@@ -58,11 +58,9 @@ export class MqService {
       });
     }
     for (const step of updateList) {
-      console.log(step);
       // await this.mqStepRepo.update(step.stepId, step);
       const mqStep = await this.mqStepRepo.findOne(step.stepId);
       this.mqStepRepo.merge(mqStep, step);
-      console.log(mqStep);
       await this.mqStepRepo.save(mqStep);
     }
     for (const stepId of deleteList) {

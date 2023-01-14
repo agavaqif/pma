@@ -112,7 +112,6 @@ export class KpService {
       await this.kpRepo.update(kp, { execType: { execTypeId: defaultExecType.execTypeId } as ExecType });
     }
     await this.batchUpdateIsCompleted(projectId, defaultExecType.execTypeId, kps);
-    console.log({ projectId, defaultExecType, kps });
     return true;
   }
 }
