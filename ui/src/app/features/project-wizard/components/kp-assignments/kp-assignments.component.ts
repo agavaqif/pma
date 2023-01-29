@@ -75,7 +75,7 @@ export class KpAssignmentsComponent implements OnInit {
       this.isCompletedService.findAllByProjectId(this.projectId).subscribe((data) => {
         this.isCompletedData = data;
         this.initGridData();
-        this.grid.refresh();
+        // this.grid.refresh();
       });
     } else {
       this.resetGridData();
