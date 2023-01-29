@@ -13,11 +13,13 @@ import { MqStepModule } from './resources/mq-step/mq-step.module';
 import { IsCompletedModule } from './resources/is-completed/is-completed.module';
 import { StepNoteModule } from './resources/step-note/step-note.module';
 
+console.log(process.env.NODE_ENV);
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `${process.cwd()}/env/${process.env.NODE_ENV}.env`,
+      envFilePath: process.env.NODE_ENV == 'dev' ? `${process.cwd()}/env/${process.env.NODE_ENV}.env` : `${process.cwd()}/env/prod.env`,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
