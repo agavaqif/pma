@@ -14,6 +14,7 @@ import { StepsTableComponent } from './components/steps-table/steps-table.compon
 import { KpAssignmentsComponent } from './components/kp-assignments/kp-assignments.component';
 import { IsCompletedModalComponent } from './components/is-completed-modal/is-completed-modal.component';
 import { MqStepsTableComponent } from './components/mq-steps-table/mq-steps-table.component';
+import { SummaryComponent } from './components/summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MqStepsTableComponent } from './components/mq-steps-table/mq-steps-tabl
     KpAssignmentsComponent,
     IsCompletedModalComponent,
     MqStepsTableComponent,
+    SummaryComponent,
   ],
   imports: [CommonModule, SharedModule],
 })

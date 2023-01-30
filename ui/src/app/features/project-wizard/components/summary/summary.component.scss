@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+}
+
+.mq-modal-content {
+  margin-top: 10px;
+}
+
+.e-css.e-checkbox-wrapper .e-frame {
+  height: 16px;
+  width: 16px;
+  line-height: 16px;
+}
+
+.e-css.e-checkbox-wrapper {
+  position: relative;
+}
+
+.e-icons.e-check:before {
+  font-size: 12px;
+  width: 14px;
+  height: 14px;
+}
+.e-checkbox-wrapper .e-stop::before,
+.e-css.e-checkbox-wrapper .e-stop::before {
+  display: none;
+}

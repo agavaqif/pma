@@ -82,6 +82,15 @@ export const wordsMap: any = {
   CREW: 'Crew',
   COMPLETE_DATE: 'Complete Date',
   COMPLETED_DATE: 'Completed Date',
+
+  // Summary
+  SUMMARY: 'Summary',
+  ADD_SUMMARY: 'Add Summary',
+
+  // Modal
+  CLOSE: 'Close',
+  CONFIRM: 'Confirm',
+  MODAL_TITLE: 'Modal Title',
 };
 
 export const validateWords: any = {

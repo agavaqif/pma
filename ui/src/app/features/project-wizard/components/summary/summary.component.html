@@ -1,0 +1,10 @@
+<div class="header">
+  <h2>{{word('SUMMARY')}}</h2>
+  <button ejs-button [isPrimary]="true" (click)="onAddSummary()">{{word('ADD_SUMMARY')}}</button>
+</div>
+<app-modal #selectMqModal>
+  <div class="mq-modal-content">
+    <ejs-listview id='sample-list' [dataSource]='projectMqs' [fields]='fields' [showCheckBox]='true'
+      headerTitle='To Do List' showHeader='true'></ejs-listview>
+  </div>
+</app-modal>

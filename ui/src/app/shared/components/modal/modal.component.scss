@@ -1,0 +1,48 @@
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .title {
+      font-size: 19px;
+      font-weight: 100;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      white-space: nowrap;
+      width: 80%;
+    }
+
+    .e-dlg-closeicon-btn {
+      border-radius: 50%;
+      background-color: none;
+      &:hover {
+        background-color: none;
+      }
+    }
+  }
+
+  .actions {
+    text-align: right;
+    margin-top: 10px;
+    button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.e-dialog .e-dlg-content {
+  padding-top: 14px;
+}
+
+.e-icon-btn {
+  background-color: inherit !important;
+  border: none !important;
+}
