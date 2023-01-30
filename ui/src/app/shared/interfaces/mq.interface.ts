@@ -11,3 +11,5 @@ export interface IMq {
   mqSteps?: IMqStep[] | Partial<IMqStep>[];
   stepsList?: IStepLists;
 }
+
+export type PartialMq = Partial<IMq>;

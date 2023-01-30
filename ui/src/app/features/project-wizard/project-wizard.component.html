@@ -6,11 +6,6 @@
   <div class="card tabs-container">
     <ejs-tab>
       <e-tabitems>
-        <e-tabitem [header]="headerText[7]">
-          <ng-template #content>
-            <app-summary></app-summary>
-          </ng-template>
-        </e-tabitem>
         <e-tabitem [header]="headerText[0]">
           <ng-template #content>
             <app-project-exec-types></app-project-exec-types>
@@ -39,6 +34,11 @@
         <e-tabitem [header]="headerText[6]">
           <ng-template #content>
             <app-kp-assignments></app-kp-assignments>
+          </ng-template>
+        </e-tabitem>
+        <e-tabitem [header]="headerText[7]">
+          <ng-template #content>
+            <app-summary></app-summary>
           </ng-template>
         </e-tabitem>
       </e-tabitems>

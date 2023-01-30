@@ -86,6 +86,7 @@ export const wordsMap: any = {
   // Summary
   SUMMARY: 'Summary',
   ADD_SUMMARY: 'Add Summary',
+  WHICH_MEASUREMENT_QUANTITIES_DO_YOU_WANT_TO_SUMMARIZE: 'Which measurement quantities do you want to summarize?',
 
   // Modal
   CLOSE: 'Close',
