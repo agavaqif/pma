@@ -1,0 +1,17 @@
+<ejs-dialog #ejDialog isModal="true" (overlayClick)="close()" [visible]="false" [width]="width" [buttons]="btns">
+  <ng-template #content>
+    <div class="modal-content">
+      <div class="header">
+        <div class="title">{{header}}</div>
+        <button class="e-dlg-closeicon-btn e-control e-btn e-lib e-flat e-icon-btn" (click)="close()">
+          <span class="e-btn-icon e-icon-dlg-close e-icons"></span>
+        </button>
+      </div>
+      <ng-content></ng-content>
+      <div class="actions">
+        <button ejs-button *ngFor="let btn of btns" [isPrimary]="btn.isPrimary" [cssClass]="btn.cssClass"
+          (click)="btn.click($event)" [disabled]="btn.disabled || false">{{btn.text}}</button>
+      </div>
+    </div>
+  </ng-template>
+</ejs-dialog>

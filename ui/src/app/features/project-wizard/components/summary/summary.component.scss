@@ -1,0 +1,83 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+}
+
+.mq-modal-content {
+  margin-top: 10px;
+}
+
+.e-css.e-checkbox-wrapper .e-frame {
+  height: 16px;
+  width: 16px;
+}
+
+.e-css.e-checkbox-wrapper {
+  position: relative;
+}
+
+.e-icons.e-check:before {
+  font-size: 12px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  position: relative;
+  top: -1px;
+}
+.e-checkbox-wrapper .e-stop::before,
+.e-css.e-checkbox-wrapper .e-stop::before {
+  display: none;
+}
+
+ejs-grid {
+  max-width: 800px;
+  margin-top: 1rem;
+}
+
+ejs-toolbar {
+  max-width: 698px;
+  .toolbar-items {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.not-done {
+  background-color: rgba(255, 183, 3, 0.5);
+}
+.done {
+  background-color: rgba(0, 128, 0, 0.5);
+}
+.disabled {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+
+.mq {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  span {
+    visibility: hidden;
+  }
+}
+
+.custom-row {
+  td {
+    border: 1px solid #ccc;
+    padding: 6px 8px;
+  }
+}
+
+ejs-listview {
+  border: 1px solid #ccc;
+  margin-block: 1rem;
+}

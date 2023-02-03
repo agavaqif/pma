@@ -1,0 +1,41 @@
+<div class="header">
+  <h2>{{word('SUMMARY')}}</h2>
+  <button ejs-button [isPrimary]="true" (click)="onAddSummary()">{{word('ADD_SUMMARY')}}</button>
+</div>
+
+<ejs-grid #grid [dataSource]='gridData' width="auto">
+  <e-columns>
+    <e-column field='start' [headerText]='word("START")' width="20"></e-column>
+    <e-column field='end' [headerText]='word("END")' width="20"></e-column>
+    <ng-container *ngIf="selectedMqs.length">
+      <e-column *ngFor="let mq of selectedMqs" [field]='mq.name' [headerText]='mq.name' width="20">
+      </e-column>
+    </ng-container>
+  </e-columns>
+  <ng-template #rowTemplate let-data>
+    <tr class="custom-row">
+      <td class="start">{{data.start}}</td>
+      <td class="end">{{data.end}}</td>
+      <ng-container *ngIf="selectedMqs.length">
+        <td *ngFor="let mq of selectedMqs" [ngClass]="{
+            'not-done': data[mq.name] === false,
+            'done': data[mq.name] === true,
+            'disabled': data[mq.name] === null
+          }">
+          <div class="mq">
+            <span>
+              {{data[mq.name]}}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+</ejs-grid>
+
+<app-modal #selectMqModal [btns]="mqModalBtns" [header]="word('SELECT_MQ')">
+  <div class="mq-modal-content">
+    <p class="question">{{word('WHICH_MEASUREMENT_QUANTITIES_DO_YOU_WANT_TO_SUMMARIZE')}}</p>
+    <ejs-listview #checklist [dataSource]='projectMqs' [fields]='fields' [showCheckBox]='true'></ejs-listview>
+  </div>
+</app-modal>
