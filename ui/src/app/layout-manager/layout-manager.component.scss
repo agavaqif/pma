@@ -1,0 +1,65 @@
+#sidebar {
+  // top: 55px;
+  background-color: #1e1e2d;
+}
+
+.sidebar-head {
+  background-color: #1a1a27;
+}
+
+.e-sidebar.e-left {
+  border-right: 1px solid #1e1e2d;
+}
+
+.sidebar-head > img {
+  padding: 15px 20px;
+}
+
+// /*--icon styleing--*/
+.e-icons {
+  color: #494b74;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.e-list-text {
+  color: #9899ac;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.e-treeview .e-list-item .people:before {
+  content: '\e425';
+}
+
+.e-treeview .e-list-item.e-hover > .e-text-content {
+  background-color: #1e1e2d;
+}
+
+.e-treeview .e-list-item.e-hover > .e-text-content > .e-list-text {
+  color: #fff;
+}
+
+.e-treeview .e-list-item.e-hover > .e-text-content > .e-icons {
+  color: #009ef7;
+}
+
+.e-treeview .e-list-item.e-active > .e-text-content {
+  background-color: #1e1e2d;
+}
+
+.e-treeview .e-list-item.e-active > .e-text-content > .e-list-text {
+  color: #fff;
+}
+
+.e-treeview .e-list-item.e-active > .e-text-content > .e-icons {
+  color: #009ef7;
+}
+
+.e-treeview .e-ul {
+  padding: 0px;
+}
+
+.main-content {
+  margin: 10px;
+}
