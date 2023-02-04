@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { word } from 'src/app/core/utils/words';
 import { IProject } from 'src/app/shared/interfaces/project.interface';
 import { ProjectService } from 'src/app/core/services/project.service';
+import { SummaryComponent } from './components/summary/summary.component';
 
 @Component({
   selector: 'app-project-wizard',
@@ -13,6 +14,10 @@ import { ProjectService } from 'src/app/core/services/project.service';
 export class ProjectWizardComponent implements OnInit {
   public project: IProject;
   public fields: object = { text: 'name', id: 'projectId' };
+
+  @ViewChild(SummaryComponent)
+  private summary: SummaryComponent;
+
   public headerText = [
     { text: word('EXEC_TYPES') },
     { text: word('KPS') },
@@ -32,5 +37,13 @@ export class ProjectWizardComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.getProject(this.projectId).subscribe((project: any) => (this.project = project));
+  }
+
+  onTabSelect(args: any) {
+    console.log(args);
+    if (args.selectedIndex == 6) {
+      // Update data after first click
+      if (this.summary) this.summary.initData();
+    }
   }
 }

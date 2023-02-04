@@ -4,7 +4,7 @@
     <span>Project Name: </span> <span>{{project?.name}}</span>
   </div>
   <div class="card tabs-container">
-    <ejs-tab>
+    <ejs-tab (selected)="onTabSelect($event)">
       <e-tabitems>
         <e-tabitem [header]="headerText[0]">
           <ng-template #content>
@@ -38,7 +38,7 @@
         </e-tabitem>
         <e-tabitem [header]="headerText[7]">
           <ng-template #content>
-            <app-summary></app-summary>
+            <app-summary #summary></app-summary>
           </ng-template>
         </e-tabitem>
       </e-tabitems>
