@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProjectWizardComponent } from './project-wizard.component';
+import { ProjectWizardRoutingModule } from './project-wizard-routing.module';
 import { ProjectKpsComponent } from './components/project-kps/project-kps.component';
 import { ProjectExecTypesComponent } from './components/project-exec-types/project-exec-types.component';
 import { ProjectMqsComponent } from './components/project-mqs/project-mqs.component';
@@ -32,6 +33,6 @@ import { SummaryComponent } from './components/summary/summary.component';
     MqStepsTableComponent,
     SummaryComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, ProjectWizardRoutingModule],
 })
 export class ProjectWizardModule {}

@@ -23,7 +23,7 @@ export class SidebarService {
 
   projectWizardLinks(projectId: string): ISidebarLink[] {
     return projectWizardLinks.map(({ url, ...rest }) => ({
-      url: `projectWizard/${projectId}/${url}`,
+      url: `/project-wizard/${projectId}/${url}`,
       ...rest,
     }));
   }
@@ -34,7 +34,7 @@ const projectWizardLinks: ISidebarLink[] = [
     nodeId: '01',
     nodeText: word('EXEC_TYPES'),
     icon: 'fa fa-cogs',
-    url: 'executionType',
+    url: 'execution-type',
   },
   {
     nodeId: '02',
@@ -52,7 +52,7 @@ const projectWizardLinks: ISidebarLink[] = [
     nodeId: '04',
     nodeText: word('PIPELINE_MANAGER'),
     icon: 'fa-solid fa-timeline',
-    url: 'pipelineManager',
+    url: 'pipeline-manager',
   },
   {
     nodeId: '05',
@@ -64,7 +64,7 @@ const projectWizardLinks: ISidebarLink[] = [
     nodeId: '06',
     nodeText: word('KP_ASSIGNMENTS'),
     icon: 'fa fa-map-signs',
-    url: 'kpAssignment',
+    url: 'kp-assignment',
   },
   {
     nodeId: '07',

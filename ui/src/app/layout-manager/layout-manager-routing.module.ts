@@ -6,11 +6,11 @@ import { ProjectWizardComponent } from '../features/project-wizard/project-wizar
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    loadChildren: () => import('../features/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'project-wizard/:projectId',
-    component: ProjectWizardComponent,
+    loadChildren: () => import('../features/project-wizard/project-wizard.module').then((m) => m.ProjectWizardModule),
   },
 ];
 
