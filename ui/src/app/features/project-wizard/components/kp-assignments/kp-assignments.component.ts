@@ -32,7 +32,7 @@ export class KpAssignmentsComponent implements OnInit {
   constructor(private kpService: KpService, private route: ActivatedRoute, private mqService: MqService, private isCompletedService: IsCompletedService) {}
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
 
   word = word;

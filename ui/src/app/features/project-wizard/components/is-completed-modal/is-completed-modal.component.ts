@@ -90,7 +90,7 @@ export class IsCompletedModalComponent implements OnInit {
   word = word;
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
 
   constructor(private crewService: CrewService, private route: ActivatedRoute) {}

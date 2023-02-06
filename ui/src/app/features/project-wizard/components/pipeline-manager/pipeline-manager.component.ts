@@ -18,7 +18,7 @@ export class PipelineManagerComponent implements OnInit {
   constructor(private readonly execTypeService: ExecTypesService, private route: ActivatedRoute, private readonly mqService: MqService) {}
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
   word = word;
 

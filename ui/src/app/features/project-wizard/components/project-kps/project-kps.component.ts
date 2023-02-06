@@ -25,7 +25,7 @@ export class ProjectKpsComponent implements OnInit {
   constructor(private kpService: KpService, private route: ActivatedRoute, private execTypesService: ExecTypesService) {}
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
   word = word;
 

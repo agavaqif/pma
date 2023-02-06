@@ -78,7 +78,7 @@ export class BatchUpdateKpsComponent implements OnInit {
   }
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
 
   word = word;

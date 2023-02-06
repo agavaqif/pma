@@ -88,7 +88,7 @@ export class SummaryComponent implements OnInit {
   word = word;
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
 
   // ! Test

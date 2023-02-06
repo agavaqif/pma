@@ -105,7 +105,7 @@ export class ProjectCrewsComponent implements OnInit {
   }
 
   get projectId() {
-    return +this.route.snapshot.paramMap.get('projectId');
+    return +this.route.parent.snapshot.paramMap.get('projectId');
   }
 
   constructor(private route: ActivatedRoute, private crewService: CrewService, private mqService: MqService) {}
