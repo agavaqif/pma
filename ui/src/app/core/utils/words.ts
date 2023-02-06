@@ -92,6 +92,10 @@ export const wordsMap: any = {
   CLOSE: 'Close',
   CONFIRM: 'Confirm',
   MODAL_TITLE: 'Modal Title',
+
+  // SideBar
+  PROJECT_KPS: 'Project Kps',
+  
 };
 
 export const validateWords: any = {
