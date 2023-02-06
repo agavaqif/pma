@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { HomeComponent } from './features/home/home.component';
-import { ProjectWizardComponent } from './features/project-wizard/project-wizard.component';
+import { LayoutManagerComponent } from './layout-manager/layout-manager.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'project-wizard/:projectId',
-    component: ProjectWizardComponent,
+    component: LayoutManagerComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./layout-manager/layout-manager.module').then((m) => m.LayoutManagerModule),
+      },
+    ],
   },
 ];
 

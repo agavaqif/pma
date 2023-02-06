@@ -1,0 +1,14 @@
+<ejs-sidebar id="sidebar" #sidebar [mediaQuery]="mediaQuery" [width]="width">
+
+  <ejs-treeview id=" sidebar-tree" #sidebarTree [fields]="field" (nodeSelected)="loadRoutingContent($event)"
+    sortOder="Ascending"></ejs-treeview>
+</ejs-sidebar>
+
+<div class="main-wrapper">
+  <div class="header">
+    <app-header (toggleSideBarEvent)="toggleClick()"></app-header>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
