@@ -1,4 +1,7 @@
 <ejs-sidebar id="sidebar" #sidebar [mediaQuery]="mediaQuery" [width]="width">
+  <div class="sidebar-head">
+    <h1>PMA</h1>
+  </div>
 
   <ejs-treeview id=" sidebar-tree" #sidebarTree [fields]="field" (nodeSelected)="loadRoutingContent($event)"
     sortOder="Ascending"></ejs-treeview>

@@ -13,11 +13,15 @@ export class SidebarService {
     return this.sidbarLinks.asObservable();
   }
 
-  setSidebarLinks(links: ISidebarLink[]) {
-    this.sidbarLinks.next(links);
+  setProjectWizardLinks(projectId: string) {
+    this.sidbarLinks.next(this.projectWizardLinks(projectId));
   }
 
-  projectWizardLinks(projectId: number): ISidebarLink[] {
+  setHomeLinks() {
+    this.sidbarLinks.next([]);
+  }
+
+  projectWizardLinks(projectId: string): ISidebarLink[] {
     return projectWizardLinks.map(({ url, ...rest }) => ({
       url: `projectWizard/${projectId}/${url}`,
       ...rest,
@@ -47,7 +51,7 @@ const projectWizardLinks: ISidebarLink[] = [
   {
     nodeId: '04',
     nodeText: word('PIPELINE_MANAGER'),
-    icon: 'fa fa-pipeline',
+    icon: 'fa-solid fa-timeline',
     url: 'pipelineManager',
   },
   {

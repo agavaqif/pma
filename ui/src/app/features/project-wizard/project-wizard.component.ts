@@ -1,3 +1,4 @@
+import { SidebarService } from './../../core/services/sidebar.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -24,7 +25,7 @@ export class ProjectWizardComponent implements OnInit {
     { text: word('SUMMARY') },
   ];
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) {}
+  constructor(private projectService: ProjectService, private route: ActivatedRoute, private sideBarService: SidebarService) {}
 
   get projectId() {
     return this.route.snapshot.paramMap.get('projectId');
@@ -32,5 +33,6 @@ export class ProjectWizardComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.getProject(this.projectId).subscribe((project: any) => (this.project = project));
+    this.sideBarService.setProjectWizardLinks(this.projectId);
   }
 }

@@ -1,3 +1,4 @@
+import { SidebarService } from './../../core/services/sidebar.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit {
   public projectForm: FormGroup;
   public initForm = () => (this.projectForm = new FormGroup({ name: new FormControl('', [Validators.required]) }));
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  constructor(private projectService: ProjectService, private router: Router, private sideBarService: SidebarService) {}
 
   ngOnInit(): void {
     this.initTarget();
@@ -49,6 +50,7 @@ export class HomeComponent implements OnInit {
     this.initBtns();
     this.projectService.onProjects().subscribe((projects) => (this.projects = projects));
     this.projectService.getProjects();
+    this.sideBarService.setHomeLinks();
   }
 
   onCreateProject(): void {
